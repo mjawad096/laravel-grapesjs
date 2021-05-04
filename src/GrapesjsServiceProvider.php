@@ -27,6 +27,10 @@ class GrapesjsServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__.'/../config/config.php' => config_path('grapesjs.php'),
             ], 'config');
+
+            $this->publishes([__DIR__.'/../public' => public_path()], 'public');
         }
+
+        $this->loadViewsFrom(realpath(__DIR__.'/resources/views/'), 'grapesjs');
     }
 }
