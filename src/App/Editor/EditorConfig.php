@@ -2,7 +2,7 @@
 
 namespace Topdot\Grapesjs\App\Editor;
 
-class EditorConfig
+class EditorConfig extends EditorBaseClass
 {
     public string $container = '#editor';
     public bool $fromElement = false;

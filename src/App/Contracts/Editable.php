@@ -4,17 +4,19 @@ namespace Topdot\Grapesjs\App\Contracts;
 
 interface Editable{
 
+    public function setGjsDataAttribute($value);
+    public function getGjsDataAttribute($value): array;
 
-    public function getStyleSheetLinks(): array;
-    public function getScriptLinks(): array;
+    public function getStyleSheetLinksAttribute(): array;
+    public function getScriptLinksAttribute(): array;
 
-    public function getComponents() : array | string;
-    public function getStyles() :array;
+    public function getComponentsAttribute() : array | string;
+    public function getStylesAttribute() :array;
 
-    public function getHtml() :string;
-    public function getCss() :string;
-    public function getAssets() :array;
+    public function getHtmlAttribute() :string;
+    public function getCssAttribute() :string;
+    public function getAssetsAttribute() :array;
 
-    public function getStoreUrl(): string;
-    public function getTemplatesUrl(): string | null;
+    public function getStoreUrlAttribute(): string;
+    public function getTemplatesUrlAttribute(): string | null;
 }

@@ -1,6 +1,216 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/resources/js/gjs/gjs.js":
+/*!*************************************!*\
+  !*** ./src/resources/js/gjs/gjs.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var grapesjs_dist_css_grapes_min_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! grapesjs/dist/css/grapes.min.css */ "./node_modules/grapesjs/dist/css/grapes.min.css");
+/* harmony import */ var grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! grapesjs-blocks-basic */ "./node_modules/grapesjs-blocks-basic/dist/grapesjs-blocks-basic.min.js");
+/* harmony import */ var grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var grapesjs = __webpack_require__(/*! grapesjs */ "./node_modules/grapesjs/dist/grapes.min.js");
+
+ // import bootstrap4 from 'grapesjs-blocks-bootstrap4';
+
+var toastr = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+
+var config = window.editorConfig;
+delete window.editorConfig;
+config.plugins = [(grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_1___default()) // bootstrap4
+];
+config.pluginsOpts = {
+  'grapesjs-blocks-basic': {} // 'grapesjs-blocks-bootstrap4': {}
+
+};
+var editor = grapesjs.init(config);
+var loader = document.getElementById('loader');
+
+var showLoader = function showLoader() {
+  if (loader) {
+    loader.style.display = 'flex';
+  }
+};
+
+var hideLoader = function hideLoader() {
+  if (loader) {
+    loader.style.display = 'none';
+  }
+};
+
+editor.on('load', function () {
+  hideLoader();
+});
+var pfx = editor.getConfig().stylePrefix;
+var modal = editor.Modal;
+var cmdm = editor.Commands;
+var codeViewer = editor.CodeManager.getViewer('CodeMirror').clone();
+var pnm = editor.Panels;
+var container = document.createElement('div');
+var btnEdit = document.createElement('button');
+codeViewer.set({
+  codeName: 'htmlmixed',
+  readOnly: 0,
+  theme: 'hopscotch',
+  autoBeautify: true,
+  autoCloseTags: true,
+  autoCloseBrackets: true,
+  lineWrapping: true,
+  styleActiveLine: true,
+  smartIndent: true,
+  indentWithTabs: true
+});
+btnEdit.innerHTML = 'Save';
+btnEdit.style["float"] = 'right';
+btnEdit.style.backgroundColor = '#090';
+btnEdit.className = pfx + 'btn-prim ' + pfx + 'btn-import';
+
+btnEdit.onclick = function () {
+  var code = codeViewer.editor.getValue();
+  editor.DomComponents.getWrapper().set('content', '');
+  editor.setComponents(code.trim());
+  modal.close();
+  toastr.success('Html Saved', 'Success');
+};
+
+cmdm.add('html-edit', {
+  run: function run(editor, sender) {
+    sender && sender.set('active', 0);
+    var viewer = codeViewer.editor;
+    modal.setTitle('Edit code');
+
+    if (!viewer) {
+      var txtarea = document.createElement('textarea');
+      container.appendChild(txtarea);
+      container.appendChild(btnEdit);
+      codeViewer.init(txtarea);
+      viewer = codeViewer.editor;
+    }
+
+    var InnerHtml = editor.getHtml();
+    var Css = editor.getCss();
+    modal.setContent('');
+    modal.setContent(container);
+    codeViewer.setContent(InnerHtml + "<style>" + Css + '</style>');
+    modal.open();
+    viewer.refresh();
+  }
+});
+pnm.addButton('options', [{
+  id: 'edit',
+  className: 'fa fa-edit',
+  command: 'html-edit',
+  attributes: {
+    title: 'Edit'
+  }
+}]);
+pnm.addButton('options', [{
+  id: 'upload-file',
+  className: 'fa fa-upload',
+  command: function command(editor) {
+    modal.setTitle('Upload File');
+    modal.backdrop = false;
+    var uploadFileContainer = document.createElement('div');
+    uploadFileContainer.style.position = 'relative';
+    uploadFileContainer.style.overflow = 'hidden';
+    var uploadedLink = document.createElement('input');
+    uploadedLink.type = 'text';
+    uploadedLink.style.width = "100%";
+    uploadedLink.readOnly = 'readonly';
+    var loader = document.createElement('div');
+    loader.style.display = 'none';
+    loader.style.alignItems = 'center';
+    loader.style.justifyContent = 'center';
+    loader.style.width = '100%';
+    loader.style.position = 'absolute';
+    loader.style.top = '0';
+    loader.style.left = '0';
+    loader.style.height = '100%';
+    loader.style.zIndex = '100';
+    loader.style.backgroundColor = '#727272e0';
+    loader.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+    uploadFileContainer.append(loader);
+    var input = document.createElement('input');
+    input.type = "file";
+    input.style.width = '100%';
+
+    input.onchange = function (event) {
+      if (event.target.files[0] == undefined) {
+        return;
+      }
+
+      loader.style.display = 'flex';
+      var formData = new FormData();
+      formData.append("file[]", event.target.files[0]);
+      uploadFileContainer.disabled = 'true';
+      fetch('/asset/store', {
+        method: "POST",
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: formData
+      }).then(function (resp) {
+        return resp.json();
+      }).then(function (data) {
+        event.target.value = "";
+        loader.style.display = 'none';
+
+        if (data.errors) {
+          throw data.message;
+        }
+
+        uploadedLink.value = data.data[0];
+        toastr.success('FIle uploaded and Link Ready', 'Success');
+      })["catch"](function (error) {
+        loader.style.display = 'none';
+        toastr.error(error, 'Error');
+      });
+    };
+
+    uploadFileContainer.append(input);
+    uploadFileContainer.append(uploadedLink);
+    modal.setContent(uploadFileContainer);
+    modal.open();
+  },
+  attributes: {
+    title: 'Edit'
+  }
+}]);
+pnm.addButton('options', [{
+  id: 'save',
+  className: 'fa fa-save',
+  command: function command(editor) {
+    showLoader();
+    editor.store(function (res) {
+      hideLoader();
+      toastr.success('Page Saved', 'Success');
+    });
+  },
+  attributes: {
+    title: 'Save'
+  }
+}]);
+var blockManager = editor.BlockManager;
+
+if (config.templatesUrl) {
+  fetch(config.templatesUrl).then(function (resp) {
+    return resp.json();
+  }).then(function (data) {
+    data.forEach(function (block) {
+      blockManager.add('block-' + block.id, block);
+    });
+  })["catch"](function (error) {
+    console.log(error);
+  });
+}
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[2]!./node_modules/grapesjs/dist/css/grapes.min.css":
 /*!*****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[2]!./node_modules/grapesjs/dist/css/grapes.min.css ***!
@@ -12001,216 +12211,17 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-"use strict";
-/*!*********************************!*\
-  !*** ./src/resources/js/gjs.js ***!
-  \*********************************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var grapesjs_dist_css_grapes_min_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! grapesjs/dist/css/grapes.min.css */ "./node_modules/grapesjs/dist/css/grapes.min.css");
-/* harmony import */ var grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! grapesjs-blocks-basic */ "./node_modules/grapesjs-blocks-basic/dist/grapesjs-blocks-basic.min.js");
-/* harmony import */ var grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_1__);
-
-
-var grapesjs = __webpack_require__(/*! grapesjs */ "./node_modules/grapesjs/dist/grapes.min.js");
-
- // import bootstrap4 from 'grapesjs-blocks-bootstrap4';
-
-var toastr = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
-
+/*!***************************************!*\
+  !*** ./src/resources/js/gjs/index.js ***!
+  \***************************************/
 var config = window.editorConfig;
-delete window.editorConfig;
 
-if (Object.keys(config) == 0) {
+if (Object.keys(config).length === 0) {
   throw new Error('No config found');
-}
-
-config.plugins = [(grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_1___default()) // bootstrap4
-];
-config.pluginsOpts = {
-  'grapesjs-blocks-basic': {} // 'grapesjs-blocks-bootstrap4': {}
-
-};
-var editor = grapesjs.init(config);
-var loader = document.getElementById('loader');
-
-var showLoader = function showLoader() {
-  if (loader) {
-    loader.style.display = 'flex';
-  }
-};
-
-var hideLoader = function hideLoader() {
-  if (loader) {
-    loader.style.display = 'none';
-  }
-};
-
-editor.on('load', function () {
-  hideLoader();
-});
-var pfx = editor.getConfig().stylePrefix;
-var modal = editor.Modal;
-var cmdm = editor.Commands;
-var codeViewer = editor.CodeManager.getViewer('CodeMirror').clone();
-var pnm = editor.Panels;
-var container = document.createElement('div');
-var btnEdit = document.createElement('button');
-codeViewer.set({
-  codeName: 'htmlmixed',
-  readOnly: 0,
-  theme: 'hopscotch',
-  autoBeautify: true,
-  autoCloseTags: true,
-  autoCloseBrackets: true,
-  lineWrapping: true,
-  styleActiveLine: true,
-  smartIndent: true,
-  indentWithTabs: true
-});
-btnEdit.innerHTML = 'Save';
-btnEdit.style["float"] = 'right';
-btnEdit.style.backgroundColor = '#090';
-btnEdit.className = pfx + 'btn-prim ' + pfx + 'btn-import';
-
-btnEdit.onclick = function () {
-  var code = codeViewer.editor.getValue();
-  editor.DomComponents.getWrapper().set('content', '');
-  editor.setComponents(code.trim());
-  modal.close();
-  toastr.success('Html Saved', 'Success');
-};
-
-cmdm.add('html-edit', {
-  run: function run(editor, sender) {
-    sender && sender.set('active', 0);
-    var viewer = codeViewer.editor;
-    modal.setTitle('Edit code');
-
-    if (!viewer) {
-      var txtarea = document.createElement('textarea');
-      container.appendChild(txtarea);
-      container.appendChild(btnEdit);
-      codeViewer.init(txtarea);
-      viewer = codeViewer.editor;
-    }
-
-    var InnerHtml = editor.getHtml();
-    var Css = editor.getCss();
-    modal.setContent('');
-    modal.setContent(container);
-    codeViewer.setContent(InnerHtml + "<style>" + Css + '</style>');
-    modal.open();
-    viewer.refresh();
-  }
-});
-pnm.addButton('options', [{
-  id: 'edit',
-  className: 'fa fa-edit',
-  command: 'html-edit',
-  attributes: {
-    title: 'Edit'
-  }
-}]);
-pnm.addButton('options', [{
-  id: 'upload-file',
-  className: 'fa fa-upload',
-  command: function command(editor) {
-    modal.setTitle('Upload File');
-    modal.backdrop = false;
-    var uploadFileContainer = document.createElement('div');
-    uploadFileContainer.style.position = 'relative';
-    uploadFileContainer.style.overflow = 'hidden';
-    var uploadedLink = document.createElement('input');
-    uploadedLink.type = 'text';
-    uploadedLink.style.width = "100%";
-    uploadedLink.readOnly = 'readonly';
-    var loader = document.createElement('div');
-    loader.style.display = 'none';
-    loader.style.alignItems = 'center';
-    loader.style.justifyContent = 'center';
-    loader.style.width = '100%';
-    loader.style.position = 'absolute';
-    loader.style.top = '0';
-    loader.style.left = '0';
-    loader.style.height = '100%';
-    loader.style.zIndex = '100';
-    loader.style.backgroundColor = '#727272e0';
-    loader.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
-    uploadFileContainer.append(loader);
-    var input = document.createElement('input');
-    input.type = "file";
-    input.style.width = '100%';
-
-    input.onchange = function (event) {
-      if (event.target.files[0] == undefined) {
-        return;
-      }
-
-      loader.style.display = 'flex';
-      var formData = new FormData();
-      formData.append("file[]", event.target.files[0]);
-      uploadFileContainer.disabled = 'true';
-      fetch('/asset/store', {
-        method: "POST",
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest'
-        },
-        body: formData
-      }).then(function (resp) {
-        return resp.json();
-      }).then(function (data) {
-        event.target.value = "";
-        loader.style.display = 'none';
-
-        if (data.errors) {
-          throw data.message;
-        }
-
-        uploadedLink.value = data.data[0];
-        toastr.success('FIle uploaded and Link Ready', 'Success');
-      })["catch"](function (error) {
-        loader.style.display = 'none';
-        toastr.error(error, 'Error');
-      });
-    };
-
-    uploadFileContainer.append(input);
-    uploadFileContainer.append(uploadedLink);
-    modal.setContent(uploadFileContainer);
-    modal.open();
-  },
-  attributes: {
-    title: 'Edit'
-  }
-}]);
-pnm.addButton('options', [{
-  id: 'save',
-  className: 'fa fa-save',
-  command: function command(editor) {
-    showLoader();
-    editor.store(function (res) {
-      hideLoader();
-      toastr.success('Page Saved', 'Success');
-    });
-  },
-  attributes: {
-    title: 'Save'
-  }
-}]);
-var blockManager = editor.BlockManager;
-
-if (editorConfig.templatesUrl) {
-  fetch(editorConfig.templatesUrl).then(function (resp) {
-    return resp.json();
-  }).then(function (data) {
-    data.forEach(function (block) {
-      blockManager.add('block-' + block.id, block);
-    });
-  })["catch"](function (error) {
-    console.log(error);
-  });
+} else {
+  __webpack_require__(/*! ./gjs */ "./src/resources/js/gjs/gjs.js");
 }
 })();
 
