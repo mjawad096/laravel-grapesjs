@@ -1,6 +1,6 @@
 <?php
 
-namespace Topdot\Grapesjs\Contracts;
+namespace Topdot\Grapesjs\App\Contracts;
 
 interface Editable{
 

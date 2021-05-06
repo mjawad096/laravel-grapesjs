@@ -19,10 +19,10 @@ const mix = require('laravel-mix');
  */
 
 // merge all needed JS into a big bundle file
-mix.js('resources/js/gjs.js', 'public/grapesjs/editor.js')
+mix.js('src/resources/js/gjs.js', 'src/public/grapesjs/editor.js')
 
 
 // FOR MAINTAINERS
 // copy asset files from Base's public folder the main app's public folder
 // so that you don't have to publish the assets with artisan to test them
-mix.copyDirectory('public', '../../../public')
+mix.copyDirectory('src/public', '../../../public')

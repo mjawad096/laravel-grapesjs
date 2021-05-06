@@ -1,6 +1,6 @@
 <?php
 
-namespace Topdot\Grapesjs\Editor;
+namespace Topdot\Grapesjs\App\Editor;
 
 class EditorConfig
 {
