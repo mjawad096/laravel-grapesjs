@@ -12004,9 +12004,9 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
-/*!*****************************!*\
-  !*** ./resources/js/gjs.js ***!
-  \*****************************/
+/*!*********************************!*\
+  !*** ./src/resources/js/gjs.js ***!
+  \*********************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var grapesjs_dist_css_grapes_min_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! grapesjs/dist/css/grapes.min.css */ "./node_modules/grapesjs/dist/css/grapes.min.css");
 /* harmony import */ var grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! grapesjs-blocks-basic */ "./node_modules/grapesjs-blocks-basic/dist/grapesjs-blocks-basic.min.js");
@@ -12020,35 +12020,41 @@ var grapesjs = __webpack_require__(/*! grapesjs */ "./node_modules/grapesjs/dist
 var toastr = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
 
 var config = window.editorConfig;
+delete window.editorConfig;
+
+if (Object.keys(config) == 0) {
+  throw new Error('No config found');
+}
+
 config.plugins = [(grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_1___default()) // bootstrap4
 ];
 config.pluginsOpts = {
   'grapesjs-blocks-basic': {} // 'grapesjs-blocks-bootstrap4': {}
 
 };
-window.editor = grapesjs.init(config);
+var editor = grapesjs.init(config);
 var loader = document.getElementById('loader');
 
-window.showLoader = function () {
+var showLoader = function showLoader() {
   if (loader) {
     loader.style.display = 'flex';
   }
 };
 
-window.hideLoader = function () {
+var hideLoader = function hideLoader() {
   if (loader) {
     loader.style.display = 'none';
   }
 };
 
-window.editor.on('load', function () {
-  window.hideLoader();
+editor.on('load', function () {
+  hideLoader();
 });
-var pfx = window.editor.getConfig().stylePrefix;
-var modal = window.editor.Modal;
-var cmdm = window.editor.Commands;
-var codeViewer = window.editor.CodeManager.getViewer('CodeMirror').clone();
-var pnm = window.editor.Panels;
+var pfx = editor.getConfig().stylePrefix;
+var modal = editor.Modal;
+var cmdm = editor.Commands;
+var codeViewer = editor.CodeManager.getViewer('CodeMirror').clone();
+var pnm = editor.Panels;
 var container = document.createElement('div');
 var btnEdit = document.createElement('button');
 codeViewer.set({
@@ -12070,8 +12076,8 @@ btnEdit.className = pfx + 'btn-prim ' + pfx + 'btn-import';
 
 btnEdit.onclick = function () {
   var code = codeViewer.editor.getValue();
-  window.editor.DomComponents.getWrapper().set('content', '');
-  window.editor.setComponents(code.trim());
+  editor.DomComponents.getWrapper().set('content', '');
+  editor.setComponents(code.trim());
   modal.close();
   toastr.success('Html Saved', 'Success');
 };
@@ -12090,8 +12096,8 @@ cmdm.add('html-edit', {
       viewer = codeViewer.editor;
     }
 
-    var InnerHtml = window.editor.getHtml();
-    var Css = window.editor.getCss();
+    var InnerHtml = editor.getHtml();
+    var Css = editor.getCss();
     modal.setContent('');
     modal.setContent(container);
     codeViewer.setContent(InnerHtml + "<style>" + Css + '</style>');
@@ -12183,9 +12189,9 @@ pnm.addButton('options', [{
   id: 'save',
   className: 'fa fa-save',
   command: function command(editor) {
-    window.showLoader();
+    showLoader();
     editor.store(function (res) {
-      window.hideLoader();
+      hideLoader();
       toastr.success('Page Saved', 'Success');
     });
   },
@@ -12193,10 +12199,10 @@ pnm.addButton('options', [{
     title: 'Save'
   }
 }]);
-var blockManager = window.editor.BlockManager;
+var blockManager = editor.BlockManager;
 
-if (window.editorConfig.templatesUrl) {
-  fetch(window.editorConfig.templatesUrl).then(function (resp) {
+if (editorConfig.templatesUrl) {
+  fetch(editorConfig.templatesUrl).then(function (resp) {
     return resp.json();
   }).then(function (data) {
     data.forEach(function (block) {
