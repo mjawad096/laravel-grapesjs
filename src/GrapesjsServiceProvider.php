@@ -63,7 +63,10 @@ class GrapesjsServiceProvider extends ServiceProvider
             __DIR__.'/config.php' => config_path('grapesjs.php'),
         ], 'config');
 
-        $this->publishes([__DIR__.'/public' => public_path()], 'public');
+        $this->publishes([
+            __DIR__.'/public' => public_path(),
+            __DIR__.'/../fonts' => public_path('fonts'),
+        ], 'public');
 
         if (! class_exists('CreateTempMediaTable')) {
             $this->publishes([

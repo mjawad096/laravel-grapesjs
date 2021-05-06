@@ -10,21 +10,22 @@ trait EditableTrait{
 		return $slugify ? str_replace('\\', '-', static::class) : static::class;
 	}
 
-	protected function getKeyValue(){
+	protected function getKeyValue()
+    {
 		return $this->{$this->getKeyName()};
 	}
 
-    protected function setGjsDataAttribute($value)
+    public function setGjsDataAttribute($value)
     {
         $this->attributes['gjs_data'] = json_encode($value);
     }
 
-    protected function getGjsDataAttribute($value)
+    public function getGjsDataAttribute($value): array
     {
         return json_decode($value, true) ?? [];
     }
 
-    protected function getHtmlAttribute()
+    public function getHtmlAttribute(): string
     {
         $processedContent = $this->gjs_data['html'] ?? '';
 
@@ -39,17 +40,12 @@ trait EditableTrait{
         return $processedContent;
     }
 
-    protected function getComponentsAttribute()
+    public function getComponentsAttribute(): array
     {
         return json_decode($this->gjs_data['components'] ?? '[]');
     }
 
-    protected function getStylesAttribute()
-    {
-        return json_decode($this->gjs_data['styles'] ?? '[]');
-    }
-
-    protected function getStylesAttribute()
+    public function getStylesAttribute(): array
     {
         return json_decode($this->gjs_data['styles'] ?? '[]');
     }
@@ -76,12 +72,12 @@ trait EditableTrait{
 
     public function getStoreUrlAttribute(): string
     {
-        return route('grapesjs.editor.model.store', $this->getModelClass(true), $this->idgetKeyValue());
+        return route('grapesjs.editor.model.store', [$this->getModelClass(true), $this->getKeyValue()]);
     }
 
     public function getTemplatesUrlAttribute(): string | null
     {
-        return route('grapesjs.editor.model', $this->getModelClass(true), $this->getKeyValue());
+        return route('grapesjs.editor.model.templates', [$this->getModelClass(true), $this->getKeyValue()]);
     }
 
     public function getPlaceholders()

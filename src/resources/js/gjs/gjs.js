@@ -8,10 +8,6 @@ const toastr = require('toastr');
 let config = window.editorConfig;
 delete window.editorConfig;
 
-if(Object.keys(config) == 0){
-	throw new Error('No config found')
-}
-
 config.plugins = [
 	pluginBlocks, 
 	// bootstrap4
@@ -204,8 +200,8 @@ pnm.addButton('options',
 
 let blockManager = editor.BlockManager;
 
-if (editorConfig.templatesUrl) {
-	fetch(editorConfig.templatesUrl)
+if (config.templatesUrl) {
+	fetch(config.templatesUrl)
 		.then(resp => resp.json())
 		.then(data => {
 			data.forEach(block => {

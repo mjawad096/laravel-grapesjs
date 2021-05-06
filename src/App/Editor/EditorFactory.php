@@ -2,20 +2,21 @@
 
 namespace Topdot\Grapesjs\App\Editor;
 
-use Topdot\Grapesjs\Contracts\Editable;
+use Topdot\Grapesjs\App\Contracts\Editable;
 
 class EditorFactory extends EditorBaseClass
 {
-    public function initialize(Editable $editable, AssetRepository $assetRepository)
+    public function initialize(Editable $editable)
     {
-
+        // dd($editable->style_sheet_links);
+        $assetRepository = app(AssetRepository::class);
         $editorCanvas = new EditorCanvas;
         $editorCanvas->styles = array_merge(
-            config('editor.styles'), $editable->style_sheet_Links
+            config('grapesjs.styles'), $editable->style_sheet_links
         );
 
         $editorCanvas->scripts = array_merge(
-            config('editor.scripts'), $editable->script_links
+            config('grapesjs.scripts'), $editable->script_links
         );
 
         $editorStorage = new EditorStorageManager;
