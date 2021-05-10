@@ -13,7 +13,10 @@
             "name": "Muhammad Jawad",
             "email": "jawad.topdot@gmail.com"
         }
-    ],    
+    ],  
+    "psr-4": {
+        "Topdot\\Grapesjs\\": "packages/jawad-topdot/laravel-grapesjs/src"
+    },  
     "extra": {
         "laravel": {
             "providers": [
