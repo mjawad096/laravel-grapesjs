@@ -21,7 +21,7 @@
         "laravel": {
             "providers": [
                 "Topdot\\Grapesjs\\GrapesjsServiceProvider"
-            ],
+            ]
         }
     },
     "minimum-stability": "dev"
