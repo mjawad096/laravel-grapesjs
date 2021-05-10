@@ -13,7 +13,14 @@
             "name": "Muhammad Jawad",
             "email": "jawad.topdot@gmail.com"
         }
-    ],
+    ],    
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Topdot\\Grapesjs\\GrapesjsServiceProvider"
+            ],
+        }
+    },
     "minimum-stability": "dev"
 }
 
