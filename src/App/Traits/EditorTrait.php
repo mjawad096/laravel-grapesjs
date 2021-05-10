@@ -3,16 +3,17 @@
 namespace Topdot\Grapesjs\App\Traits;
 
 use Illuminate\Http\Request;
+use Topdot\Grapesjs\App\Editor\EditorFactory;
 
 trait EditorTrait{
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @param Request $request
-	 * @return Response
-	 */
-	public function store_gjs_data(Request $request, $model)
+	protected function show_gjs_editor(Request $request, $model){
+		$factory = app(EditorFactory::class);
+		$editorConfig = $factory->initialize($model);
+		return view('grapesjs::edittor', compact('editorConfig'));
+	}
+
+	protected function store_gjs_data(Request $request, $model)
 	{	
 		$model->gjs_data = [
 	        'components' => $request->get('laravel-editor-components'),

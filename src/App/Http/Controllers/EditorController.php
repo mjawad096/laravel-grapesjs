@@ -22,12 +22,11 @@ class EditorController extends Controller
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return Response
-     */
+    public function editor(Request $request, $model, $id)
+    {
+        return $this->show_gjs_editor($request, $model::findOrFail($id));
+    }
+    
     public function store(Request $request, $model, $id)
     {
         return $this->store_gjs_data($request, $model::findOrFail($id));
