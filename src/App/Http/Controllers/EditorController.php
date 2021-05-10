@@ -8,9 +8,12 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller;
 use Topdot\Grapesjs\App\Editor\EditorFactory;
+use Topdot\Grapesjs\App\Traits\EditorTrait;
 
 class EditorController extends Controller
 {
+    use EditorTrait;
+
     public function __construct(Request $request){
         $model = $request->route()->parameters['model'] ?? null;
         
@@ -27,16 +30,7 @@ class EditorController extends Controller
      */
     public function store(Request $request, $model, $id)
     {
-
-        dd(str_replace('-', '\\', $model));
-        $page->update([
-            'components' => $request->get('laravel-editorcomponents'),
-            'styles' => $request->get('laravel-editorstyles'),
-            'css' => $request->get('laravel-editorcss'),
-            'html' => $request->get('laravel-editorhtml'),
-        ]);
-
-        return response()->noContent(200);
+        return $this->store_gjs_data($request, $model::findOrFail($id));
     }
 
     public function templates(Request $request)
