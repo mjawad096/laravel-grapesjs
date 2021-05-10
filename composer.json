@@ -16,7 +16,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Topdot\\Grapesjs\\": "packages/jawad-topdot/laravel-grapesjs/src"
+            "Topdot\\Grapesjs\\": "src"
         }
     },
     "extra": {
