@@ -2,7 +2,7 @@
 
 namespace Topdot\Grapesjs\App\Http\Controllers;
 
-use App\Models\TempMedia;
+use Topdot\Grapesjs\App\Models\TempMedia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Topdot\Grapesjs\App\Editor\AssetRepository;
@@ -35,7 +35,7 @@ class AssetController extends Controller
         $media = TempMedia::create()->addMediaFromRequest('file')->toMediaCollection('default');
         return response()->json([
             'data' => [
-                route('grapesjs.medias.show', $media)
+                route('grapesjs.media.show', $media)
             ]
         ]);
     }
