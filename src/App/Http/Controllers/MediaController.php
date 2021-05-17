@@ -35,7 +35,7 @@ class MediaController extends Controller
             'temp_id' => $mediaStored->model->id,
             'media_id' => $mediaStored->id,
             'media_url' => route('grapesjs.media.show', $mediaStored->id)
-        ]
+        ];
     }
 
     /**
@@ -44,8 +44,9 @@ class MediaController extends Controller
      * @param Media $media
      * @return \Illuminate\Http\Response
      */
-    public function show(Media $media)
+    public function show($media)
     {
+        $media = Media::findOrFail($media);
         return response()->download($media->getPath(), $media->file_name, [], 'inline');
     }
 
