@@ -62,16 +62,26 @@ class MediaController extends Controller
         //
     }
 
+    protected function response($success=true, $message='', $data=[],  $code=200)
+    {
+        return response()->json([
+            'success' => $success,
+            'message' => $message,
+            'data' => $data
+        ], $code);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
      * @param Media $media
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Media $media)
+    public function destroy($media)
     {
+        $media = Media::findOrFail($media);
         $media->delete();
-        return apiResponse(true, "File Deleted");
+        return $this->response(true, "File Deleted");
     }
 
     /**
@@ -85,16 +95,16 @@ class MediaController extends Controller
         $payload = json_decode($request->getContent());
 
         if ( !$payload instanceof \stdClass || !$payload->temp_id ){
-            return apiResponse(false, "file Not found", [], 404);
+            return $this->response(false, "file Not found", [], 404);
         }
 
         $tempMedia = TempMedia::find($payload->temp_id);
 
         if ( !$tempMedia ){
-            return apiResponse(false, "file Not found", [], 404);
+            return $this->response(false, "file Not found", [], 404);
         }
 
         $tempMedia->delete();
-        return apiResponse(true, "File Deleted");
+        return $this->response(true, "File Deleted");
     }
 }
