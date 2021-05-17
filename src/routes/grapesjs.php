@@ -12,5 +12,5 @@ Route::prefix('grapesjs')->name('grapesjs.')->namespace('Topdot\Grapesjs\App\Htt
 	Route::get('editor/{model}/{editable}/templates', 'EditorController@templates')->name('editor.model.templates');
 	Route::get('editor/templates', 'EditorController@templates')->name('editor.templates');
 
-	// Route::get('media/{media}', 'MediaController@show')->name('media.show');
+	Route::get('media/{media}', 'MediaController@show')->name('media.show');
 });
