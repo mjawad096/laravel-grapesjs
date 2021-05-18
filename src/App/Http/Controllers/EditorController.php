@@ -48,20 +48,22 @@ class EditorController extends Controller
         $templates = []; 
 
         foreach (File::allFiles($templatesPath) as $fileInfo) {
+            $file_name = str_replace(".blade.php", "", $fileInfo->getBasename());
             $templates [] = [
                 'category' => 'Templates',
                 'id' => $fileInfo->getFilename(),
-                'label' => Str::title(str_replace([".blade.php","-"]," ",$fileInfo->getBasename())),
-                'content' => $fileInfo->getContents()
+                'label' => Str::title(str_replace(["-"], " ", $file_name)),
+                'content' => view("grapesjs::templates.{$file_name}")->render()
             ];
         }
         
         foreach (File::allFiles($otherBlocks) as $fileInfo) {
+            $file_name = str_replace(".blade.php", "", $fileInfo->getBasename());
             $templates [] = [
                 'category' => 'Blocks',
                 'id' => $fileInfo->getFilename(),
-                'label' => Str::title(str_replace([".blade.php","-"], " ", $fileInfo->getBasename())),
-                'content' => view()->file($fileInfo->getPathname())->render()
+                'label' => Str::title(str_replace(["-"], " ", $file_name)),
+                'content' => view("grapesjs::templates.{$file_name}")->render()
             ];
         }
 
