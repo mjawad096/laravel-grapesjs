@@ -40,6 +40,11 @@ trait EditableTrait{
         return $processedContent;
     }
 
+    public function getCssAttribute(): array
+    {
+        return $this->gjs_data['css'] ?? '';
+    }
+
     public function getComponentsAttribute(): array
     {
         return json_decode($this->gjs_data['components'] ?? '[]');
