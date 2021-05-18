@@ -40,12 +40,12 @@ trait EditableTrait{
         return $processedContent;
     }
 
-    public function getCssAttribute(): array
+    public function getCssAttribute() : string
     {
         return $this->gjs_data['css'] ?? '';
     }
 
-    public function getComponentsAttribute(): array
+    public function getComponentsAttribute() : array
     {
         return json_decode($this->gjs_data['components'] ?? '[]');
     }
@@ -63,11 +63,6 @@ trait EditableTrait{
     public function getScriptLinksAttribute(): array
     {
         return [];
-    }
-
-    public function getCssAttribute() :string
-    {
-        return '';
     }
 
     public function getAssetsAttribute() :array
