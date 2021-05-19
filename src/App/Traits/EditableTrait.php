@@ -25,9 +25,9 @@ trait EditableTrait{
         return json_decode($value, true) ?? [];
     }
 
-    protected function findAndSetPlaceholders($string){
+    protected function findAndSetPlaceholders($html){
         $re = '/\[\[([A-Z]([a-z]+)?-?)+\]\]/';
-        preg_match_all($re, $string, $placeholders);
+        preg_match_all($re, $html, $placeholders);
 
         $placeholders = $placeholders[0] ?? [];
 
@@ -44,9 +44,9 @@ trait EditableTrait{
         }
 
         $placeholders = $this->getPlaceholders();
-        $processedContent = str_replace(array_keys($placeholders), array_values($placeholders), $processedContent);
+        $html = str_replace(array_keys($placeholders), array_values($placeholders), $html);
 
-        return $processedContent;
+        return $html;
     }
 
     public function getHtmlAttribute(): string
