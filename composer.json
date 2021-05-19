@@ -1,6 +1,6 @@
 {
     "name": "jawad-topdot/laravel-grapesjs",
-    "description": "A package for use Grapes.js in Larave",
+    "description": "A package for use Grapes.js in Laravel",
     "type": "library",
     "require": {
         "php": "^7.3|^8.0",

@@ -38,7 +38,7 @@ trait EditableTrait{
                 $view = strtolower($placeholder);
 
                 if(view()->exists("grapesjs::placeholders.{$view}")){
-                    $this->setPlaceholder($_placeholder, view("grapesjs::placeholders.{$view}")->render());
+                    $this->setPlaceholder($_placeholder, view("grapesjs::placeholders.{$view}", ['item' => $this])->render());
                 }
             }
         }
