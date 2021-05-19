@@ -25,19 +25,39 @@ trait EditableTrait{
         return json_decode($value, true) ?? [];
     }
 
+    protected function findAndSetPlaceholders($string){
+        $re = '/\[\[([A-Z]([a-z]+)?-?)+\]\]/';
+        preg_match_all($re, $string, $placeholders);
+
+        $placeholders = $placeholders[0] ?? [];
+
+
+        foreach ($placeholders as $_placeholder) {
+            if(empty($this->placeholders[$_placeholder])){
+                $placeholder = str_replace(['[[', ']]'], '', $_placeholder);
+                $view = strtolower($placeholder);
+
+                if(view()->exists("grapesjs::placeholders.{$view}")){
+                    $this->setPlaceholder($_placeholder, view("grapesjs::placeholders.{$view}")->render());
+                }
+            }
+        }
+
+        $placeholders = $this->getPlaceholders();
+        $processedContent = str_replace(array_keys($placeholders), array_values($placeholders), $processedContent);
+
+        return $processedContent;
+    }
+
     public function getHtmlAttribute(): string
     {
-        $processedContent = $this->gjs_data['html'] ?? '';
+        $html = $this->gjs_data['html'] ?? '';
 
-        if ( empty($processedContent) ){
+        if ( empty($html) ){
             return '';
         }
 
-        foreach($this->getPlaceholders() as $placeolder => $replaceContent){
-            $processedContent = str_replace($placeolder, $replaceContent, $processedContent);
-        }
-
-        return $processedContent;
+        return $this->findAndSetPlaceholders($html);
     }
 
     public function getCssAttribute() : string
