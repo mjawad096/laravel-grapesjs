@@ -11,7 +11,7 @@ trait EditableTrait{
 	}
 
     protected function getModelBaseClass(){
-        return end(explode('\\', $this->getModelClass()) ?? []);
+        return end(explode('\\', $this->getModelClass()) ?? ['Item']);
     }
 
 	protected function getKeyValue()
