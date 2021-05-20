@@ -10,10 +10,23 @@ trait EditableTrait{
 		return $slugify ? str_replace('\\', '-', static::class) : static::class;
 	}
 
+    protected function getModelBaseClass(){
+        return explode('\\', $this->getModelClass())[0] ?? '';
+    }
+
 	protected function getKeyValue()
     {
 		return $this->{$this->getKeyName()};
 	}
+
+    public function getEditorPageTitleAttribute(): string
+    {
+        $title = $this->name ?: $this->title ?: $this->slug ?: '';
+
+        $title = "{$title} " . $this->getModelBaseClass();
+
+        return $title;
+    }
 
     public function setGjsDataAttribute($value)
     {

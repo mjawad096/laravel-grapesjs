@@ -1,1 +1,3 @@
-Example Template
+<div>
+	Example Template
+</div>

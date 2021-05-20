@@ -3,6 +3,7 @@
 namespace Topdot\Grapesjs\App\Contracts;
 
 interface Editable{
+    public function getEditorPageTitleAttribute(): string;
 
     public function setGjsDataAttribute($value);
     public function getGjsDataAttribute($value): array;
