@@ -10,7 +10,7 @@ trait EditorTrait{
 	protected function show_gjs_editor(Request $request, $model){
 		$factory = app(EditorFactory::class);
 		$editorConfig = $factory->initialize($model);
-		return view('grapesjs::edittor', compact('editorConfig'));
+		return view('grapesjs::edittor', compact('editorConfig', 'model'));
 	}
 
 	protected function store_gjs_data(Request $request, $model)
