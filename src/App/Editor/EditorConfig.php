@@ -10,7 +10,7 @@ class EditorConfig extends EditorBaseClass
     public string $width = '100%';
     public ?EditorStorageManager $storageManager;
     public ?EditorAssetManager $assetManager;
-    public array | string $components;
+    public array $components;
     public array $style;
     public EditorCanvas $canvas;
     public ?string $templatesUrl;
