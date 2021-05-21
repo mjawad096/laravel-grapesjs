@@ -109,7 +109,7 @@ trait EditableTrait{
         return route('grapesjs.editor.model.store', [$this->getModelClass(true), $this->getKeyValue()]);
     }
 
-    public function getTemplatesUrlAttribute(): string | null
+    public function getTemplatesUrlAttribute(): ?string
     {
         return route('grapesjs.editor.model.templates', [$this->getModelClass(true), $this->getKeyValue()]);
     }
