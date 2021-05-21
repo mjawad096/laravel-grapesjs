@@ -11,7 +11,7 @@ interface Editable{
     public function getStyleSheetLinksAttribute(): array;
     public function getScriptLinksAttribute(): array;
 
-    public function getComponentsAttribute() : array | string;
+    public function getComponentsAttribute() : array;
     public function getStylesAttribute() :array;
 
     public function getHtmlAttribute() :string;
@@ -19,5 +19,5 @@ interface Editable{
     public function getAssetsAttribute() :array;
 
     public function getStoreUrlAttribute(): string;
-    public function getTemplatesUrlAttribute(): string | null;
+    public function getTemplatesUrlAttribute(): ?string;
 }
