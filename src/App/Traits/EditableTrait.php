@@ -40,7 +40,12 @@ trait EditableTrait{
     }
 
     protected function findAndSetPlaceholders($html){
-        $re = '/\[\[([A-Z]([a-z]+)?-?)+\]\]/';
+        // $re = '/\[\[([A-Z]([a-z]+)?-?)+\]\]/';
+
+        //included attributes
+        # $re = '/\[\[[A-Z][a-z]*(-[A-Z][a-z]*)*([\s][a-z]+=.+)*\]\]/';
+        $re = '/\[\[[A-Z][a-z]*(-[A-Z][a-z]*)*([\s]+[a-z]+(=.+)?)*\]\]/';
+
         preg_match_all($re, $html, $placeholders);
 
         $placeholders = $placeholders[0] ?? [];
@@ -49,10 +54,28 @@ trait EditableTrait{
         foreach ($placeholders as $_placeholder) {
             if(empty($this->placeholders[$_placeholder])){
                 $placeholder = str_replace(['[[', ']]'], '', $_placeholder);
-                $view = strtolower($placeholder);
+                $placeholder_options = preg_split('/[\s]+/', $placeholder);
+
+                $view = array_shift($placeholder_options);
+                $view = strtolower($view);
+
+                $attributes = ['item' => $this];
+                foreach($placeholder_options as $attribute){
+                    $attribute = explode('=', $attribute);
+                    
+                    $name = $attribute[0];
+                    
+                    if(!empty($attribute[1])){
+                        $value = str_replace(['"', "'"], '', $attribute[1]);
+                    }else{
+                        $value = true;
+                    }
+                    
+                    $attributes[$name] = $value;
+                }
 
                 if(view()->exists("grapesjs::placeholders.{$view}")){
-                    $this->setPlaceholder($_placeholder, view("grapesjs::placeholders.{$view}", ['item' => $this])->render());
+                    $this->setPlaceholder($_placeholder, view("grapesjs::placeholders.{$view}", $attributes)->render());
                 }
             }
         }
