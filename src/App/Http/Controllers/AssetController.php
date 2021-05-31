@@ -2,7 +2,7 @@
 
 namespace Topdot\Grapesjs\App\Http\Controllers;
 
-use Topdot\Grapesjs\App\Models\TempMedia;
+use Topdot\Media\App\Models\TempMedia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Topdot\Grapesjs\App\Editor\AssetRepository;
