@@ -67,24 +67,5 @@ class GrapesjsServiceProvider extends ServiceProvider
             __DIR__.'/public' => public_path(),
             __DIR__.'/../fonts' => public_path('fonts'),
         ], 'public');
-
-        if (! class_exists('CreateTempMediaTable')) {
-            $this->publishes([
-                __DIR__.'/database/migrations/create_temp_media_table.php.stub' => database_path('migrations/2021_05_06_064425_create_temp_media_table.php'),
-            ], 'migrations');
-        }
-
-        if (! class_exists('CreateMediaTable')) {
-            $stub_file = "/database/migrations/create_media_table.php.stub";
-
-            $stub_path = __DIR__.'/../../../spatie/laravel-medialibrary';
-            if(!file_exists($stub_path.$stub_file)){
-                $stub_path = __DIR__;
-            }
-
-            $this->publishes([
-                $stub_path.$stub_file => database_path('migrations/2021_05_06_064425_create_media_table.php'),
-            ], 'migrations');
-        }
     }
 }
