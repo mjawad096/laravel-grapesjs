@@ -51,7 +51,7 @@ class EditorController extends Controller
             $file_name = str_replace(".blade.php", "", $fileInfo->getBasename());
             $templates [] = [
                 'category' => 'Templates',
-                'id' => $fileInfo->getFilename(),
+                'id' => 'template-' . $fileInfo->getFilename(),
                 'label' => Str::title(str_replace(["-"], " ", $file_name)),
                 'content' => view("grapesjs::templates.{$file_name}")->render()
             ];
@@ -61,9 +61,9 @@ class EditorController extends Controller
             $file_name = str_replace(".blade.php", "", $fileInfo->getBasename());
             $templates [] = [
                 'category' => 'Blocks',
-                'id' => $fileInfo->getFilename(),
+                'id' => 'block-' . $fileInfo->getFilename(),
                 'label' => Str::title(str_replace(["-"], " ", $file_name)),
-                'content' => view("grapesjs::templates.{$file_name}")->render()
+                'content' => view("grapesjs::gjs-blocks.{$file_name}")->render()
             ];
         }
 

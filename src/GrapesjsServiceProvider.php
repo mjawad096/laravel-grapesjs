@@ -65,7 +65,11 @@ class GrapesjsServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/public' => public_path(),
-            __DIR__.'/../fonts' => public_path('fonts'),
+            // __DIR__.'/../fonts' => public_path('fonts'),
         ], 'public');
+
+        $this->publishes([
+            __DIR__.'/resources/views' => resource_path('views'),
+        ], 'views');
     }
 }
