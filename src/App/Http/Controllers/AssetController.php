@@ -29,7 +29,7 @@ class AssetController extends Controller
     {
         $this->validate($request,[
             'file' => 'bail|required|array|min:1',
-            'file.*' => 'bail|required|max:10240'
+            'file.*' => 'bail|required|max:102400'
         ]);
 
         $media = TempMedia::create()->addMediaFromRequest('file')->toMediaCollection('default');
