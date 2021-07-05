@@ -142,7 +142,7 @@ pnm.addButton('options',
 					let formData = new FormData();
 					formData.append("file[]", event.target.files[0]);
 					uploadFileContainer.disabled = 'true';
-					fetch('/asset/store', {
+					fetch('/media', {
 						method: "POST",
 						headers: {
 							'X-Requested-With': 'XMLHttpRequest'
