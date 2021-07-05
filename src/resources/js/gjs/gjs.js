@@ -140,7 +140,7 @@ pnm.addButton('options',
 					if (event.target.files[0] == undefined) { return; }
 					loader.style.display = 'flex';
 					let formData = new FormData();
-					formData.append("file[]", event.target.files[0]);
+					formData.append("file", event.target.files[0]);
 					uploadFileContainer.disabled = 'true';
 					fetch('/media', {
 						method: "POST",
