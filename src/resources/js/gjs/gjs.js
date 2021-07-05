@@ -156,7 +156,7 @@ pnm.addButton('options',
 							if (data.errors) {
 								throw data.message;
 							}
-							uploadedLink.value = data.data[0];
+							uploadedLink.value = data.media_url;
 							toastr.success('FIle uploaded and Link Ready', 'Success')
 						})
 						.catch(error => {
