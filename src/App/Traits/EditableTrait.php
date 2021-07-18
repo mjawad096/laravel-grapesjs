@@ -8,12 +8,13 @@ trait EditableTrait
 
     protected function getModelClass(): string
     {
-        return strtolower(static::class);
+        $name = strtolower(static::class);
+        return config('grapesjs.model.' . $name, $name);
     }
 
     protected function getModelBaseClass(): string
     {
-        return class_basename($this->getModelClass());
+        return class_basename(static::class);
     }
 
     protected function getKeyValue()

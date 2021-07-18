@@ -16,7 +16,7 @@ class EditorController extends Controller
 
     public function editor(Request $request, $model, $id)
     {
-        $modelClass = config('grapesjs.model' . $model);
+        $modelClass = config('grapesjs.model.' . $model);
         if (is_null($modelClass))
             abort(404);
 
@@ -27,7 +27,7 @@ class EditorController extends Controller
     
     public function store(Request $request, $model, $id)
     {
-        $modelClass = config('grapesjs.model' . $model);
+        $modelClass = config('grapesjs.model.' . $model);
         if (is_null($modelClass))
             abort(404);
 
