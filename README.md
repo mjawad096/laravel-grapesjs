@@ -30,7 +30,7 @@ using middleware in routes
 
 models name -> strtolower
 ````
-key -> strtolower(App\Page::class);
+key -> strtolower(class_basename(App\Page::class));
 value -> App\Page::class
 
 'model' => [
