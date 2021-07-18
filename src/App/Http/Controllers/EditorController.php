@@ -14,22 +14,26 @@ class EditorController extends Controller
 {
     use EditorTrait;
 
-    public function __construct(Request $request){
-        $model = $request->route()->parameters['model'] ?? null;
-        
-        if(!empty($model)){
-            $request->route()->setParameter('model',  str_replace('-', '\\', $model));
-        }
-    }
-
     public function editor(Request $request, $model, $id)
     {
-        return $this->show_gjs_editor($request, $model::findOrFail($id));
+        $modelClass = config('grapesjs.model' . $model);
+        if (is_null($modelClass))
+            abort(404);
+
+        $editable = $modelClass::findOrFail($id);
+
+        return $this->show_gjs_editor($request, $editable);
     }
     
     public function store(Request $request, $model, $id)
     {
-        return $this->store_gjs_data($request, $model::findOrFail($id));
+        $modelClass = config('grapesjs.model' . $model);
+        if (is_null($modelClass))
+            abort(404);
+
+        $editable = $modelClass::findOrFail($id);
+
+        return $this->store_gjs_data($request, $editable);
     }
 
     public function templates(Request $request)

@@ -2,23 +2,24 @@
 
 namespace Topdot\Grapesjs\App\Traits;
 
-trait EditableTrait{
-	public $placeholders = [];
+trait EditableTrait
+{
+    public $placeholders = [];
 
-	protected function getModelClass($slugify = false): string
-	{
-		return $slugify ? str_replace('\\', '-', static::class) : static::class;
-	}
-
-    protected function getModelBaseClass(){
-        $explode = explode('\\', $this->getModelClass()) ?? ['Item'];
-        return end($explode);
+    protected function getModelClass(): string
+    {
+        return strtolower(static::class);
     }
 
-	protected function getKeyValue()
+    protected function getModelBaseClass(): string
     {
-		return $this->{$this->getKeyName()};
-	}
+        return class_basename($this->getModelClass());
+    }
+
+    protected function getKeyValue()
+    {
+        return $this->{$this->getKeyName()};
+    }
 
     public function getEditorPageTitleAttribute(): string
     {
@@ -39,7 +40,8 @@ trait EditableTrait{
         return json_decode($value, true) ?? [];
     }
 
-    protected function findAndSetPlaceholders($html){
+    protected function findAndSetPlaceholders($html)
+    {
         // $re = '/\[\[([A-Z]([a-z]+)?-?)+\]\]/';
 
         //included attributes
@@ -52,7 +54,7 @@ trait EditableTrait{
 
 
         foreach ($placeholders as $_placeholder) {
-            if(empty($this->placeholders[$_placeholder])){
+            if (empty($this->placeholders[$_placeholder])) {
                 $placeholder = str_replace(['[[', ']]'], '', $_placeholder);
                 $placeholder_options = preg_split('/[\s]+/', $placeholder);
 
@@ -60,21 +62,21 @@ trait EditableTrait{
                 $view = strtolower($view);
 
                 $attributes = ['item' => $this];
-                foreach($placeholder_options as $attribute){
+                foreach ($placeholder_options as $attribute) {
                     $attribute = explode('=', $attribute);
-                    
+
                     $name = $attribute[0];
-                    
-                    if(!empty($attribute[1])){
+
+                    if (!empty($attribute[1])) {
                         $value = str_replace(['"', "'"], '', $attribute[1]);
-                    }else{
+                    } else {
                         $value = true;
                     }
-                    
+
                     $attributes[$name] = $value;
                 }
 
-                if(view()->exists("grapesjs::placeholders.{$view}")){
+                if (view()->exists("grapesjs::placeholders.{$view}")) {
                     $this->setPlaceholder($_placeholder, view("grapesjs::placeholders.{$view}", $attributes)->render());
                 }
             }
@@ -90,19 +92,19 @@ trait EditableTrait{
     {
         $html = $this->gjs_data['html'] ?? '';
 
-        if ( empty($html) ){
+        if (empty($html)) {
             return '';
         }
 
         return $this->findAndSetPlaceholders($html);
     }
 
-    public function getCssAttribute() : string
+    public function getCssAttribute(): string
     {
         return $this->gjs_data['css'] ?? '';
     }
 
-    public function getComponentsAttribute() : array
+    public function getComponentsAttribute(): array
     {
         return json_decode($this->gjs_data['components'] ?? '[]');
     }
@@ -122,19 +124,19 @@ trait EditableTrait{
         return [];
     }
 
-    public function getAssetsAttribute() :array
+    public function getAssetsAttribute(): array
     {
         return [];
     }
 
     public function getStoreUrlAttribute(): string
     {
-        return route('grapesjs.editor.model.store', [$this->getModelClass(true), $this->getKeyValue()]);
+        return route('grapesjs.editor.model.store', [$this->getModelClass(), $this->getKeyValue()]);
     }
 
     public function getTemplatesUrlAttribute(): ?string
     {
-        return route('grapesjs.editor.model.templates', [$this->getModelClass(true), $this->getKeyValue()]);
+        return route('grapesjs.editor.model.templates', [$this->getModelClass(), $this->getKeyValue()]);
     }
 
     public function getPlaceholders()
