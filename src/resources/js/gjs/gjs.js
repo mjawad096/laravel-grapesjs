@@ -200,6 +200,31 @@ pnm.addButton('options',
 
 let blockManager = editor.BlockManager;
 
+blockManager.add("iframe", {
+	category: 'Basic',
+    label: "iframe",
+    type: "iframe",
+    content: "<iframe> </iframe>",
+    selectable: true,
+    attributes: {class:'fa fa-file'},
+});
+
+editor.DomComponents.addType("iframe", {
+    isComponent: el => el.tagName === "IFRAME",
+    model: {
+        defaults: {
+            type: "iframe",
+            traits: [
+                {
+					type: "text",
+					label: "src",
+					name: "src"
+                }
+            ]
+        }
+    }
+});
+
 if (config.templatesUrl) {
 	fetch(config.templatesUrl)
 		.then(resp => resp.json())
@@ -212,3 +237,4 @@ if (config.templatesUrl) {
 			console.log(error);
 		})
 }
+
