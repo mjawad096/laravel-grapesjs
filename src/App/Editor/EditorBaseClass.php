@@ -1,6 +1,6 @@
 <?php
 
-namespace Topdot\Grapesjs\App\Editor;
+namespace Dotlogics\Grapesjs\App\Editor;
 
 class EditorBaseClass
 {

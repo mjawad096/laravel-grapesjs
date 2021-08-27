@@ -1,6 +1,6 @@
 <?php
 
-namespace Topdot\Grapesjs\App\Traits;
+namespace Dotlogics\Grapesjs\App\Traits;
 
 trait EditableTrait{
 	public $placeholders = [];

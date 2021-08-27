@@ -1,11 +1,11 @@
 <?php
 
-namespace Topdot\Grapesjs\App\Http\Controllers;
+namespace Dotlogics\Grapesjs\App\Http\Controllers;
 
-use Topdot\Media\App\Models\TempMedia;
+use Dotlogics\Media\App\Models\TempMedia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Topdot\Grapesjs\App\Editor\AssetRepository;
+use Dotlogics\Grapesjs\App\Editor\AssetRepository;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
 class AssetController extends Controller

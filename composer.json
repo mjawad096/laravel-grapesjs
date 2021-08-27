@@ -1,28 +1,28 @@
 {
-    "name": "jawad-topdot/laravel-grapesjs",
+    "name": "jd-dotlogics/laravel-grapesjs",
     "description": "A package for use Grapes.js in Laravel",
     "type": "library",
     "require": {
         "php": "^7.3|^8.0",
         "illuminate/support": "~5.6.0|~5.7.0|~5.8.0|^6.0|^7.0|^8.0",
-        "jawad-topdot/laravel-media": "^1"
+        "jd-dotlogics/laravel-media": "^1"
     },
     "license": "MIT",
     "authors": [
         {
-            "name": "Muhammad Jawad",
-            "email": "jawad.topdot@gmail.com"
+            "name": "Dotlogics",
+            "email": "hello@dotlogics.com"
         }
     ],
     "autoload": {
         "psr-4": {
-            "Topdot\\Grapesjs\\": "src"
+            "Dotlogics\\Grapesjs\\": "src"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Topdot\\Grapesjs\\GrapesjsServiceProvider"
+                "Dotlogics\\Grapesjs\\GrapesjsServiceProvider"
             ]
         }
     },

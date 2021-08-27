@@ -1,6 +1,6 @@
 <?php
 
-namespace Topdot\Grapesjs\App\Editor;
+namespace Dotlogics\Grapesjs\App\Editor;
 
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
