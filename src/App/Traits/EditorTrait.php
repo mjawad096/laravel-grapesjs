@@ -1,9 +1,9 @@
 <?php
 
-namespace Topdot\Grapesjs\App\Traits;
+namespace Dotlogics\Grapesjs\App\Traits;
 
 use Illuminate\Http\Request;
-use Topdot\Grapesjs\App\Editor\EditorFactory;
+use Dotlogics\Grapesjs\App\Editor\EditorFactory;
 
 trait EditorTrait{
 

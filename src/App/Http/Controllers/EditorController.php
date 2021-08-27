@@ -1,14 +1,14 @@
 <?php
 
-namespace Topdot\Grapesjs\App\Http\Controllers;
+namespace Dotlogics\Grapesjs\App\Http\Controllers;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller;
-use Topdot\Grapesjs\App\Editor\EditorFactory;
-use Topdot\Grapesjs\App\Traits\EditorTrait;
+use Dotlogics\Grapesjs\App\Editor\EditorFactory;
+use Dotlogics\Grapesjs\App\Traits\EditorTrait;
 
 class EditorController extends Controller
 {

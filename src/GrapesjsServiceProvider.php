@@ -1,6 +1,6 @@
 <?php
 
-namespace Topdot\Grapesjs;
+namespace Dotlogics\Grapesjs;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Routing\Router;

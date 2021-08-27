@@ -1,8 +1,8 @@
 <?php
 
-namespace Topdot\Grapesjs\App\Editor;
+namespace Dotlogics\Grapesjs\App\Editor;
 
-use Topdot\Grapesjs\App\Contracts\Editable;
+use Dotlogics\Grapesjs\App\Contracts\Editable;
 
 class EditorFactory extends EditorBaseClass
 {
