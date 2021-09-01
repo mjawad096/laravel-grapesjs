@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 
-Route::prefix('grapesjs')->name('grapesjs.')->namespace('Topdot\Grapesjs\App\Http\Controllers')->group(function(){
+Route::prefix('grapesjs')->name('grapesjs.')->namespace('Dotlogics\Grapesjs\App\Http\Controllers')->group(function(){
 	Route::post('editor/asset/store', 'AssetController@store')->name('editor.asset.store');
 	
 	Route::get('editor/{model}/{editable}', 'EditorController@editor')->name('editor.model.editor');
