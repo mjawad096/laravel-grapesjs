@@ -3,6 +3,7 @@ const grapesjs = require('grapesjs');
 import pluginBlocks from 'grapesjs-blocks-basic';
 // import bootstrap4 from 'grapesjs-blocks-bootstrap4';
 
+import "toastr/build/toastr.min.css"
 const toastr = require('toastr');
 
 let config = window.editorConfig;
@@ -18,6 +19,12 @@ config.pluginsOpts = {
 };
 
 let editor = grapesjs.init(config);
+
+if(config.exposeApi){
+	Object.defineProperty(window, 'gjsEditor', {
+		value: editor
+	})
+}
 
 let loader = document.getElementById('loader');
 let showLoader = function(){

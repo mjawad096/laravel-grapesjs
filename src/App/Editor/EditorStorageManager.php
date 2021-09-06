@@ -15,4 +15,14 @@ class EditorStorageManager
     ];
     // autoload: true,         // Autoload stored data on init
     public int $stepsBeforeSave = 10;  
+
+    function __construct($save_url = null)
+    {
+        $this->params['_token'] = csrf_token();
+
+        if(!empty($save_url)){
+            $this->type = 'remote';
+            $this->urlStore = $save_url;
+        }
+    }
 }

@@ -8,39 +8,25 @@ class EditorFactory extends EditorBaseClass
 {
     public function initialize(Editable $editable)
     {
-        // dd($editable->style_sheet_links);
         $assetRepository = app(AssetRepository::class);
-        $editorCanvas = new EditorCanvas;
-        $editorCanvas->styles = array_merge(
-            config('grapesjs.styles'), $editable->style_sheet_links
-        );
-
-        $editorCanvas->scripts = array_merge(
-            config('grapesjs.scripts'), $editable->script_links
-        );
-
-        $editorStorage = new EditorStorageManager;
-        $editorStorage->type = 'remote';
-        $editorStorage->urlStore = $editable->store_url;
-        $editorStorage->params = [
-            '_token' => csrf_token()
-        ];
-
+        $editorCanvas = new EditorCanvas;     
+        
         $editorAssetManager = new EditorAssetManager;
         $editorAssetManager->assets = $assetRepository->getAllMediaLinks();
-        $editorAssetManager->upload = $assetRepository->getUploadUrl();
-        $editorAssetManager->headers = [
-            '_token' => csrf_token()
-        ];
+        $editorAssetManager->upload = $assetRepository->getUploadUrl();        
         $editorAssetManager->uploadName = 'file';
+
         $editorConfig = new EditorConfig;
+        $editorConfig->assetManager = $editorAssetManager;
+        $editorConfig->canvas = with(new EditorCanvas)->mergeStyles($editable->style_sheet_links)->mergeScripts($editable->script_links);
+        $editorConfig->storageManager = new EditorStorageManager($editable->store_url);
+
+
         $editorConfig->components = $editable->components; 
         $editorConfig->style = $editable->styles;
-        $editorConfig->canvas = $editorCanvas;
-        $editorConfig->assetManager = $editorAssetManager;
-        $editorConfig->storageManager = $editorStorage;
-        $editorConfig->forceClass = false;
         $editorConfig->templatesUrl = $editable->templates_url;
+        
+        $editorConfig->forceClass = false;
 
         return $editorConfig;
     }
