@@ -1,7 +1,7 @@
 <?php 
 
 return [
-    'expose_api' = false,
+    'expose_api' => false,
     'styles' => [],
     'scripts' => []
 ];
