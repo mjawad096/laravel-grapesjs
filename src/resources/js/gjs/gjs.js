@@ -45,9 +45,9 @@ editor.on('load',()=>{
 
 var pfx = editor.getConfig().stylePrefix;
 var modal = editor.Modal;
-var cmdm = editor.Commands;
+var commands = editor.Commands;
 var codeViewer = editor.CodeManager.getViewer('CodeMirror').clone();
-var pnm = editor.Panels;
+var panels = editor.Panels;
 var container = document.createElement('div');
 var btnEdit = document.createElement('button');
 
@@ -76,7 +76,7 @@ btnEdit.onclick = function () {
 	toastr.success('Html Saved', 'Success');
 };
 
-cmdm.add('html-edit', {
+commands.add('html-edit', {
 	run: function (editor, sender) {
 		sender && sender.set('active', 0);
 		var viewer = codeViewer.editor;
@@ -98,20 +98,20 @@ cmdm.add('html-edit', {
 	}
 });
 
-pnm.addButton('options',
+panels.addButton('options',
 	[
 		{
 			id: 'edit',
 			className: 'fa fa-edit',
 			command: 'html-edit',
 			attributes: {
-				title: 'Edit'
+				title: 'Edit code.'
 			}
 		}
 	]
 );
 
-pnm.addButton('options',
+panels.addButton('options',
 	[
 		{
 			id: 'upload-file',
@@ -179,14 +179,13 @@ pnm.addButton('options',
 				modal.open();
 			},
 			attributes: {
-				title: 'Edit'
+				title: 'Upload a file and get its url.'
 			}
 		}
 	]
 );
 
-
-pnm.addButton('options',
+panels.addButton('options',
 	[
 		{
 			id: 'save',
@@ -200,6 +199,22 @@ pnm.addButton('options',
 			},
 			attributes: {
 				title: 'Save'
+			}
+		}
+	]
+);
+
+
+panels.addButton('options',
+	[
+		{
+			id: 'cancel',
+			className: 'fa fa-arrow-left',
+			command(editor) {
+				window.history.back()
+			},
+			attributes: {
+				title: 'Go back'
 			}
 		}
 	]
