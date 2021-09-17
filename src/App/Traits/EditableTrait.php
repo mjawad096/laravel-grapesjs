@@ -2,23 +2,25 @@
 
 namespace Dotlogics\Grapesjs\App\Traits;
 
-trait EditableTrait{
-	public $placeholders = [];
+use DOMDocument;
 
-	protected function getModelClass($slugify = false): string
-	{
-		return $slugify ? str_replace('\\', '-', static::class) : static::class;
-	}
+trait EditableTrait{
+    public $placeholders = [];
+
+    protected function getModelClass($slugify = false): string
+    {
+        return $slugify ? str_replace('\\', '-', static::class) : static::class;
+    }
 
     protected function getModelBaseClass(){
         $explode = explode('\\', $this->getModelClass()) ?? ['Item'];
         return end($explode);
     }
 
-	protected function getKeyValue()
+    protected function getKeyValue()
     {
-		return $this->{$this->getKeyName()};
-	}
+        return $this->{$this->getKeyName()};
+    }
 
     public function getEditorPageTitleAttribute(): string
     {
@@ -39,40 +41,51 @@ trait EditableTrait{
         return json_decode($value, true) ?? [];
     }
 
-    protected function findAndSetPlaceholders($html){
-        // $re = '/\[\[([A-Z]([a-z]+)?-?)+\]\]/';
+    protected function getPlaceholderAttributes($placeholder)
+    {
+        $attributes = ['item' => $this];
+        try {
+            $placeholder = html_entity_decode($placeholder);
+            $dom = new DOMDocument;
+            libxml_use_internal_errors(TRUE);
+            $dom->loadHTML("<$placeholder />");
+            libxml_use_internal_errors(FALSE);
+            
+            $body = $dom->documentElement->firstChild;
+            $placeholder = $body->childNodes[0];
+            $length = $placeholder->attributes->length;
+            
+            for ($i = 0; $i < $length; ++$i) {
+                $name = $placeholder->attributes->item($i)->name;
+                $value = $placeholder->getAttribute($name);
 
-        //included attributes
-        # $re = '/\[\[[A-Z][a-z]*(-[A-Z][a-z]*)*([\s][a-z]+=.+)*\]\]/';
+                if(empty($value) || $value == "''"){
+                    $value = true;
+                }
+
+                $attributes[$name] = $value;
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+        return $attributes;
+    }
+
+    protected function findAndSetPlaceholders($html){
         $re = '/\[\[[A-Z][a-z]*(-[A-Z][a-z]*)*([\s]+[a-z]+(=.+)?)*\]\]/';
 
         preg_match_all($re, $html, $placeholders);
 
         $placeholders = $placeholders[0] ?? [];
 
-
         foreach ($placeholders as $_placeholder) {
             if(empty($this->placeholders[$_placeholder])){
-                $placeholder = str_replace(['[[', ']]'], '', $_placeholder);
-                $placeholder_options = preg_split('/[\s]+/', $placeholder);
+                $placeholder = str_replace(['[[', ']]'], '', $_placeholder);                
+                $attributes = $this->getPlaceholderAttributes($placeholder);
 
-                $view = array_shift($placeholder_options);
+                $view = preg_split('/[\s]+/', $placeholder);
+                $view = array_shift($view);
                 $view = strtolower($view);
-
-                $attributes = ['item' => $this];
-                foreach($placeholder_options as $attribute){
-                    $attribute = explode('=', $attribute);
-                    
-                    $name = $attribute[0];
-                    
-                    if(!empty($attribute[1])){
-                        $value = str_replace(['"', "'"], '', $attribute[1]);
-                    }else{
-                        $value = true;
-                    }
-                    
-                    $attributes[$name] = $value;
-                }
 
                 if(view()->exists("grapesjs::placeholders.{$view}")){
                     $this->setPlaceholder($_placeholder, view("grapesjs::placeholders.{$view}", $attributes)->render());
