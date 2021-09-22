@@ -24,3 +24,5 @@
  */
 
 /*! grapesjs - 0.16.45 */
+
+/*! grapesjs-tui-image-editor - 0.1.3 */

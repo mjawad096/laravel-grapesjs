@@ -2,6 +2,7 @@ import 'grapesjs/dist/css/grapes.min.css';
 const grapesjs = require('grapesjs');
 import pluginBlocks from 'grapesjs-blocks-basic';
 // import bootstrap4 from 'grapesjs-blocks-bootstrap4';
+import tUIImageEditor from 'grapesjs-tui-image-editor';
 
 import "toastr/build/toastr.min.css"
 const toastr = require('toastr');
@@ -11,11 +12,29 @@ delete window.editorConfig;
 
 config.plugins = [
 	pluginBlocks, 
-	// bootstrap4
+	// bootstrap4,
+	tUIImageEditor,
 ];
+
+let remoteIcons = 'https://cdnjs.cloudflare.com/ajax/libs/tui-image-editor/3.15.0/svg/'
 config.pluginsOpts = {
 	'grapesjs-blocks-basic': {},
-	// 'grapesjs-blocks-bootstrap4': {}
+	// 'grapesjs-blocks-bootstrap4': {},
+	[tUIImageEditor]: {
+		config: {
+			includeUI: {
+				initMenu: 'filter',
+			},
+		},
+		icons: {
+			'menu.normalIcon.path': `${remoteIcons}icon-d.svg`,
+			'menu.activeIcon.path': `${remoteIcons}icon-b.svg`,
+			'menu.disabledIcon.path': `${remoteIcons}icon-a.svg`,
+			'menu.hoverIcon.path': `${remoteIcons}icon-c.svg`,
+			'submenu.normalIcon.path': `${remoteIcons}icon-d.svg`,
+			'submenu.activeIcon.path': `${remoteIcons}icon-c.svg`,
+		},
+	},
 };
 
 let editor = grapesjs.init(config);
