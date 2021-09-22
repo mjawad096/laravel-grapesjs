@@ -1,10 +1,8 @@
 .idea/
-vendor/
-node_modules/
+/vendor/
+/node_modules/
 .DS_Store
 .composer.lock
 composer.lock
 .phpunit.result.cache
 
-
-!src/public/vendor
