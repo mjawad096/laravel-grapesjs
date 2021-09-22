@@ -10,17 +10,22 @@ const toastr = require('toastr');
 let config = window.editorConfig;
 delete window.editorConfig;
 
-config.plugins = [
-	pluginBlocks, 
-	// bootstrap4,
-	tUIImageEditor,
-];
 
 let remoteIcons = 'https://cdnjs.cloudflare.com/ajax/libs/tui-image-editor/3.15.0/svg/'
-config.pluginsOpts = {
+
+let plugins = [
+	pluginBlocks, 
+	// bootstrap4,
+]
+
+let pluginsOpts = {
 	'grapesjs-blocks-basic': {},
 	// 'grapesjs-blocks-bootstrap4': {},
-	[tUIImageEditor]: {
+};
+
+if(config.imageEditor){
+	plugins.push(tUIImageEditor)
+	pluginsOpts[tUIImageEditor] = {
 		config: {
 			includeUI: {
 				initMenu: 'filter',
@@ -34,8 +39,11 @@ config.pluginsOpts = {
 			'submenu.normalIcon.path': `${remoteIcons}icon-d.svg`,
 			'submenu.activeIcon.path': `${remoteIcons}icon-c.svg`,
 		},
-	},
-};
+	}
+}
+
+config.plugins = plugins
+config.pluginsOpts = pluginsOpts
 
 let editor = grapesjs.init(config);
 
