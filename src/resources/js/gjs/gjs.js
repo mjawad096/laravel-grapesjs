@@ -66,8 +66,39 @@ let hideLoader = function(){
 	}
 }
 
+
+editor.addFontFamily = function(fontFamily){
+    let styleManager = this.StyleManager;
+    
+    let fontProperty = styleManager.getProperty('typography', 'font-family');
+    let list = fontProperty.get('list');
+    list.push(fontFamily);
+    
+    fontProperty.set('list', list);
+    styleManager.render();
+}
+
 editor.on('load',()=>{
 	hideLoader();
+
+	const event = new Event('gjs_loaded');
+	event.editor = editor;
+
+	window.document.dispatchEvent(event);
+
+	if(config.fonts && Array.isArray(config.fonts) && config.fonts.length){
+		config.fonts.forEach(font => {
+			if(!font.value){
+				console.error('Invalid font', font)
+				return;
+			}
+
+			editor.addFontFamily({
+				name: font.name || font.value,
+				value: font.value
+			});
+		})
+	}
 })
 
 var pfx = editor.getConfig().stylePrefix;
@@ -230,7 +261,6 @@ panels.addButton('options',
 		}
 	]
 );
-
 
 panels.addButton('options',
 	[

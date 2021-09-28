@@ -5,6 +5,8 @@ namespace Dotlogics\Grapesjs\App\Editor;
 class EditorConfig extends EditorBaseClass
 {
     public bool $exposeApi = false;
+    public bool $imageEditor = false;
+    public array $fonts = [];
     public string $container = '#editor';
     public bool $fromElement = false;
     public string $height = "100vh";
@@ -20,5 +22,6 @@ class EditorConfig extends EditorBaseClass
     function __construct(){
         $this->exposeApi = config('grapesjs.expose_api', false);
         $this->imageEditor = config('grapesjs.image_editor', false);
+        $this->fonts = config('grapesjs.fonts', []);
     }
 }
