@@ -67,12 +67,19 @@ let hideLoader = function(){
 }
 
 
-editor.addFontFamily = function(fontFamily){
+editor.addFontFamily = function(fontFamily, prepend){
+	prepend = prepend === true
+
     let styleManager = this.StyleManager;
     
     let fontProperty = styleManager.getProperty('typography', 'font-family');
     let list = fontProperty.get('list');
-    list.push(fontFamily);
+
+    if(prepend){
+    	list.unshift(fontFamily);
+    }else{
+    	list.push(fontFamily);
+    }
     
     fontProperty.set('list', list);
     styleManager.render();
@@ -85,6 +92,11 @@ editor.on('load',()=>{
 	event.editor = editor;
 
 	window.document.dispatchEvent(event);
+
+	editor.addFontFamily({
+		name: 'Unset',
+		value: '',
+	}, true);
 
 	if(config.fonts && Array.isArray(config.fonts) && config.fonts.length){
 		config.fonts.forEach(font => {
