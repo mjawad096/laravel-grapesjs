@@ -27,7 +27,10 @@ class Page extends Model implements Editable
 
 3. Next Create a Route for editor
 ```php
-Route::get('pages/{page}/editor', 'PageController@editor');
+
+ use App\Http\Controllers\PageController;
+
+ Route::get('pages/{page}/editor', [PageController::class, 'editor']);
 
 ```
 
