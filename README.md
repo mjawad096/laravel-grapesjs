@@ -3,9 +3,15 @@
 >`composer require jd-dotlogics/laravel-grapesjs`
 
 
-# Publish files
+# Publish files & migrate
 
 >`php artisan vendor:publish --provider="Dotlogics\Grapesjs\GrapesjsServiceProvider"`
+
+>`php artisan vendor:publish --provider="Spatie\MediaLibrary\MediaLibraryServiceProvider" --tag="migrations"`
+
+>`php artisan vendor:publish --provider="Dotlogics\Media\MediaServiceProvider" --tag="migrations"`
+
+>`php artisan migrate`
 
 # Get Start
 
