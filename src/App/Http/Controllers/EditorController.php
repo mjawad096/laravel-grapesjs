@@ -32,41 +32,70 @@ class EditorController extends Controller
         return $this->store_gjs_data($request, $model::findOrFail($id));
     }
 
-    public function templates(Request $request)
+    public function templates(Request $request, $model, $id)
     {
-        $templatesPath = resource_path('views/vendor/grapesjs/templates');
-        $otherBlocks = resource_path('views/vendor/grapesjs/gjs-blocks');
+        $model = $model::findOrFail($id);
 
-        if(!File::exists($templatesPath)) {
-            $templatesPath = __DIR__ . '/../../../resources/views/templates';
-        }
+        return collect([
+                'templates',
+                'gjs-blocks',
+            ])
+            ->map(function($type) use ($model){
+                $type = Str::of($type);
+                $base_path_package_views = __DIR__ . '/../../../resources/views/';
+                $base_path_project_views = resource_path('views/vendor/grapesjs/');
+                
+                $path_getter_method = "get" . $type->studly() . 'Path';
 
-        if(!File::exists($otherBlocks)) {
-            $otherBlocks = __DIR__ . '/../../../resources/views/gjs-blocks';
-        }
-        
-        $templates = []; 
+                if(method_exists($model, $path_getter_method)){
+                    $path = $model->{$path_getter_method}();
 
-        foreach (File::allFiles($templatesPath) as $fileInfo) {
-            $file_name = str_replace(".blade.php", "", $fileInfo->getBasename());
-            $templates [] = [
-                'category' => 'Templates',
-                'id' => 'template-' . $fileInfo->getFilename(),
-                'label' => Str::title(str_replace(["-"], " ", $file_name)),
-                'content' => view("grapesjs::templates.{$file_name}")->render()
-            ];
-        }
-        
-        foreach (File::allFiles($otherBlocks) as $fileInfo) {
-            $file_name = str_replace(".blade.php", "", $fileInfo->getBasename());
-            $templates [] = [
-                'category' => 'Blocks',
-                'id' => 'block-' . $fileInfo->getFilename(),
-                'label' => Str::title(str_replace(["-"], " ", $file_name)),
-                'content' => view("grapesjs::gjs-blocks.{$file_name}")->render()
-            ];
-        }
+                    if(!empty($path)){
+                        $path = $base_path_project_views . $path;
+                    }
+                }else{
+                    $path = $base_path_project_views . $type;
 
-        return $templates;
+                    if(!File::exists($path)) {
+                        $path = $base_path_package_views . $type;
+                    }
+                }
+
+                if(empty($path) || !File::exists($path)) return;
+
+                $type_name = $type->replace('gjs-', '');
+
+                $id_prefix = (string)$type_name->singular() . '-';
+                $category = (string)$type_name->title();
+
+                $templates = [];
+                foreach (File::allFiles($path) as $fileInfo) {
+                    $file_name = Str::of($fileInfo->getBasename())->replace(".blade.php", "");
+                    $view_base = Str::of($fileInfo->getPath())->replace([
+                        $base_path_package_views,
+                        $base_path_project_views,
+                        rtrim($base_path_package_views, '/'),
+                        rtrim($base_path_project_views, '/'),
+                    ], '');
+                    
+                    if(!empty('' . $view_base)){
+                        $view_base .= '.';
+                    }
+
+                    $view = "grapesjs::{$view_base}{$file_name}";
+
+                    $templates [] = [
+                        'category' => $category,
+                        'id' => $id_prefix . $fileInfo->getFilename(),
+                        'label' => $file_name->replace('-', ' ')->title(),
+                        'content' => view($view)->render(),
+                    ];
+                }
+
+                return $templates;
+            })
+            ->flatten(1)
+            ->filter()
+            ->values();
     }
 }
