@@ -139,11 +139,15 @@ btnEdit.style.float = 'right';
 btnEdit.style.backgroundColor = '#090';
 btnEdit.className = pfx + 'btn-prim ' + pfx + 'btn-import';
 btnEdit.onclick = function () {
-	var code = codeViewer.editor.getValue();
+	let html = (codeViewer.editor.getValue() || '').trim();
+    let css = ((html.split('<style>') || [])[1] || '').replace('</style>', '');
+
 	editor.DomComponents.getWrapper().set('content', '');
-	editor.setComponents(code.trim());
+	editor.setComponents(html);
+	editor.setStyle(css);
+
 	modal.close();
-	toastr.success('Html Saved', 'Success');
+	toastr.success('Content Updated', 'Success');
 };
 
 commands.add('html-edit', {
