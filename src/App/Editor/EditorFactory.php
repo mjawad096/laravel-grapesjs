@@ -25,8 +25,6 @@ class EditorFactory extends EditorBaseClass
         $editorConfig->components = $editable->components; 
         $editorConfig->style = $editable->styles;
         $editorConfig->templatesUrl = $editable->templates_url;
-        
-        $editorConfig->forceClass = false;
 
         return $editorConfig;
     }

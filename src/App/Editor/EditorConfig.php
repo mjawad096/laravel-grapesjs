@@ -22,6 +22,7 @@ class EditorConfig extends EditorBaseClass
     function __construct(){
         $this->exposeApi = config('grapesjs.expose_api', false);
         $this->imageEditor = config('grapesjs.image_editor', false);
+        $this->forceClass = config('grapesjs.force_class', false);
         $this->fonts = config('grapesjs.fonts', []);
     }
 }

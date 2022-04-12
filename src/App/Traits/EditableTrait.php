@@ -72,7 +72,7 @@ trait EditableTrait{
     }
 
     protected function findAndSetPlaceholders($html){
-        $re = '/\[\[[A-Z][a-z]*(-[A-Z][a-z]*)*([\s]+[a-z]+(=.+)?)*\]\]/';
+        $re = '/\[\[[A-Z][a-z]*(-[A-Z][a-z]*)*([\s]+[a-z]+(=[^]]+)?)*\]\]/';
 
         preg_match_all($re, $html, $placeholders);
 
