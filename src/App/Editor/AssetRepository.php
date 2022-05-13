@@ -10,7 +10,7 @@ class AssetRepository
     public function getAllMediaLinks()
     {
         $allStoredMedia = Media::all()->map(function($media){
-            return route('media.show', $media);
+            return $media->getFullUrl();
         });
 
         return $allStoredMedia->toArray();
