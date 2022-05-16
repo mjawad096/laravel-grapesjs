@@ -1,3 +1,8 @@
 {
-    "/src/public/vendor/grapesjs/editor.js": "/src/public/vendor/grapesjs/editor.js"
+    "/dist/assets/editor.js": "/dist/assets/editor.js",
+    "/dist/assets/editor.css": "/dist/assets/editor.css",
+    "/dist/fonts/main-fonts.eot": "/dist/fonts/main-fonts.eot",
+    "/dist/fonts/main-fonts.svg": "/dist/fonts/main-fonts.svg",
+    "/dist/fonts/main-fonts.ttf": "/dist/fonts/main-fonts.ttf",
+    "/dist/fonts/main-fonts.woff": "/dist/fonts/main-fonts.woff"
 }

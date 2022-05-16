@@ -19,13 +19,16 @@ const mix = require('laravel-mix');
  */
 
 // merge all needed JS into a big bundle file
-mix.js('src/resources/js/gjs', 'src/public/vendor/grapesjs/editor.js')
+mix.js('src/resources/js', 'dist/assets/editor.js')
+    .sass('src/resources/scss/gjs.scss','dist/assets/editor.css')
+    .options({
+        processCssUrls: false
+    });
+
+mix.copyDirectory('node_modules/grapesjs/dist/fonts', 'dist/fonts')
+// mix.copyDirectory('src/resources/js/plugins/image-editor/src/svg', 'dist/svg')
 
 
 if(!mix.inProduction()){
-    // FOR MAINTAINERS
-    // copy asset files from Base's public folder the main app's public folder
-    // so that you don't have to publish the assets with artisan to test them
-    mix.copyDirectory('src/public', '../../../public')
-    mix.copyDirectory('fonts', '../../../public/fonts')
+    // mix.copyDirectory('dist', '../../../public/vendor/laravel-grapesjs')
 }
