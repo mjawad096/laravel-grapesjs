@@ -4,10 +4,8 @@ namespace Dotlogics\Grapesjs\App\Http\Controllers;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller;
-use Dotlogics\Grapesjs\App\Editor\EditorFactory;
 use Dotlogics\Grapesjs\App\Traits\EditorTrait;
 
 class EditorController extends Controller
@@ -43,7 +41,7 @@ class EditorController extends Controller
             ->map(function($type) use ($model){
                 $type = Str::of($type);
                 $base_path_package_views = __DIR__ . '/../../../resources/views/';
-                $base_path_project_views = resource_path('views/vendor/grapesjs/');
+                $base_path_project_views = resource_path('views/vendor/laravel-grapesjs/');
                 
                 $path_getter_method = "get" . $type->studly() . 'Path';
 
@@ -82,7 +80,7 @@ class EditorController extends Controller
                         $view_base .= '.';
                     }
 
-                    $view = "grapesjs::{$view_base}{$file_name}";
+                    $view = "laravel-grapesjs::{$view_base}{$file_name}";
 
                     $templates [] = [
                         'category' => $category,

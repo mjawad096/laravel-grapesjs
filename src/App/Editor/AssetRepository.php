@@ -17,6 +17,6 @@ class AssetRepository
     }
 
     public function getUploadUrl(){
-    	return route('grapesjs.editor.asset.store');
+    	return route('laravel-grapesjs.asset.store');
     }
 }
