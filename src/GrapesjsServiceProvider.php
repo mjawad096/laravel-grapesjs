@@ -7,7 +7,11 @@ use Illuminate\Routing\Router;
 
 class GrapesjsServiceProvider extends ServiceProvider
 {
-    public $routeFilePath = '/routes/grapesjs.php';
+    public $routeFilePath = '/routes/laravel-grapesjs.php';
+    public $confiFilePath = 'laravel-grapesjs.php';
+    public $publicDirPath = 'vendor/laravel-grapesjs';
+    public $viewDirPath = 'views/vendor/laravel-grapesjs';
+    public $namespace = 'laravel-grapesjs';
 
     /**
      * Register services.
@@ -25,8 +29,8 @@ class GrapesjsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(realpath(__DIR__.'/resources/views/'), 'grapesjs');
-        $this->mergeConfigFrom(__DIR__.'/config.php', 'grapesjs');
+        $this->loadViewsFrom(realpath(__DIR__.'/resources/views/'), $this->namespace);
+        $this->mergeConfigFrom(__DIR__.'/config.php', $this->namespace);
 
         $this->setupRoutes($this->app->router);
 
@@ -50,8 +54,8 @@ class GrapesjsServiceProvider extends ServiceProvider
         $routeFilePathInUse = __DIR__.$this->routeFilePath;
 
         // but if there's a file with the same name in routes/backpack, use that one
-        if (file_exists(base_path().$this->routeFilePath)) {
-            $routeFilePathInUse = base_path().$this->routeFilePath;
+        if (file_exists($path = base_path($this->routeFilePath))) {
+            $routeFilePathInUse = $path;
         }
 
         $this->loadRoutesFrom($routeFilePathInUse);
@@ -60,16 +64,15 @@ class GrapesjsServiceProvider extends ServiceProvider
     public function publishFiles()
     {
         $this->publishes([
-            __DIR__.'/config.php' => config_path('grapesjs.php'),
-        ], 'config');
+            __DIR__.'/config.php' => config_path($this->confiFilePath),
+        ], [$this->namespace, 'config']);
 
         $this->publishes([
-            __DIR__.'/public' => public_path(),
-            __DIR__.'/../fonts' => public_path('fonts'),
-        ], 'public');
+            __DIR__.'/../dist' => public_path($this->publicDirPath),
+        ], [$this->namespace, 'public']);
 
         $this->publishes([
-            __DIR__.'/resources/views' => resource_path('views/vendor/grapesjs'),
-        ], 'views');
+            __DIR__.'/resources/views' => resource_path($this->viewDirPath),
+        ], [$this->namespace, 'views']);
     }
 }
