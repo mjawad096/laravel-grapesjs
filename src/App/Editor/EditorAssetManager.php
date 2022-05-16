@@ -14,6 +14,7 @@ class EditorAssetManager
     public int $dropzone = 1;
     public int $openAssetsOnDrop = 0;
     public string $modalTitle = 'Upload Images';
+    public bool $showUrlInput = false;
 
     function __construct($save_url = null)
     {
