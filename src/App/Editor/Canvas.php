@@ -2,7 +2,7 @@
 
 namespace Dotlogics\Grapesjs\App\Editor;
 
-class EditorCanvas
+class Canvas
 {
     public array $styles = [];
     public array $scripts = [];

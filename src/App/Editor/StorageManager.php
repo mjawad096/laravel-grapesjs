@@ -3,7 +3,7 @@
 namespace Dotlogics\Grapesjs\App\Editor;
 
 
-class EditorStorageManager
+class StorageManager
 {
     public string $id = 'laravel-grapesjs-';           // Prefix identifier that will be used on parameters
     public string $type = 'remote';        // Type of the storage

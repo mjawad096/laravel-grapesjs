@@ -4,7 +4,7 @@ namespace Dotlogics\Grapesjs\App\Editor;
 
 use Dotlogics\Grapesjs\App\Contracts\Editable;
 
-class EditorFactory extends EditorBaseClass
+class Factory extends Base
 {
     public function initialize(Editable $editable)
     {
@@ -12,9 +12,7 @@ class EditorFactory extends EditorBaseClass
         $editorCanvas = new EditorCanvas;     
         
         $editorAssetManager = new EditorAssetManager;
-        $editorAssetManager->assets = $assetRepository->getAllMediaLinks();
-        $editorAssetManager->upload = $assetRepository->getUploadUrl();        
-        $editorAssetManager->uploadName = 'file';
+        
 
         $editorConfig = new EditorConfig;
         $editorConfig->assetManager = $editorAssetManager;

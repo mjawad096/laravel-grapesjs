@@ -4,7 +4,19 @@ return [
     'expose_api' => false,
     'image_editor' => false,
     'force_class' => false,
-    'fonts' => [],
+
     'styles' => [],
-    'scripts' => []
+    'scripts' => [],
+    'puglings' => [],
+    'fonts' => [],
+
+    'canvas' => [
+        'styles' => [],
+        'scripts' => [],
+    ],
+
+    'storage_manager' => [
+        'autosave' => true,
+        'steps_before_save' => 10,
+    ],
 ];

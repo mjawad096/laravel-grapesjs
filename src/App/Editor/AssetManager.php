@@ -2,9 +2,9 @@
 
 namespace Dotlogics\Grapesjs\App\Editor;
 
-class EditorAssetManager
+class AssetManager
 {
-    public array $assets =[];
+    public array $assets = [];
     public ?string $upload = null;
     public ?string $uploadName = null;
     public array $headers = [];
@@ -16,8 +16,12 @@ class EditorAssetManager
     public string $modalTitle = 'Upload Images';
     public bool $showUrlInput = false;
 
-    function __construct($save_url = null)
+    function __construct()
     {
         $this->headers['_token'] = csrf_token();
+        $this->upload = route('laravel-grapesjs.asset.store');    
+        $this->uploadName = 'file';
+
+        $this->assets = Media::all()->map(fn($m) => $m->getFullUrl())->toArray();
     }
 }
