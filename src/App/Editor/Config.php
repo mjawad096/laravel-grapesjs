@@ -2,7 +2,9 @@
 
 namespace Dotlogics\Grapesjs\App\Editor;
 
-class Config extends Base
+use Dotlogics\Grapesjs\App\Contracts\Editable;
+
+class Config
 {
     public bool $exposeApi = false;
     public bool $imageEditor = false;
@@ -11,11 +13,11 @@ class Config extends Base
     public bool $fromElement = false;
     public string $height = "100vh";
     public string $width = '100%';
-    public ?EditorStorageManager $storageManager;
-    public ?EditorAssetManager $assetManager;
+    public ?StorageManager $storageManager;
+    public ?AssetManager $assetManager;
     public array $components;
     public array $style;
-    public EditorCanvas $canvas;
+    public Canvas $canvas;
     public ?string $templatesUrl;
     public bool $forceClass = true;
 
@@ -24,5 +26,42 @@ class Config extends Base
         $this->imageEditor = config('laravel-grapesjs.image_editor', false);
         $this->forceClass = config('laravel-grapesjs.force_class', false);
         $this->fonts = config('laravel-grapesjs.fonts', []);
+    }
+
+    public function initialize(Editable $editable)
+    {
+        $assetManager = app(AssetManager::class);
+        $storageManager = app(StorageManager::class, ['save_url' => $editable->store_url]);
+
+        $canvas = app(Canvas::class)
+            ->mergeStyles($editable->style_sheet_links)
+            ->mergeScripts($editable->script_links);
+        
+
+        $this->assetManager = $assetManager;
+        $this->canvas = $canvas;
+        $this->storageManager = $storageManager;
+
+
+        $this->components = $editable->components; 
+        $this->style = $editable->styles;
+        $this->templatesUrl = $editable->templates_url;
+
+        return $this;
+    }
+
+    public function toJson()
+    {
+        return json_encode($this);
+    }
+    
+    public function __toString()
+    {
+        return $this->toJson();
+    }
+
+    public function toArray()
+    {
+    	return json_decode($this->toJson(), true);
     }
 }

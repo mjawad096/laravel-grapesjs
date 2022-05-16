@@ -2,14 +2,14 @@
 
 namespace Dotlogics\Grapesjs\App\Traits;
 
+use Dotlogics\Grapesjs\App\Editor\Config;
 use Illuminate\Http\Request;
-use Dotlogics\Grapesjs\App\Editor\EditorFactory;
 
 trait EditorTrait{
 
 	protected function show_gjs_editor(Request $request, $model){
-		$factory = app(EditorFactory::class);
-		$editorConfig = $factory->initialize($model);
+		$editorConfig = app(Config::class)->initialize($model);
+		
 		return view('laravel-grapesjs::edittor', compact('editorConfig', 'model'));
 	}
 

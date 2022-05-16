@@ -1,6 +1,7 @@
 <?php
 
 namespace Dotlogics\Grapesjs\App\Editor;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class AssetManager
 {

@@ -9,8 +9,8 @@ class Canvas
 
     function __construct()
     {
-        $this->styles = config('laravel-grapesjs.styles');
-        $this->scripts = config('laravel-grapesjs.scripts');
+        $this->styles = config('laravel-grapesjs.canvas.styles', []);
+        $this->scripts = config('laravel-grapesjs.canvas.scripts', []);
     }
 
     public function mergeStyles($styles)
