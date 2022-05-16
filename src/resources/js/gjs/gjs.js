@@ -320,6 +320,30 @@ editor.DomComponents.addType("iframe", {
     }
 });
 
+editor.DomComponents.addType('image', {
+	isComponent: el => el.tagName == 'IMG',
+	model: {
+		defaults: {
+			traits: [
+				{
+					name: 'src',
+					placeholder: 'Insert image url here.',
+				},
+				{
+					type: 'button',
+					text: 'Choose Image',
+					full: true, // Full width button
+					command: function(editor){
+						editor.getSelected().trigger('active')
+					},
+					
+				},
+				'alt',
+			],
+		},
+	},
+});
+
 if (config.templatesUrl) {
 	fetch(config.templatesUrl)
 		.then(resp => resp.json())
