@@ -5,20 +5,24 @@ namespace Dotlogics\Grapesjs\App\Editor;
 
 class StorageManager
 {
-    public string $id = 'laravel-grapesjs-';           // Prefix identifier that will be used on parameters
-    public string $type = 'remote';        // Type of the storage
-    public bool $autosave = true;         // Store data automatically
-    public bool $autoload = false;         // Store data automatically
+    public string $id = 'laravel-grapesjs-';
+    public string $type = 'remote';
+
+    public bool $autosave = true;
+    public int $stepsBeforeSave = 10;  
+    public bool $autoload = false;
     public ?string $urlStore = null;
+
     public $params = [
         '_token' => null 
     ];
-    // autoload: true,         // Autoload stored data on init
-    public int $stepsBeforeSave = 10;  
 
     function __construct($save_url = null)
     {
         $this->params['_token'] = csrf_token();
+
+        $this->autosave = config('laravel-grapesjs.storage_manager.autosave', true);
+        $this->stepsBeforeSave = config('laravel-grapesjs.storage_manager.steps_before_save', 10);
 
         if(!empty($save_url)){
             $this->type = 'remote';
