@@ -87,8 +87,8 @@ trait EditableTrait{
                 $view = array_shift($view);
                 $view = strtolower($view);
 
-                if(view()->exists("grapesjs::placeholders.{$view}")){
-                    $this->setPlaceholder($_placeholder, view("grapesjs::placeholders.{$view}", $attributes)->render());
+                if(view()->exists("laravel-grapesjs::placeholders.{$view}")){
+                    $this->setPlaceholder($_placeholder, view("laravel-grapesjs::placeholders.{$view}", $attributes)->render());
                 }
             }
         }
@@ -142,12 +142,12 @@ trait EditableTrait{
 
     public function getStoreUrlAttribute(): string
     {
-        return route('grapesjs.editor.model.store', [$this->getModelClass(true), $this->getKeyValue()]);
+        return route('laravel-grapesjs.model.store', [$this->getModelClass(true), $this->getKeyValue()]);
     }
 
     public function getTemplatesUrlAttribute(): ?string
     {
-        return route('grapesjs.editor.model.templates', [$this->getModelClass(true), $this->getKeyValue()]);
+        return route('laravel-grapesjs.model.templates', [$this->getModelClass(true), $this->getKeyValue()]);
     }
 
     public function getPlaceholders()

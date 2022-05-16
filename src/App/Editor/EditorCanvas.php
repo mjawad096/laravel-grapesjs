@@ -9,8 +9,8 @@ class EditorCanvas
 
     function __construct()
     {
-        $this->styles = config('grapesjs.styles');
-        $this->scripts = config('grapesjs.scripts');
+        $this->styles = config('laravel-grapesjs.styles');
+        $this->scripts = config('laravel-grapesjs.scripts');
     }
 
     public function mergeStyles($styles)

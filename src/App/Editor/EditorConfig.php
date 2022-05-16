@@ -20,9 +20,9 @@ class EditorConfig extends EditorBaseClass
     public bool $forceClass = true;
 
     function __construct(){
-        $this->exposeApi = config('grapesjs.expose_api', false);
-        $this->imageEditor = config('grapesjs.image_editor', false);
-        $this->forceClass = config('grapesjs.force_class', false);
-        $this->fonts = config('grapesjs.fonts', []);
+        $this->exposeApi = config('laravel-grapesjs.expose_api', false);
+        $this->imageEditor = config('laravel-grapesjs.image_editor', false);
+        $this->forceClass = config('laravel-grapesjs.force_class', false);
+        $this->fonts = config('laravel-grapesjs.fonts', []);
     }
 }

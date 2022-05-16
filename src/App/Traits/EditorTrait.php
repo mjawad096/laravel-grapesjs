@@ -16,10 +16,10 @@ trait EditorTrait{
 	protected function store_gjs_data(Request $request, $model)
 	{	
 		$model->gjs_data = [
-	        'components' => $request->get('components'),
-	        'styles' => $request->get('styles'),
-	        'css' => $request->get('css'),
-	        'html' => $request->get('html'),
+	        'components' => $request->get('laravel-grapesjs-components'),
+	        'styles' => $request->get('laravel-grapesjs-styles'),
+	        'css' => $request->get('laravel-grapesjs-css'),
+	        'html' => $request->get('laravel-grapesjs-html'),
 	    ];
 
 	    $model->save();
