@@ -2,7 +2,7 @@
 
 namespace Dotlogics\Grapesjs\App\Editor;
 
-class EditorConfig extends EditorBaseClass
+class Config extends Base
 {
     public bool $exposeApi = false;
     public bool $imageEditor = false;

@@ -12,13 +12,6 @@ class AssetController extends Controller
 {
     use ValidatesRequests;
 
-    public function index(AssetRepository $assetRepository)
-    {
-        return response()->json(
-            $assetRepository->getAllMediaLinks()
-        );
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -32,11 +25,16 @@ class AssetController extends Controller
             'file.*' => 'bail|required|max:102400'
         ]);
 
-        $media = TempMedia::create()->addMediaFromRequest('file')->toMediaCollection('default');
-        return response()->json([
+        $media = TempMedia::create()
+            ->addMediaFromRequest('file')
+            ->toMediaCollection('default');
+        
+        $response = [
             'data' => [
-                route('media.show', $media)
+                $media->getFullUrl()
             ]
-        ]);
+        ];
+
+        return response()->json($response);
     }
 }
