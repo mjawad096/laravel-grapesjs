@@ -9,8 +9,8 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! grapesjs */ "./node_modules/grapesjs/dist/grapes.min.js");
-/* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(grapesjs__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! grapesjs */ "./node_modules/grapesjs/dist/grapes.min.js");
+/* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(grapesjs__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! grapesjs-blocks-basic */ "./node_modules/grapesjs-blocks-basic/dist/grapesjs-blocks-basic.min.js");
 /* harmony import */ var grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var grapesjs_blocks_bootstrap4__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! grapesjs-blocks-bootstrap4 */ "./node_modules/grapesjs-blocks-bootstrap4/dist/grapesjs-blocks-bootstrap4.min.js");
@@ -23,6 +23,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _plugins_save_button__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./plugins/save-button */ "./src/resources/js/plugins/save-button/src/index.js");
 /* harmony import */ var _plugins_back_button__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./plugins/back-button */ "./src/resources/js/plugins/back-button/src/index.js");
 /* harmony import */ var _plugins_templates__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./plugins/templates */ "./src/resources/js/plugins/templates/src/index.js");
+/* harmony import */ var _plugins_custom_types__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./plugins/custom-types */ "./src/resources/js/plugins/custom-types/src/index.js");
 var _pluginsOpts;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -38,12 +39,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 var config = window.editorConfig;
 delete window.editorConfig;
-var plugins = [_plugins_custom_font_family__WEBPACK_IMPORTED_MODULE_4__.default, _plugins_loader__WEBPACK_IMPORTED_MODULE_5__.default, _plugins_notifications__WEBPACK_IMPORTED_MODULE_6__.default];
+var plugins = [_plugins_custom_font_family__WEBPACK_IMPORTED_MODULE_4__.default, _plugins_loader__WEBPACK_IMPORTED_MODULE_5__.default, _plugins_notifications__WEBPACK_IMPORTED_MODULE_6__.default, _plugins_custom_types__WEBPACK_IMPORTED_MODULE_10__.default];
 var pluginsOpts = (_pluginsOpts = {}, _defineProperty(_pluginsOpts, _plugins_custom_font_family__WEBPACK_IMPORTED_MODULE_4__.default, {
   fonts: config.pluginManager.customFonts
-}), _defineProperty(_pluginsOpts, _plugins_loader__WEBPACK_IMPORTED_MODULE_5__.default, {}), _defineProperty(_pluginsOpts, _plugins_notifications__WEBPACK_IMPORTED_MODULE_6__.default, {}), _pluginsOpts);
+}), _defineProperty(_pluginsOpts, _plugins_loader__WEBPACK_IMPORTED_MODULE_5__.default, {}), _defineProperty(_pluginsOpts, _plugins_notifications__WEBPACK_IMPORTED_MODULE_6__.default, {}), _defineProperty(_pluginsOpts, _plugins_custom_types__WEBPACK_IMPORTED_MODULE_10__.default, {}), _pluginsOpts);
 
 if (config.pluginManager.basicBlocks) {
   plugins.push('gjs-blocks-basic');
@@ -76,60 +78,13 @@ if (config.pluginManager.templates) {
 
 config.plugins = plugins;
 config.pluginsOpts = pluginsOpts;
-var editor = grapesjs__WEBPACK_IMPORTED_MODULE_10___default().init(config);
+var editor = grapesjs__WEBPACK_IMPORTED_MODULE_11___default().init(config);
 
 if (config.exposeApi) {
   Object.defineProperty(window, 'gjsEditor', {
     value: editor
   });
 }
-
-editor.BlockManager.add("iframe", {
-  category: 'Basic',
-  label: "iframe",
-  type: "iframe",
-  content: "<iframe> </iframe>",
-  selectable: true,
-  attributes: {
-    "class": 'fa fa-file'
-  }
-});
-editor.DomComponents.addType("iframe", {
-  isComponent: function isComponent(el) {
-    return el.tagName === "IFRAME";
-  },
-  model: {
-    defaults: {
-      type: "iframe",
-      traits: [{
-        type: "text",
-        label: "src",
-        name: "src"
-      }]
-    }
-  }
-});
-editor.DomComponents.addType('image', {
-  isComponent: function isComponent(el) {
-    return el.tagName == 'IMG';
-  },
-  model: {
-    defaults: {
-      traits: [{
-        name: 'src',
-        placeholder: 'Insert image url here.'
-      }, {
-        type: 'button',
-        text: 'Choose Image',
-        full: true,
-        // Full width button
-        command: function command(editor) {
-          editor.getSelected().trigger('active');
-        }
-      }, 'alt']
-    }
-  }
-});
 
 /***/ }),
 
@@ -352,6 +307,69 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     });
     fontProperty.setOptions(options);
     styleManager.render();
+  });
+});
+
+/***/ }),
+
+/***/ "./src/resources/js/plugins/custom-types/src/index.js":
+/*!************************************************************!*\
+  !*** ./src/resources/js/plugins/custom-types/src/index.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (editor) {
+  var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  editor.BlockManager.add("iframe", {
+    category: 'Basic',
+    label: "iframe",
+    type: "iframe",
+    content: "<iframe> </iframe>",
+    selectable: true,
+    attributes: {
+      "class": 'fa fa-file'
+    }
+  });
+  editor.DomComponents.addType("iframe", {
+    isComponent: function isComponent(el) {
+      return el.tagName === "IFRAME";
+    },
+    model: {
+      defaults: {
+        type: "iframe",
+        traits: [{
+          type: "text",
+          label: "src",
+          name: "src"
+        }]
+      }
+    }
+  });
+  editor.DomComponents.addType('image', {
+    isComponent: function isComponent(el) {
+      return el.tagName == 'IMG';
+    },
+    model: {
+      defaults: {
+        traits: [{
+          name: 'src',
+          placeholder: 'Insert image url here.'
+        }, {
+          type: 'button',
+          text: 'Choose Image',
+          full: true,
+          // Full width button
+          command: function command(editor) {
+            editor.getSelected().trigger('active');
+          }
+        }, 'alt']
+      }
+    }
   });
 });
 
