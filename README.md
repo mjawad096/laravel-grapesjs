@@ -7,10 +7,6 @@
 
 >`php artisan vendor:publish --provider="Dotlogics\Grapesjs\GrapesjsServiceProvider"`
 
->`php artisan vendor:publish --provider="Spatie\MediaLibrary\MediaLibraryServiceProvider" --tag="migrations"`
-
->`php artisan vendor:publish --provider="Dotlogics\Media\MediaServiceProvider" --tag="migrations"`
-
 >`php artisan migrate`
 
 # Get Start
@@ -71,13 +67,13 @@ class PageController extends Controller
 Placeholders are like short-code in wordpress. The synax of placeholder is
 >`[[This-Is-Placeholder]]`
 
-Create a file named "this-is-placeholder.blade.php" in "/resources/views/vendor/grapesjs/placeholders" directory.
+Create a file named "this-is-placeholder.blade.php" in "/resources/views/vendor/laravel-grapesjs/placeholders" directory.
 
 The the placeholder will be replaced by the content of the relative blade file "this-is-placeholder.blade.php"
 
 
 # Templates
-You can create a template (a block) in the "/resources/views/vendor/grapesjs/templates" directory. And the templates will be availabe in the block section of edittor. 
+You can create a template (a block) in the "/resources/views/vendor/laravel-grapesjs/templates" directory. And the templates will be availabe in the block section of edittor. 
 
 # Display output
 The "Editable" model (e.g. Page) will have two public properties, css and html. In your blade file you can use these properties to display the content.
