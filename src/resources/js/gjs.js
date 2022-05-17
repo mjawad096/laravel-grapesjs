@@ -2,6 +2,8 @@ import grapesjs from 'grapesjs';
 import 'grapesjs-blocks-basic';
 import 'grapesjs-blocks-bootstrap4';
 import ImageEditor from "./plugins/image-editor"
+
+import customFontFamily from "./plugins/custom-font-family"
 import loader from "./plugins/loader"
 import notifications from "./plugins/notifications"
 import saveButton from "./plugins/save-button"
@@ -10,11 +12,13 @@ let config = window.editorConfig;
 delete window.editorConfig;
 
 let plugins = [
+	customFontFamily,
 	loader,
 	notifications,
 	saveButton,
 ]
 let pluginsOpts = {
+	[customFontFamily]: {fonts: config.pluginManager.customFonts},
 	[loader]: {},
 	[notifications]: {},
 	[saveButton]: {},
@@ -47,49 +51,11 @@ if(config.exposeApi){
 	})
 }
 
-
-editor.addFontFamily = function(fontFamily, prepend){
-	prepend = prepend === true
-
-    let styleManager = this.StyleManager;
-    
-    let fontProperty = styleManager.getProperty('typography', 'font-family');
-    let list = fontProperty.get('list');
-
-    if(prepend){
-    	list.unshift(fontFamily);
-    }else{
-    	list.push(fontFamily);
-    }
-    
-    fontProperty.set('list', list);
-    styleManager.render();
-}
-
 editor.on('load',()=>{
 	const event = new Event('gjs_loaded');
 	event.editor = editor;
 
 	window.document.dispatchEvent(event);
-
-	editor.addFontFamily({
-		name: 'Unset',
-		value: '',
-	}, true);
-
-	if(config.fonts && Array.isArray(config.fonts) && config.fonts.length){
-		config.fonts.forEach(font => {
-			if(!font.value){
-				console.error('Invalid font', font)
-				return;
-			}
-
-			editor.addFontFamily({
-				name: font.name || font.value,
-				value: font.value
-			});
-		})
-	}
 })
 
 var pfx = editor.getConfig().stylePrefix;

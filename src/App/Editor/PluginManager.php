@@ -7,11 +7,13 @@ class PluginManager
     public array|bool $basicBlocks = true;
     public array|bool $bootstrap4Blocks = false;
     public array|bool $imageEditor = false;
+    public array $customFonts = [];
 
     function __construct(){
         $this->basicBlocks = config('laravel-grapesjs.plugins.default.basic_blocks', true);
         $this->bootstrap4Blocks = config('laravel-grapesjs.plugins.default.bootstrap4_blocks', false);
         $this->imageEditor = config('laravel-grapesjs.plugins.default.image_editor', false);
+        $this->customFonts = config('laravel-grapesjs.plugins.default.custom_fonts', []);
 
         if($this->basicBlocks){
             $this->basicBlocks = [];
