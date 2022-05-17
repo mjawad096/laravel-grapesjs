@@ -7,6 +7,7 @@ import customFontFamily from "./plugins/custom-font-family"
 import loader from "./plugins/loader"
 import notifications from "./plugins/notifications"
 import saveButton from "./plugins/save-button"
+import backButton from "./plugins/back-button"
 
 let config = window.editorConfig;
 delete window.editorConfig;
@@ -16,12 +17,14 @@ let plugins = [
 	loader,
 	notifications,
 	saveButton,
+	backButton,
 ]
 let pluginsOpts = {
 	[customFontFamily]: {fonts: config.pluginManager.customFonts},
 	[loader]: {},
 	[notifications]: {},
 	[saveButton]: {},
+	[backButton]: {},
 };
 
 if(config.pluginManager.basicBlocks){
@@ -125,21 +128,6 @@ panels.addButton('options',
 			command: 'html-edit',
 			attributes: {
 				title: 'Edit code.'
-			}
-		}
-	]
-);
-
-panels.addButton('options',
-	[
-		{
-			id: 'cancel',
-			className: 'fa fa-arrow-left',
-			command(editor) {
-				window.history.back()
-			},
-			attributes: {
-				title: 'Go back'
 			}
 		}
 	]
