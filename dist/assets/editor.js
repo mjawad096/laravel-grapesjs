@@ -9,15 +9,19 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! grapesjs */ "./node_modules/grapesjs/dist/grapes.min.js");
-/* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(grapesjs__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! grapesjs-blocks-basic */ "./node_modules/grapesjs-blocks-basic/dist/grapesjs-blocks-basic.min.js");
-/* harmony import */ var grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var grapesjs_blocks_bootstrap4__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! grapesjs-blocks-bootstrap4 */ "./node_modules/grapesjs-blocks-bootstrap4/dist/grapesjs-blocks-bootstrap4.min.js");
-/* harmony import */ var grapesjs_blocks_bootstrap4__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(grapesjs_blocks_bootstrap4__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _plugins_image_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./plugins/image-editor */ "./src/resources/js/plugins/image-editor/src/index.js");
-/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
-/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! grapesjs */ "./node_modules/grapesjs/dist/grapes.min.js");
+/* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(grapesjs__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! grapesjs-blocks-basic */ "./node_modules/grapesjs-blocks-basic/dist/grapesjs-blocks-basic.min.js");
+/* harmony import */ var grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var grapesjs_blocks_bootstrap4__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! grapesjs-blocks-bootstrap4 */ "./node_modules/grapesjs-blocks-bootstrap4/dist/grapesjs-blocks-bootstrap4.min.js");
+/* harmony import */ var grapesjs_blocks_bootstrap4__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(grapesjs_blocks_bootstrap4__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _plugins_image_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./plugins/image-editor */ "./src/resources/js/plugins/image-editor/src/index.js");
+/* harmony import */ var _plugins_loader__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./plugins/loader */ "./src/resources/js/plugins/loader/src/index.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 
 
@@ -25,8 +29,9 @@ __webpack_require__.r(__webpack_exports__);
 
 var config = window.editorConfig;
 delete window.editorConfig;
-var plugins = [];
-var pluginsOpts = {};
+var plugins = [_plugins_loader__WEBPACK_IMPORTED_MODULE_4__.default];
+
+var pluginsOpts = _defineProperty({}, _plugins_loader__WEBPACK_IMPORTED_MODULE_4__.default, {});
 
 if (config.pluginManager.basicBlocks) {
   plugins.push('gjs-blocks-basic');
@@ -39,34 +44,20 @@ if (config.pluginManager.bootstrap4Blocks) {
 }
 
 if (config.pluginManager.imageEditor) {
-  plugins.push(_plugins_image_editor__WEBPACK_IMPORTED_MODULE_2__.default);
-  pluginsOpts[_plugins_image_editor__WEBPACK_IMPORTED_MODULE_2__.default] = config.pluginManager.imageEditor;
+  plugins.push(_plugins_image_editor__WEBPACK_IMPORTED_MODULE_3__.default);
+  pluginsOpts[_plugins_image_editor__WEBPACK_IMPORTED_MODULE_3__.default] = config.pluginManager.imageEditor;
 }
 
 config.plugins = plugins;
 config.pluginsOpts = pluginsOpts;
 console.log(config);
-var editor = grapesjs__WEBPACK_IMPORTED_MODULE_4___default().init(config);
+var editor = grapesjs__WEBPACK_IMPORTED_MODULE_5___default().init(config);
 
 if (config.exposeApi) {
   Object.defineProperty(window, 'gjsEditor', {
     value: editor
   });
 }
-
-var loader = document.getElementById('loader');
-
-var showLoader = function showLoader() {
-  if (loader) {
-    loader.style.display = 'flex';
-  }
-};
-
-var hideLoader = function hideLoader() {
-  if (loader) {
-    loader.style.display = 'none';
-  }
-};
 
 editor.addFontFamily = function (fontFamily, prepend) {
   prepend = prepend === true;
@@ -85,7 +76,6 @@ editor.addFontFamily = function (fontFamily, prepend) {
 };
 
 editor.on('load', function () {
-  hideLoader();
   var event = new Event('gjs_loaded');
   event.editor = editor;
   window.document.dispatchEvent(event);
@@ -139,7 +129,7 @@ btnEdit.onclick = function () {
   editor.setComponents(html);
   editor.setStyle(css);
   modal.close();
-  toastr__WEBPACK_IMPORTED_MODULE_3___default().success('Content Updated', 'Success');
+  toastr__WEBPACK_IMPORTED_MODULE_0___default().success('Content Updated', 'Success');
 };
 
 commands.add('html-edit', {
@@ -229,10 +219,10 @@ panels.addButton('options', [{
         }
 
         uploadedLink.value = data.media_url;
-        toastr__WEBPACK_IMPORTED_MODULE_3___default().success('FIle uploaded and Link Ready', 'Success');
+        toastr__WEBPACK_IMPORTED_MODULE_0___default().success('FIle uploaded and Link Ready', 'Success');
       })["catch"](function (error) {
         loader.style.display = 'none';
-        toastr__WEBPACK_IMPORTED_MODULE_3___default().error(error, 'Error');
+        toastr__WEBPACK_IMPORTED_MODULE_0___default().error(error, 'Error');
       });
     };
 
@@ -249,10 +239,8 @@ panels.addButton('options', [{
   id: 'save',
   className: 'fa fa-save',
   command: function command(editor) {
-    showLoader();
     editor.store(function (res) {
-      hideLoader();
-      toastr__WEBPACK_IMPORTED_MODULE_3___default().success('Page Saved', 'Success');
+      toastr__WEBPACK_IMPORTED_MODULE_0___default().success('Page Saved', 'Success');
     });
   },
   attributes: {
@@ -650,6 +638,83 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         type: type
       });
     }
+  });
+});
+
+/***/ }),
+
+/***/ "./src/resources/js/plugins/loader/src/index.js":
+/*!******************************************************!*\
+  !*** ./src/resources/js/plugins/loader/src/index.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (editor) {
+  var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  var options = _objectSpread({
+    id: 'loader',
+    container: 'body',
+    styles: {
+      "left": "0",
+      "top": "0",
+      "background-color": "white",
+      "opacity": "0.7",
+      "position": "absolute",
+      "align-items": "center",
+      "justify-content": "center",
+      "width": "100%",
+      "height": "100%",
+      "font-size": "36pt",
+      "display": "flex",
+      "z-index": "100"
+    }
+  }, opts);
+
+  var container = document.querySelector(options.container);
+  var loader = document.getElementById('loader');
+
+  if (!loader) {
+    loader = document.createElement('div');
+    loader.id = 'loader';
+
+    for (var style in options.styles) {
+      loader.style[style] = options.styles[style];
+    }
+
+    loader.innerHTML = ' <i class="fa fa-spinner fa-spin"></i>';
+  }
+
+  var commands = editor.Commands;
+  commands.add('show-loader', function (editor, sender, opts) {
+    if (container) {
+      container.append(loader);
+      container.style.position = 'relative';
+    }
+  });
+  commands.add('hide-loader', function (editor, sender, opts) {
+    if (container) {
+      container.style.position = '';
+      var loaderElement = document.querySelector("".concat(options.container, " #loader"));
+      loaderElement && loaderElement.remove();
+    }
+  });
+  editor.on('storage:start', function () {
+    editor.runCommand('show-loader');
+  });
+  editor.on('storage:end', function () {
+    editor.runCommand('hide-loader');
   });
 });
 
