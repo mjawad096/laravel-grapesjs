@@ -17,7 +17,6 @@ class Config
     //Default Content
     public array $components;
     public array $style;
-    public ?string $templatesUrl;
 
     // Management
     public Canvas $canvas;
@@ -32,7 +31,7 @@ class Config
 
     public function initialize(Editable $editable)
     {
-        $pluginManager = app(PluginManager::class);
+        $pluginManager = app(PluginManager::class, ['templates_url' => $editable->templates_url]);
         $assetManager = app(AssetManager::class);
         $storageManager = app(StorageManager::class, ['save_url' => $editable->store_url]);
 
@@ -40,16 +39,13 @@ class Config
             ->mergeStyles($editable->style_sheet_links)
             ->mergeScripts($editable->script_links);
         
-
         $this->pluginManager = $pluginManager;
         $this->assetManager = $assetManager;
         $this->canvas = $canvas;
         $this->storageManager = $storageManager;
 
-
         $this->components = $editable->components; 
         $this->style = $editable->styles;
-        $this->templatesUrl = $editable->templates_url;
 
         // dd($this->toArray());
         return $this;

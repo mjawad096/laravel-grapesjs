@@ -1,0 +1,23 @@
+{
+  "name": "templates",
+  "version": "1.0.0",
+  "description": "Templates",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR-USERNAME/templates.git"
+  },
+  "scripts": {
+    "start": "grapesjs-cli serve",
+    "build": "grapesjs-cli build",
+    "bump": "npm version patch -m 'Bump v%s'"
+  },
+  "keywords": [
+    "grapesjs",
+    "plugin"
+  ],
+  "devDependencies": {
+    "grapesjs-cli": "^3.0.0"
+  },
+  "license": "MIT"
+}

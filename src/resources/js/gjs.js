@@ -4,24 +4,25 @@ import 'grapesjs-blocks-bootstrap4';
 import CodeEditor from "./plugins/code-editor"
 import ImageEditor from "./plugins/image-editor"
 
-import customFontFamily from "./plugins/custom-font-family"
-import loader from "./plugins/loader"
-import notifications from "./plugins/notifications"
-import saveButton from "./plugins/save-button"
-import backButton from "./plugins/back-button"
+import CustomFontFamily from "./plugins/custom-font-family"
+import Loader from "./plugins/loader"
+import Notifications from "./plugins/notifications"
+import SaveButton from "./plugins/save-button"
+import BackButton from "./plugins/back-button"
+import Templates from "./plugins/templates"
 
 let config = window.editorConfig;
 delete window.editorConfig;
 
 let plugins = [
-	customFontFamily,
-	loader,
-	notifications,
+	CustomFontFamily,
+	Loader,
+	Notifications,
 ]
 let pluginsOpts = {
-	[customFontFamily]: {fonts: config.pluginManager.customFonts},
-	[loader]: {},
-	[notifications]: {},
+	[CustomFontFamily]: {fonts: config.pluginManager.customFonts},
+	[Loader]: {},
+	[Notifications]: {},
 };
 
 if(config.pluginManager.basicBlocks){
@@ -44,9 +45,14 @@ if(config.pluginManager.imageEditor){
 	pluginsOpts[ImageEditor] = config.pluginManager.imageEditor
 }
 
-plugins.push(saveButton, backButton)
-pluginsOpts[saveButton] = {}
-pluginsOpts[backButton] = {}
+plugins.push(SaveButton, BackButton)
+pluginsOpts[SaveButton] = {}
+pluginsOpts[BackButton] = {}
+
+if(config.pluginManager.templates){	
+	plugins.push(Templates)
+	pluginsOpts[Templates] = config.pluginManager.templates
+}
 
 config.plugins = plugins
 config.pluginsOpts = pluginsOpts
@@ -67,9 +73,7 @@ editor.on('load',()=>{
 	window.document.dispatchEvent(event);
 })
 
-let blockManager = editor.BlockManager;
-
-blockManager.add("iframe", {
+editor.BlockManager.add("iframe", {
 	category: 'Basic',
     label: "iframe",
     type: "iframe",
@@ -117,17 +121,3 @@ editor.DomComponents.addType('image', {
 		},
 	},
 });
-
-if (config.templatesUrl) {
-	fetch(config.templatesUrl)
-		.then(resp => resp.json())
-		.then(data => {
-			data.forEach(block => {
-				blockManager.add('block-' + block.id, block);
-			});
-		})
-		.catch(error => {
-			console.log(error);
-		})
-}
-

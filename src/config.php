@@ -31,6 +31,7 @@ return [
             'code_editor' => true,
             'image_editor' => false,
             'custom_fonts' => [],
+            'templates' => true,
         ],
         'custom' => [],
     ],
