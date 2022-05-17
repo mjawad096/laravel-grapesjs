@@ -28,6 +28,7 @@ return [
         'default' => [
             'basic_blocks' => true,
             'bootstrap4_blocks' => false,
+            'code_editor' => true,
             'image_editor' => false,
             'custom_fonts' => [],
         ],
