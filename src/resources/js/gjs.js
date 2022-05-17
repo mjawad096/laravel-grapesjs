@@ -1,36 +1,34 @@
-const grapesjs = require('grapesjs');
-import pluginBlocks from 'grapesjs-blocks-basic';
-
+import grapesjs from 'grapesjs';
+import basicBlocks from 'grapesjs-blocks-basic';
+import bootstrap4Blocks from 'grapesjs-blocks-bootstrap4';
 import ImageEditor from "./plugins/image-editor"
-
-const toastr = require('toastr');
+import toastr from 'toastr';
 
 let config = window.editorConfig;
 delete window.editorConfig;
 
+let plugins = []
+let pluginsOpts = {};
 
-let plugins = [
-	pluginBlocks, 
-	// bootstrap4,
-]
+if(config.pluginManager.basicBlocks){
+	plugins.push('gjs-blocks-basic')
+	pluginsOpts['gjs-blocks-basic'] = config.pluginManager.basicBlocks;
+}
 
-let pluginsOpts = {
-	'grapesjs-blocks-basic': {},
-	// 'grapesjs-blocks-bootstrap4': {},
-};
+if(config.pluginManager.bootstrap4Blocks){
+	plugins.push('grapesjs-blocks-bootstrap4')
+	pluginsOpts['grapesjs-blocks-bootstrap4'] = config.pluginManager.bootstrap4Blocks;
+}
 
-if(config.imageEditor){
+if(config.pluginManager.imageEditor){	
 	plugins.push(ImageEditor)
-	pluginsOpts[ImageEditor] = {
-		dist_path: config.dist_path,
-		proxy_url : config.media_proxy_url,
-		proxy_url_input : config.media_proxy_url_input,
-	}
+	pluginsOpts[ImageEditor] = config.pluginManager.imageEditor
 }
 
 config.plugins = plugins
 config.pluginsOpts = pluginsOpts
 
+console.log(config);
 let editor = grapesjs.init(config);
 
 if(config.exposeApi){
