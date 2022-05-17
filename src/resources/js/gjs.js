@@ -57,7 +57,6 @@ if(config.pluginManager.templates){
 config.plugins = plugins
 config.pluginsOpts = pluginsOpts
 
-console.log(config);
 let editor = grapesjs.init(config);
 
 if(config.exposeApi){
@@ -65,13 +64,6 @@ if(config.exposeApi){
 		value: editor
 	})
 }
-
-editor.on('load',()=>{
-	const event = new Event('gjs_loaded');
-	event.editor = editor;
-
-	window.document.dispatchEvent(event);
-})
 
 editor.BlockManager.add("iframe", {
 	category: 'Basic',
