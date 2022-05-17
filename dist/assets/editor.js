@@ -9,8 +9,8 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! grapesjs */ "./node_modules/grapesjs/dist/grapes.min.js");
-/* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(grapesjs__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! grapesjs */ "./node_modules/grapesjs/dist/grapes.min.js");
+/* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(grapesjs__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! grapesjs-blocks-basic */ "./node_modules/grapesjs-blocks-basic/dist/grapesjs-blocks-basic.min.js");
 /* harmony import */ var grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var grapesjs_blocks_bootstrap4__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! grapesjs-blocks-bootstrap4 */ "./node_modules/grapesjs-blocks-bootstrap4/dist/grapesjs-blocks-bootstrap4.min.js");
@@ -22,9 +22,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _plugins_notifications__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./plugins/notifications */ "./src/resources/js/plugins/notifications/src/index.js");
 /* harmony import */ var _plugins_save_button__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./plugins/save-button */ "./src/resources/js/plugins/save-button/src/index.js");
 /* harmony import */ var _plugins_back_button__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./plugins/back-button */ "./src/resources/js/plugins/back-button/src/index.js");
+/* harmony import */ var _plugins_templates__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./plugins/templates */ "./src/resources/js/plugins/templates/src/index.js");
 var _pluginsOpts;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -66,10 +68,16 @@ if (config.pluginManager.imageEditor) {
 plugins.push(_plugins_save_button__WEBPACK_IMPORTED_MODULE_7__.default, _plugins_back_button__WEBPACK_IMPORTED_MODULE_8__.default);
 pluginsOpts[_plugins_save_button__WEBPACK_IMPORTED_MODULE_7__.default] = {};
 pluginsOpts[_plugins_back_button__WEBPACK_IMPORTED_MODULE_8__.default] = {};
+
+if (config.pluginManager.templates) {
+  plugins.push(_plugins_templates__WEBPACK_IMPORTED_MODULE_9__.default);
+  pluginsOpts[_plugins_templates__WEBPACK_IMPORTED_MODULE_9__.default] = config.pluginManager.templates;
+}
+
 config.plugins = plugins;
 config.pluginsOpts = pluginsOpts;
 console.log(config);
-var editor = grapesjs__WEBPACK_IMPORTED_MODULE_9___default().init(config);
+var editor = grapesjs__WEBPACK_IMPORTED_MODULE_10___default().init(config);
 
 if (config.exposeApi) {
   Object.defineProperty(window, 'gjsEditor', {
@@ -82,8 +90,7 @@ editor.on('load', function () {
   event.editor = editor;
   window.document.dispatchEvent(event);
 });
-var blockManager = editor.BlockManager;
-blockManager.add("iframe", {
+editor.BlockManager.add("iframe", {
   category: 'Basic',
   label: "iframe",
   type: "iframe",
@@ -129,18 +136,6 @@ editor.DomComponents.addType('image', {
     }
   }
 });
-
-if (config.templatesUrl) {
-  fetch(config.templatesUrl).then(function (resp) {
-    return resp.json();
-  }).then(function (data) {
-    data.forEach(function (block) {
-      blockManager.add('block-' + block.id, block);
-    });
-  })["catch"](function (error) {
-    console.log(error);
-  });
-}
 
 /***/ }),
 
@@ -804,6 +799,45 @@ __webpack_require__.r(__webpack_exports__);
       title: 'Save'
     }
   });
+});
+
+/***/ }),
+
+/***/ "./src/resources/js/plugins/templates/src/index.js":
+/*!*********************************************************!*\
+  !*** ./src/resources/js/plugins/templates/src/index.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (editor) {
+  var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  var options = _objectSpread({
+    url: null
+  }, opts);
+
+  if (options.url) {
+    fetch(options.url).then(function (resp) {
+      return resp.json();
+    }).then(function (data) {
+      data.forEach(function (block) {
+        editor.BlockManager.add('block-' + block.id, block);
+      });
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  }
 });
 
 /***/ }),

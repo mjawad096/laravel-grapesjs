@@ -9,13 +9,15 @@ class PluginManager
     public array|bool $codeEditor = false;
     public array|bool $imageEditor = false;
     public array $customFonts = [];
+    public array|bool $templates = false;
 
-    function __construct(){
+    function __construct($templates_url = null){
         $this->basicBlocks = config('laravel-grapesjs.plugins.default.basic_blocks', false);
         $this->bootstrap4Blocks = config('laravel-grapesjs.plugins.default.bootstrap4_blocks', false);
         $this->codeEditor = config('laravel-grapesjs.plugins.default.code_editor', false);
         $this->imageEditor = config('laravel-grapesjs.plugins.default.image_editor', false);
         $this->customFonts = config('laravel-grapesjs.plugins.default.custom_fonts', []);
+        $this->templates = config('laravel-grapesjs.plugins.default.templates', false);
 
         if($this->basicBlocks){
             $this->basicBlocks = [];
@@ -34,6 +36,12 @@ class PluginManager
                 'dist_path' => asset('vendor/laravel-grapesjs'),
                 'proxy_url' => route('laravel-grapesjs.asset.proxy'),
                 'proxy_url_input' => 'file',
+            ];
+        }
+
+        if($this->templates){
+            $this->templates = [
+                'url' => $templates_url,
             ];
         }
     }
