@@ -4,15 +4,18 @@ import 'grapesjs-blocks-basic';
 import 'grapesjs-blocks-bootstrap4';
 import ImageEditor from "./plugins/image-editor"
 import loader from "./plugins/loader"
+import saveButton from "./plugins/save-button"
 
 let config = window.editorConfig;
 delete window.editorConfig;
 
 let plugins = [
-	loader
+	loader,
+	saveButton,
 ]
 let pluginsOpts = {
 	[loader]: {},
+	[saveButton]: {},
 };
 
 if(config.pluginManager.basicBlocks){
@@ -154,97 +157,6 @@ panels.addButton('options',
 			command: 'html-edit',
 			attributes: {
 				title: 'Edit code.'
-			}
-		}
-	]
-);
-
-panels.addButton('options',
-	[
-		{
-			id: 'upload-file',
-			className: 'fa fa-upload',
-			command(editor) {
-				modal.setTitle('Upload File');
-				modal.backdrop = false;
-				let uploadFileContainer = document.createElement('div');
-				uploadFileContainer.style.position = 'relative';
-				uploadFileContainer.style.overflow = 'hidden';
-				let uploadedLink = document.createElement('input');
-				uploadedLink.type = 'text';
-				uploadedLink.style.width = "100%";
-				uploadedLink.readOnly = 'readonly';
-				let loader = document.createElement('div');
-				loader.style.display = 'none';
-				loader.style.alignItems = 'center';
-				loader.style.justifyContent = 'center';
-				loader.style.width = '100%';
-				loader.style.position = 'absolute';
-				loader.style.top = '0';
-				loader.style.left = '0';
-				loader.style.height = '100%';
-				loader.style.zIndex = '100';
-				loader.style.backgroundColor = '#727272e0';
-				loader.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
-				uploadFileContainer.append(loader);
-
-				let input = document.createElement('input');
-				input.type = "file";
-				input.style.width = '100%';
-				input.onchange = (event) => {
-					if (event.target.files[0] == undefined) { return; }
-					loader.style.display = 'flex';
-					let formData = new FormData();
-					formData.append("file", event.target.files[0]);
-					uploadFileContainer.disabled = 'true';
-					fetch('/media', {
-						method: "POST",
-						headers: {
-							'X-Requested-With': 'XMLHttpRequest'
-						},
-						body: formData
-					})
-						.then(resp => resp.json())
-						.then(data => {
-							event.target.value = "";
-							loader.style.display = 'none';
-							if (data.errors) {
-								throw data.message;
-							}
-							uploadedLink.value = data.media_url;
-							toastr.success('FIle uploaded and Link Ready', 'Success')
-						})
-						.catch(error => {
-							loader.style.display = 'none';
-							toastr.error(error, 'Error');
-						});
-				}
-
-				uploadFileContainer.append(input);
-				uploadFileContainer.append(uploadedLink);
-
-				modal.setContent(uploadFileContainer);
-				modal.open();
-			},
-			attributes: {
-				title: 'Upload a file and get its url.'
-			}
-		}
-	]
-);
-
-panels.addButton('options',
-	[
-		{
-			id: 'save',
-			className: 'fa fa-save',
-			command(editor) {
-				editor.store(res => {
-					toastr.success('Page Saved', 'Success');
-				});
-			},
-			attributes: {
-				title: 'Save'
 			}
 		}
 	]

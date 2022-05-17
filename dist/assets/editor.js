@@ -9,8 +9,8 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! grapesjs */ "./node_modules/grapesjs/dist/grapes.min.js");
-/* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(grapesjs__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! grapesjs */ "./node_modules/grapesjs/dist/grapes.min.js");
+/* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(grapesjs__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
 /* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! grapesjs-blocks-basic */ "./node_modules/grapesjs-blocks-basic/dist/grapesjs-blocks-basic.min.js");
@@ -19,7 +19,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var grapesjs_blocks_bootstrap4__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(grapesjs_blocks_bootstrap4__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _plugins_image_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./plugins/image-editor */ "./src/resources/js/plugins/image-editor/src/index.js");
 /* harmony import */ var _plugins_loader__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./plugins/loader */ "./src/resources/js/plugins/loader/src/index.js");
+/* harmony import */ var _plugins_save_button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./plugins/save-button */ "./src/resources/js/plugins/save-button/src/index.js");
+var _pluginsOpts;
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -29,9 +33,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var config = window.editorConfig;
 delete window.editorConfig;
-var plugins = [_plugins_loader__WEBPACK_IMPORTED_MODULE_4__.default];
-
-var pluginsOpts = _defineProperty({}, _plugins_loader__WEBPACK_IMPORTED_MODULE_4__.default, {});
+var plugins = [_plugins_loader__WEBPACK_IMPORTED_MODULE_4__.default, _plugins_save_button__WEBPACK_IMPORTED_MODULE_5__.default];
+var pluginsOpts = (_pluginsOpts = {}, _defineProperty(_pluginsOpts, _plugins_loader__WEBPACK_IMPORTED_MODULE_4__.default, {}), _defineProperty(_pluginsOpts, _plugins_save_button__WEBPACK_IMPORTED_MODULE_5__.default, {}), _pluginsOpts);
 
 if (config.pluginManager.basicBlocks) {
   plugins.push('gjs-blocks-basic');
@@ -51,7 +54,7 @@ if (config.pluginManager.imageEditor) {
 config.plugins = plugins;
 config.pluginsOpts = pluginsOpts;
 console.log(config);
-var editor = grapesjs__WEBPACK_IMPORTED_MODULE_5___default().init(config);
+var editor = grapesjs__WEBPACK_IMPORTED_MODULE_6___default().init(config);
 
 if (config.exposeApi) {
   Object.defineProperty(window, 'gjsEditor', {
@@ -161,90 +164,6 @@ panels.addButton('options', [{
   command: 'html-edit',
   attributes: {
     title: 'Edit code.'
-  }
-}]);
-panels.addButton('options', [{
-  id: 'upload-file',
-  className: 'fa fa-upload',
-  command: function command(editor) {
-    modal.setTitle('Upload File');
-    modal.backdrop = false;
-    var uploadFileContainer = document.createElement('div');
-    uploadFileContainer.style.position = 'relative';
-    uploadFileContainer.style.overflow = 'hidden';
-    var uploadedLink = document.createElement('input');
-    uploadedLink.type = 'text';
-    uploadedLink.style.width = "100%";
-    uploadedLink.readOnly = 'readonly';
-    var loader = document.createElement('div');
-    loader.style.display = 'none';
-    loader.style.alignItems = 'center';
-    loader.style.justifyContent = 'center';
-    loader.style.width = '100%';
-    loader.style.position = 'absolute';
-    loader.style.top = '0';
-    loader.style.left = '0';
-    loader.style.height = '100%';
-    loader.style.zIndex = '100';
-    loader.style.backgroundColor = '#727272e0';
-    loader.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
-    uploadFileContainer.append(loader);
-    var input = document.createElement('input');
-    input.type = "file";
-    input.style.width = '100%';
-
-    input.onchange = function (event) {
-      if (event.target.files[0] == undefined) {
-        return;
-      }
-
-      loader.style.display = 'flex';
-      var formData = new FormData();
-      formData.append("file", event.target.files[0]);
-      uploadFileContainer.disabled = 'true';
-      fetch('/media', {
-        method: "POST",
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest'
-        },
-        body: formData
-      }).then(function (resp) {
-        return resp.json();
-      }).then(function (data) {
-        event.target.value = "";
-        loader.style.display = 'none';
-
-        if (data.errors) {
-          throw data.message;
-        }
-
-        uploadedLink.value = data.media_url;
-        toastr__WEBPACK_IMPORTED_MODULE_0___default().success('FIle uploaded and Link Ready', 'Success');
-      })["catch"](function (error) {
-        loader.style.display = 'none';
-        toastr__WEBPACK_IMPORTED_MODULE_0___default().error(error, 'Error');
-      });
-    };
-
-    uploadFileContainer.append(input);
-    uploadFileContainer.append(uploadedLink);
-    modal.setContent(uploadFileContainer);
-    modal.open();
-  },
-  attributes: {
-    title: 'Upload a file and get its url.'
-  }
-}]);
-panels.addButton('options', [{
-  id: 'save',
-  className: 'fa fa-save',
-  command: function command(editor) {
-    editor.store(function (res) {
-      toastr__WEBPACK_IMPORTED_MODULE_0___default().success('Page Saved', 'Success');
-    });
-  },
-  attributes: {
-    title: 'Save'
   }
 }]);
 panels.addButton('options', [{
@@ -715,6 +634,39 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   });
   editor.on('storage:end', function () {
     editor.runCommand('hide-loader');
+  });
+});
+
+/***/ }),
+
+/***/ "./src/resources/js/plugins/save-button/src/index.js":
+/*!***********************************************************!*\
+  !*** ./src/resources/js/plugins/save-button/src/index.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (editor) {
+  var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  editor.Panels.addButton('options', {
+    id: 'save',
+    className: 'fa fa-save',
+    command: function command(editor) {
+      editor.store(function (res) {
+        editor.runCommand('notify', {
+          type: 'success',
+          title: 'Success',
+          message: "Page Saved Successfully"
+        });
+      });
+    },
+    attributes: {
+      title: 'Save'
+    }
   });
 });
 
