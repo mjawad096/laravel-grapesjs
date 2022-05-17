@@ -10,6 +10,13 @@ return [
     'puglings' => [],
     'fonts' => [],
 
+    'assets' => [
+        'disk' => 'public', //Default: local
+        'path' => null, //Default: 'laravel-grapesjs/media',
+        'upload_url' => null,
+        'upload_url' => null,
+    ],
+
     'canvas' => [
         'styles' => [],
         'scripts' => [],

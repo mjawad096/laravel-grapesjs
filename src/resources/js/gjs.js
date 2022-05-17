@@ -1,15 +1,13 @@
 const grapesjs = require('grapesjs');
 import pluginBlocks from 'grapesjs-blocks-basic';
-// import bootstrap4 from 'grapesjs-blocks-bootstrap4';
-import tUIImageEditor from 'grapesjs-tui-image-editor';
+
+import ImageEditor from "./plugins/image-editor"
 
 const toastr = require('toastr');
 
 let config = window.editorConfig;
 delete window.editorConfig;
 
-
-let remoteIcons = 'https://cdnjs.cloudflare.com/ajax/libs/tui-image-editor/3.15.0/svg/'
 
 let plugins = [
 	pluginBlocks, 
@@ -22,21 +20,11 @@ let pluginsOpts = {
 };
 
 if(config.imageEditor){
-	plugins.push(tUIImageEditor)
-	pluginsOpts[tUIImageEditor] = {
-		config: {
-			includeUI: {
-				initMenu: 'filter',
-			},
-		},
-		icons: {
-			'menu.normalIcon.path': `${remoteIcons}icon-d.svg`,
-			'menu.activeIcon.path': `${remoteIcons}icon-b.svg`,
-			'menu.disabledIcon.path': `${remoteIcons}icon-a.svg`,
-			'menu.hoverIcon.path': `${remoteIcons}icon-c.svg`,
-			'submenu.normalIcon.path': `${remoteIcons}icon-d.svg`,
-			'submenu.activeIcon.path': `${remoteIcons}icon-c.svg`,
-		},
+	plugins.push(ImageEditor)
+	pluginsOpts[ImageEditor] = {
+		dist_path: config.dist_path,
+		proxy_url : config.media_proxy_url,
+		proxy_url_input : config.media_proxy_url_input,
 	}
 }
 
