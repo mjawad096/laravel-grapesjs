@@ -9,8 +9,8 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! grapesjs */ "./node_modules/grapesjs/dist/grapes.min.js");
-/* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(grapesjs__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! grapesjs */ "./node_modules/grapesjs/dist/grapes.min.js");
+/* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(grapesjs__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! grapesjs-blocks-basic */ "./node_modules/grapesjs-blocks-basic/dist/grapesjs-blocks-basic.min.js");
 /* harmony import */ var grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var grapesjs_blocks_bootstrap4__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! grapesjs-blocks-bootstrap4 */ "./node_modules/grapesjs-blocks-bootstrap4/dist/grapesjs-blocks-bootstrap4.min.js");
@@ -20,6 +20,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _plugins_loader__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./plugins/loader */ "./src/resources/js/plugins/loader/src/index.js");
 /* harmony import */ var _plugins_notifications__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./plugins/notifications */ "./src/resources/js/plugins/notifications/src/index.js");
 /* harmony import */ var _plugins_save_button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./plugins/save-button */ "./src/resources/js/plugins/save-button/src/index.js");
+/* harmony import */ var _plugins_back_button__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./plugins/back-button */ "./src/resources/js/plugins/back-button/src/index.js");
 var _pluginsOpts;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -32,12 +33,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 var config = window.editorConfig;
 delete window.editorConfig;
-var plugins = [_plugins_custom_font_family__WEBPACK_IMPORTED_MODULE_3__.default, _plugins_loader__WEBPACK_IMPORTED_MODULE_4__.default, _plugins_notifications__WEBPACK_IMPORTED_MODULE_5__.default, _plugins_save_button__WEBPACK_IMPORTED_MODULE_6__.default];
+var plugins = [_plugins_custom_font_family__WEBPACK_IMPORTED_MODULE_3__.default, _plugins_loader__WEBPACK_IMPORTED_MODULE_4__.default, _plugins_notifications__WEBPACK_IMPORTED_MODULE_5__.default, _plugins_save_button__WEBPACK_IMPORTED_MODULE_6__.default, _plugins_back_button__WEBPACK_IMPORTED_MODULE_7__.default];
 var pluginsOpts = (_pluginsOpts = {}, _defineProperty(_pluginsOpts, _plugins_custom_font_family__WEBPACK_IMPORTED_MODULE_3__.default, {
   fonts: config.pluginManager.customFonts
-}), _defineProperty(_pluginsOpts, _plugins_loader__WEBPACK_IMPORTED_MODULE_4__.default, {}), _defineProperty(_pluginsOpts, _plugins_notifications__WEBPACK_IMPORTED_MODULE_5__.default, {}), _defineProperty(_pluginsOpts, _plugins_save_button__WEBPACK_IMPORTED_MODULE_6__.default, {}), _pluginsOpts);
+}), _defineProperty(_pluginsOpts, _plugins_loader__WEBPACK_IMPORTED_MODULE_4__.default, {}), _defineProperty(_pluginsOpts, _plugins_notifications__WEBPACK_IMPORTED_MODULE_5__.default, {}), _defineProperty(_pluginsOpts, _plugins_save_button__WEBPACK_IMPORTED_MODULE_6__.default, {}), _defineProperty(_pluginsOpts, _plugins_back_button__WEBPACK_IMPORTED_MODULE_7__.default, {}), _pluginsOpts);
 
 if (config.pluginManager.basicBlocks) {
   plugins.push('gjs-blocks-basic');
@@ -57,7 +59,7 @@ if (config.pluginManager.imageEditor) {
 config.plugins = plugins;
 config.pluginsOpts = pluginsOpts;
 console.log(config);
-var editor = grapesjs__WEBPACK_IMPORTED_MODULE_7___default().init(config);
+var editor = grapesjs__WEBPACK_IMPORTED_MODULE_8___default().init(config);
 
 if (config.exposeApi) {
   Object.defineProperty(window, 'gjsEditor', {
@@ -135,16 +137,6 @@ panels.addButton('options', [{
     title: 'Edit code.'
   }
 }]);
-panels.addButton('options', [{
-  id: 'cancel',
-  className: 'fa fa-arrow-left',
-  command: function command(editor) {
-    window.history.back();
-  },
-  attributes: {
-    title: 'Go back'
-  }
-}]);
 var blockManager = editor.BlockManager;
 blockManager.add("iframe", {
   category: 'Basic',
@@ -220,6 +212,50 @@ if (Object.keys(config).length === 0) {
 } else {
   __webpack_require__(/*! ./gjs */ "./src/resources/js/gjs.js");
 }
+
+/***/ }),
+
+/***/ "./src/resources/js/plugins/back-button/src/index.js":
+/*!***********************************************************!*\
+  !*** ./src/resources/js/plugins/back-button/src/index.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (editor) {
+  var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  var options = _objectSpread({
+    icon: 'fa fa-arrow-left',
+    title: 'Go back',
+    link: null
+  }, opts);
+
+  editor.Panels.addButton('options', {
+    id: 'cancel',
+    className: options.icon,
+    command: function command(editor) {
+      if (options.link) {
+        window.location = options.link;
+      } else {
+        window.history.back();
+      }
+    },
+    attributes: {
+      title: options.title
+    }
+  });
+});
 
 /***/ }),
 
