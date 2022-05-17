@@ -1,9 +1,9 @@
 import grapesjs from 'grapesjs';
-import toastr from 'toastr';
 import 'grapesjs-blocks-basic';
 import 'grapesjs-blocks-bootstrap4';
 import ImageEditor from "./plugins/image-editor"
 import loader from "./plugins/loader"
+import notifications from "./plugins/notifications"
 import saveButton from "./plugins/save-button"
 
 let config = window.editorConfig;
@@ -11,10 +11,12 @@ delete window.editorConfig;
 
 let plugins = [
 	loader,
+	notifications,
 	saveButton,
 ]
 let pluginsOpts = {
 	[loader]: {},
+	[notifications]: {},
 	[saveButton]: {},
 };
 

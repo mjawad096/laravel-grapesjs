@@ -11,14 +11,13 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! grapesjs */ "./node_modules/grapesjs/dist/grapes.min.js");
 /* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(grapesjs__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
-/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! grapesjs-blocks-basic */ "./node_modules/grapesjs-blocks-basic/dist/grapesjs-blocks-basic.min.js");
-/* harmony import */ var grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var grapesjs_blocks_bootstrap4__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! grapesjs-blocks-bootstrap4 */ "./node_modules/grapesjs-blocks-bootstrap4/dist/grapesjs-blocks-bootstrap4.min.js");
-/* harmony import */ var grapesjs_blocks_bootstrap4__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(grapesjs_blocks_bootstrap4__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _plugins_image_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./plugins/image-editor */ "./src/resources/js/plugins/image-editor/src/index.js");
-/* harmony import */ var _plugins_loader__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./plugins/loader */ "./src/resources/js/plugins/loader/src/index.js");
+/* harmony import */ var grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! grapesjs-blocks-basic */ "./node_modules/grapesjs-blocks-basic/dist/grapesjs-blocks-basic.min.js");
+/* harmony import */ var grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var grapesjs_blocks_bootstrap4__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! grapesjs-blocks-bootstrap4 */ "./node_modules/grapesjs-blocks-bootstrap4/dist/grapesjs-blocks-bootstrap4.min.js");
+/* harmony import */ var grapesjs_blocks_bootstrap4__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(grapesjs_blocks_bootstrap4__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _plugins_image_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./plugins/image-editor */ "./src/resources/js/plugins/image-editor/src/index.js");
+/* harmony import */ var _plugins_loader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./plugins/loader */ "./src/resources/js/plugins/loader/src/index.js");
+/* harmony import */ var _plugins_notifications__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./plugins/notifications */ "./src/resources/js/plugins/notifications/src/index.js");
 /* harmony import */ var _plugins_save_button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./plugins/save-button */ "./src/resources/js/plugins/save-button/src/index.js");
 var _pluginsOpts;
 
@@ -33,8 +32,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var config = window.editorConfig;
 delete window.editorConfig;
-var plugins = [_plugins_loader__WEBPACK_IMPORTED_MODULE_4__.default, _plugins_save_button__WEBPACK_IMPORTED_MODULE_5__.default];
-var pluginsOpts = (_pluginsOpts = {}, _defineProperty(_pluginsOpts, _plugins_loader__WEBPACK_IMPORTED_MODULE_4__.default, {}), _defineProperty(_pluginsOpts, _plugins_save_button__WEBPACK_IMPORTED_MODULE_5__.default, {}), _pluginsOpts);
+var plugins = [_plugins_loader__WEBPACK_IMPORTED_MODULE_3__.default, _plugins_notifications__WEBPACK_IMPORTED_MODULE_4__.default, _plugins_save_button__WEBPACK_IMPORTED_MODULE_5__.default];
+var pluginsOpts = (_pluginsOpts = {}, _defineProperty(_pluginsOpts, _plugins_loader__WEBPACK_IMPORTED_MODULE_3__.default, {}), _defineProperty(_pluginsOpts, _plugins_notifications__WEBPACK_IMPORTED_MODULE_4__.default, {}), _defineProperty(_pluginsOpts, _plugins_save_button__WEBPACK_IMPORTED_MODULE_5__.default, {}), _pluginsOpts);
 
 if (config.pluginManager.basicBlocks) {
   plugins.push('gjs-blocks-basic');
@@ -47,8 +46,8 @@ if (config.pluginManager.bootstrap4Blocks) {
 }
 
 if (config.pluginManager.imageEditor) {
-  plugins.push(_plugins_image_editor__WEBPACK_IMPORTED_MODULE_3__.default);
-  pluginsOpts[_plugins_image_editor__WEBPACK_IMPORTED_MODULE_3__.default] = config.pluginManager.imageEditor;
+  plugins.push(_plugins_image_editor__WEBPACK_IMPORTED_MODULE_2__.default);
+  pluginsOpts[_plugins_image_editor__WEBPACK_IMPORTED_MODULE_2__.default] = config.pluginManager.imageEditor;
 }
 
 config.plugins = plugins;
@@ -132,7 +131,7 @@ btnEdit.onclick = function () {
   editor.setComponents(html);
   editor.setStyle(css);
   modal.close();
-  toastr__WEBPACK_IMPORTED_MODULE_0___default().success('Content Updated', 'Success');
+  toastr.success('Content Updated', 'Success');
 };
 
 commands.add('html-edit', {
@@ -634,6 +633,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   });
   editor.on('storage:end', function () {
     editor.runCommand('hide-loader');
+  });
+});
+
+/***/ }),
+
+/***/ "./src/resources/js/plugins/notifications/src/index.js":
+/*!*************************************************************!*\
+  !*** ./src/resources/js/plugins/notifications/src/index.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (editor, opts) {
+  editor.Commands.add('notify', function (editor, sender, opts) {
+    (toastr__WEBPACK_IMPORTED_MODULE_0___default())[opts.type](opts.message, opts.title);
   });
 });
 
