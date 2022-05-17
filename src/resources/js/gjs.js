@@ -1,14 +1,19 @@
 import grapesjs from 'grapesjs';
-import basicBlocks from 'grapesjs-blocks-basic';
-import bootstrap4Blocks from 'grapesjs-blocks-bootstrap4';
-import ImageEditor from "./plugins/image-editor"
 import toastr from 'toastr';
+import 'grapesjs-blocks-basic';
+import 'grapesjs-blocks-bootstrap4';
+import ImageEditor from "./plugins/image-editor"
+import loader from "./plugins/loader"
 
 let config = window.editorConfig;
 delete window.editorConfig;
 
-let plugins = []
-let pluginsOpts = {};
+let plugins = [
+	loader
+]
+let pluginsOpts = {
+	[loader]: {},
+};
 
 if(config.pluginManager.basicBlocks){
 	plugins.push('gjs-blocks-basic')
@@ -37,19 +42,6 @@ if(config.exposeApi){
 	})
 }
 
-let loader = document.getElementById('loader');
-let showLoader = function(){
-	if (loader){
-		loader.style.display = 'flex';
-	}
-}
-
-let hideLoader = function(){
-	if (loader){
-		loader.style.display = 'none';
-	}
-}
-
 
 editor.addFontFamily = function(fontFamily, prepend){
 	prepend = prepend === true
@@ -70,8 +62,6 @@ editor.addFontFamily = function(fontFamily, prepend){
 }
 
 editor.on('load',()=>{
-	hideLoader();
-
 	const event = new Event('gjs_loaded');
 	event.editor = editor;
 
@@ -249,9 +239,7 @@ panels.addButton('options',
 			id: 'save',
 			className: 'fa fa-save',
 			command(editor) {
-				showLoader();
 				editor.store(res => {
-					hideLoader();
 					toastr.success('Page Saved', 'Success');
 				});
 			},
