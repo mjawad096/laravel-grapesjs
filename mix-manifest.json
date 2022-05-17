@@ -4,5 +4,9 @@
     "/dist/fonts/main-fonts.eot": "/dist/fonts/main-fonts.eot",
     "/dist/fonts/main-fonts.svg": "/dist/fonts/main-fonts.svg",
     "/dist/fonts/main-fonts.ttf": "/dist/fonts/main-fonts.ttf",
-    "/dist/fonts/main-fonts.woff": "/dist/fonts/main-fonts.woff"
+    "/dist/fonts/main-fonts.woff": "/dist/fonts/main-fonts.woff",
+    "/dist/svg/icon-a.svg": "/dist/svg/icon-a.svg",
+    "/dist/svg/icon-b.svg": "/dist/svg/icon-b.svg",
+    "/dist/svg/icon-c.svg": "/dist/svg/icon-c.svg",
+    "/dist/svg/icon-d.svg": "/dist/svg/icon-d.svg"
 }

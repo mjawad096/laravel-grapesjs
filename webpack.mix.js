@@ -26,7 +26,7 @@ mix.js('src/resources/js', 'dist/assets/editor.js')
     });
 
 mix.copyDirectory('node_modules/grapesjs/dist/fonts', 'dist/fonts')
-// mix.copyDirectory('src/resources/js/plugins/image-editor/src/svg', 'dist/svg')
+mix.copyDirectory('src/resources/js/plugins/image-editor/svg', 'dist/svg')
 
 
 if(!mix.inProduction()){

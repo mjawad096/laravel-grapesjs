@@ -11,11 +11,9 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! grapesjs-blocks-basic */ "./node_modules/grapesjs-blocks-basic/dist/grapesjs-blocks-basic.min.js");
 /* harmony import */ var grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var grapesjs_tui_image_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! grapesjs-tui-image-editor */ "./node_modules/grapesjs-tui-image-editor/dist/grapesjs-tui-image-editor.min.js");
-/* harmony import */ var grapesjs_tui_image_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(grapesjs_tui_image_editor__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _plugins_image_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./plugins/image-editor */ "./src/resources/js/plugins/image-editor/src/index.js");
 var grapesjs = __webpack_require__(/*! grapesjs */ "./node_modules/grapesjs/dist/grapes.min.js");
 
- // import bootstrap4 from 'grapesjs-blocks-bootstrap4';
 
 
 
@@ -23,7 +21,6 @@ var toastr = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js"
 
 var config = window.editorConfig;
 delete window.editorConfig;
-var remoteIcons = 'https://cdnjs.cloudflare.com/ajax/libs/tui-image-editor/3.15.0/svg/';
 var plugins = [(grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_0___default()) // bootstrap4,
 ];
 var pluginsOpts = {
@@ -32,21 +29,11 @@ var pluginsOpts = {
 };
 
 if (config.imageEditor) {
-  plugins.push((grapesjs_tui_image_editor__WEBPACK_IMPORTED_MODULE_1___default()));
-  pluginsOpts[(grapesjs_tui_image_editor__WEBPACK_IMPORTED_MODULE_1___default())] = {
-    config: {
-      includeUI: {
-        initMenu: 'filter'
-      }
-    },
-    icons: {
-      'menu.normalIcon.path': "".concat(remoteIcons, "icon-d.svg"),
-      'menu.activeIcon.path': "".concat(remoteIcons, "icon-b.svg"),
-      'menu.disabledIcon.path': "".concat(remoteIcons, "icon-a.svg"),
-      'menu.hoverIcon.path': "".concat(remoteIcons, "icon-c.svg"),
-      'submenu.normalIcon.path': "".concat(remoteIcons, "icon-d.svg"),
-      'submenu.activeIcon.path': "".concat(remoteIcons, "icon-c.svg")
-    }
+  plugins.push(_plugins_image_editor__WEBPACK_IMPORTED_MODULE_1__.default);
+  pluginsOpts[_plugins_image_editor__WEBPACK_IMPORTED_MODULE_1__.default] = {
+    dist_path: config.dist_path,
+    proxy_url: config.media_proxy_url,
+    proxy_url_input: config.media_proxy_url_input
   };
 }
 
@@ -353,6 +340,314 @@ if (Object.keys(config).length === 0) {
 
 /***/ }),
 
+/***/ "./src/resources/js/plugins/image-editor/src/index.js":
+/*!************************************************************!*\
+  !*** ./src/resources/js/plugins/image-editor/src/index.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (editor) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  var opts = _objectSpread(_objectSpread({}, {
+    proxy_url: null,
+    proxy_url_input: 'file',
+    // TOAST UI's configurations
+    // http://nhnent.github.io/tui.image-editor/latest/ImageEditor.html
+    config: {
+      includeUI: {
+        initMenu: 'filter'
+      }
+    },
+    // Pass the editor constructor. By default, the `tui.ImageEditor` will be called
+    constructor: '',
+    // Label for the image editor (used in the modal)
+    labelImageEditor: 'Image Editor',
+    // Label used on the apply button
+    labelApply: 'Apply',
+    // Default editor height
+    height: '650px',
+    // Default editor width
+    width: '100%',
+    // Id to use to create the image editor command
+    commandId: 'tui-image-editor',
+    // Icon used in the component toolbar
+    toolbarIcon: "<svg viewBox=\"0 0 24 24\">\n                    <path d=\"M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z\">\n                    </path>\n                  </svg>",
+    // Hide the default editor header
+    hideHeader: 1,
+    // By default, GrapesJS takes the modified image, adds it to the Asset Manager and update the target.
+    // If you need some custom logic you can use this custom 'onApply' function
+    // eg.
+    // onApply: (imageEditor, imageModel) => {
+    //   const dataUrl = imageEditor.toDataURL();
+    //   editor.AssetManager.add({ src: dataUrl }); // Add it to Assets
+    //   imageModel.set('src', dataUrl); // Update the image component
+    // }
+    onApply: 0,
+    // If no custom `onApply` is passed and this option is `true`, the result image will be added to assets
+    addToAssets: 1,
+    // If no custom `onApply` is passed, on confirm, the edited image, will be passed to the AssetManager's
+    // uploader and the result (eg. instead of having the dataURL you'll have the URL) will be
+    // passed to the default `onApply` process (update target, etc.)
+    upload: 1,
+    // The apply button (HTMLElement) will be passed as an argument to this function, once created.
+    // This will allow you a higher customization.
+    onApplyButton: function onApplyButton() {},
+    // The TOAST UI editor isn't compiled with icons, so generally, you should download them and indicate
+    // the local path in the `includeUI.theme` configurations.
+    // Use this option to change them or set it to `false` to keep what is come in `includeUI.theme`
+    // By default, the plugin will try to use the editor's remote icons (which involves a cross-origin async
+    // request, indicated as unsafe by most of the browsers)
+    icons: {
+      'menu.normalIcon.path': "".concat(options.dist_path, "/svg/icon-d.svg"),
+      'menu.activeIcon.path': "".concat(options.dist_path, "/svg/icon-b.svg"),
+      'menu.disabledIcon.path': "".concat(options.dist_path, "/svg/icon-a.svg"),
+      'menu.hoverIcon.path': "".concat(options.dist_path, "/svg/icon-c.svg"),
+      'submenu.normalIcon.path': "".concat(options.dist_path, "/svg/icon-d.svg"),
+      'submenu.activeIcon.path': "".concat(options.dist_path, "/svg/icon-c.svg")
+    },
+    // Scripts to load dynamically in case no TOAST UI editor instance was found
+    script: ['https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.6.7/fabric.js', 'https://uicdn.toast.com/tui.code-snippet/v1.5.0/tui-code-snippet.min.js', 'https://uicdn.toast.com/tui-color-picker/v2.2.0/tui-color-picker.min.js', 'https://uicdn.toast.com/tui-image-editor/v3.4.0/tui-image-editor.js'],
+    // In case the script is loaded this style will be loaded too
+    style: ['https://uicdn.toast.com/tui-color-picker/v2.2.0/tui-color-picker.min.css', 'https://uicdn.toast.com/tui-image-editor/v3.4.0/tui-image-editor.min.css']
+  }), options);
+
+  var script = opts.script,
+      style = opts.style,
+      height = opts.height,
+      width = opts.width,
+      hideHeader = opts.hideHeader,
+      icons = opts.icons,
+      onApply = opts.onApply,
+      upload = opts.upload,
+      addToAssets = opts.addToAssets,
+      commandId = opts.commandId;
+
+  var getConstructor = function getConstructor() {
+    return opts.constructor || window.tui && window.tui.ImageEditor;
+  };
+
+  var constr = getConstructor(); // Dynamic loading of the image editor scripts and styles
+
+  if (!constr && script) {
+    var _document = document,
+        head = _document.head;
+    var scripts = Array.isArray(script) ? _toConsumableArray(script) : [script];
+    var styles = Array.isArray(style) ? _toConsumableArray(style) : [style];
+
+    var appendStyle = function appendStyle(styles) {
+      if (styles.length) {
+        var link = document.createElement('link');
+        link.href = styles.shift();
+        link.rel = 'stylesheet';
+        head.appendChild(link);
+        appendStyle(styles);
+      }
+    };
+
+    var appendScript = function appendScript(scripts) {
+      if (scripts.length) {
+        var scr = document.createElement('script');
+        scr.src = scripts.shift();
+        scr.onerror = scr.onload = appendScript.bind(null, scripts);
+        head.appendChild(scr);
+      } else {
+        constr = getConstructor();
+      }
+    };
+
+    appendStyle(styles);
+    appendScript(scripts);
+  } // Update image component toolbar
+
+
+  var domc = editor.DomComponents;
+  var typeImage = domc.getType('image').model;
+  domc.addType('image', {
+    model: {
+      initToolbar: function initToolbar() {
+        typeImage.prototype.initToolbar.apply(this, arguments);
+        var tb = this.get('toolbar');
+        var tbExists = tb.some(function (item) {
+          return item.command === commandId;
+        });
+
+        if (!tbExists) {
+          tb.unshift({
+            command: commandId,
+            label: opts.toolbarIcon
+          });
+          this.set('toolbar', tb);
+        }
+      }
+    }
+  }); // Add the image editor command
+
+  editor.Commands.add(commandId, {
+    run: function run(ed, s) {
+      var _this = this;
+
+      var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      var id = this.id;
+
+      if (!constr) {
+        ed.log('TOAST UI Image editor not found', {
+          level: 'error',
+          ns: commandId
+        });
+        return ed.stopCommand(id);
+      }
+
+      this.editor = ed;
+      this.target = options.target || ed.getSelected();
+      var content = this.createContent();
+      var title = opts.labelImageEditor;
+      var btn = content.children[1];
+      ed.Modal.open({
+        title: title,
+        content: content
+      }).getModel().once('change:open', function () {
+        return ed.stopCommand(id);
+      });
+      this.imageEditor = new constr(content.children[0], this.getEditorConfig());
+      ed.getModel().setEditing(1);
+
+      btn.onclick = function () {
+        return _this.applyChanges();
+      };
+
+      opts.onApplyButton(btn);
+    },
+    stop: function stop(ed) {
+      var imageEditor = this.imageEditor;
+      imageEditor && imageEditor.destroy();
+      ed.getModel().setEditing(0);
+    },
+    getEditorConfig: function getEditorConfig() {
+      var config = _objectSpread({}, opts.config);
+
+      var path = this.target.get('src');
+
+      if (opts.proxy_url && !path.startsWith('data:')) {
+        path = "".concat(opts.proxy_url, "?").concat(opts.proxy_url_input, "=").concat(encodeURI(path));
+      }
+
+      if (!config.includeUI) config.includeUI = {};
+      config.includeUI = _objectSpread(_objectSpread({
+        theme: {}
+      }, config.includeUI), {}, {
+        loadImage: {
+          path: path,
+          name: 1
+        },
+        uiSize: {
+          height: height,
+          width: width
+        }
+      });
+      if (hideHeader) config.includeUI.theme['header.display'] = 'none';
+      if (icons) config.includeUI.theme = _objectSpread(_objectSpread({}, config.includeUI.theme), icons);
+      return config;
+    },
+    createContent: function createContent() {
+      var content = document.createElement('div');
+      content.style = 'position: relative';
+      content.innerHTML = "\n        <div></div>\n        <button class=\"tui-image-editor__apply-btn\" style=\"\n          position: absolute;\n          top: 0; right: 0;\n          margin: 10px;\n          background-color: #fff;\n          font-size: 1rem;\n          border-radius: 3px;\n          border: none;\n          padding: 10px 20px;\n          cursor: pointer\n        \">\n          ".concat(opts.labelApply, "\n        </botton>\n      ");
+      return content;
+    },
+    applyChanges: function applyChanges() {
+      var _this2 = this;
+
+      var imageEditor = this.imageEditor,
+          target = this.target,
+          editor = this.editor;
+      var AssetManager = editor.AssetManager;
+
+      if (onApply) {
+        onApply(imageEditor, target);
+      } else {
+        if (imageEditor.getDrawingMode() === 'CROPPER') {
+          imageEditor.crop(imageEditor.getCropzoneRect()).then(function () {
+            _this2.uploadImage(imageEditor, target, AssetManager);
+          });
+        } else {
+          this.uploadImage(imageEditor, target, AssetManager);
+        }
+      }
+    },
+    uploadImage: function uploadImage(imageEditor, target, am) {
+      var _this3 = this;
+
+      var dataURL = imageEditor.toDataURL();
+
+      if (upload) {
+        var file = this.dataUrlToBlob(dataURL);
+        am.FileUploader().uploadFile({
+          dataTransfer: {
+            files: [file]
+          }
+        }, function (res) {
+          var obj = res && res.data && res.data[0];
+          var src = obj && (typeof obj === 'string' ? obj : obj.src);
+          src && _this3.applyToTarget(src);
+        });
+      } else {
+        addToAssets && am.add({
+          src: dataURL,
+          name: (target.get('src') || '').split('/').pop()
+        });
+        this.applyToTarget(dataURL);
+      }
+    },
+    applyToTarget: function applyToTarget(result) {
+      this.target.set({
+        src: result
+      });
+      this.editor.Modal.close();
+    },
+    dataUrlToBlob: function dataUrlToBlob(dataURL) {
+      var data = dataURL.split(',');
+      var byteStr = window.atob(data[1]);
+      var type = data[0].split(':')[1].split(';')[0];
+      var ab = new ArrayBuffer(byteStr.length);
+      var ia = new Uint8Array(ab);
+
+      for (var i = 0; i < byteStr.length; i++) {
+        ia[i] = byteStr.charCodeAt(i);
+      }
+
+      return new Blob([ab], {
+        type: type
+      });
+    }
+  });
+});
+
+/***/ }),
+
 /***/ "./node_modules/grapesjs-blocks-basic/dist/grapesjs-blocks-basic.min.js":
 /*!******************************************************************************!*\
   !*** ./node_modules/grapesjs-blocks-basic/dist/grapesjs-blocks-basic.min.js ***!
@@ -361,18 +656,6 @@ if (Object.keys(config).length === 0) {
 
 /*! grapesjs-blocks-basic - 0.1.8 */
 !function(e,t){ true?module.exports=t(__webpack_require__(/*! grapesjs */ "./node_modules/grapesjs/dist/grapes.min.js")):0}(this,function(e){return function(e){function t(a){if(n[a])return n[a].exports;var l=n[a]={i:a,l:!1,exports:{}};return e[a].call(l.exports,l,l.exports,t),l.l=!0,l.exports}var n={};return t.m=e,t.c=n,t.d=function(e,n,a){t.o(e,n)||Object.defineProperty(e,n,{configurable:!1,enumerable:!0,get:a})},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=0)}([function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var a=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var a in n)Object.prototype.hasOwnProperty.call(n,a)&&(e[a]=n[a])}return e},l=n(1),i=function(e){return e&&e.__esModule?e:{default:e}}(l);t.default=i.default.plugins.add("gjs-blocks-basic",function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},l=a({blocks:["column1","column2","column3","column3-7","text","link","image","video","map"],flexGrid:0,stylePrefix:"gjs-",addBasicStyle:!0,category:"Basic",labelColumn1:"1 Column",labelColumn2:"2 Columns",labelColumn3:"3 Columns",labelColumn37:"2 Columns 3/7",labelText:"Text",labelLink:"Link",labelImage:"Image",labelVideo:"Video",labelMap:"Map"},t);n(2).default(e,l)})},function(t,n){t.exports=e},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var a=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var a in n)Object.prototype.hasOwnProperty.call(n,a)&&(e[a]=n[a])}return e};t.default=function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},n=t,l=e.BlockManager,i=n.blocks,s=n.stylePrefix,o=n.flexGrid,r=n.addBasicStyle,c=s+"row",d=s+"cell",u=o?"\n    ."+c+" {\n      display: flex;\n      justify-content: flex-start;\n      align-items: stretch;\n      flex-wrap: nowrap;\n      padding: 10px;\n    }\n    @media (max-width: 768px) {\n      ."+c+" {\n        flex-wrap: wrap;\n      }\n    }":"\n    ."+c+" {\n      display: table;\n      padding: 10px;\n      width: 100%;\n    }\n    @media (max-width: 768px) {\n      ."+s+"cell, ."+s+"cell30, ."+s+"cell70 {\n        width: 100%;\n        display: block;\n      }\n    }",b=o?"\n    ."+d+" {\n      min-height: 75px;\n      flex-grow: 1;\n      flex-basis: 100%;\n    }":"\n    ."+d+" {\n      width: 8%;\n      display: table-cell;\n      height: 75px;\n    }",f="\n  ."+s+"cell30 {\n    width: 30%;\n  }",g="\n  ."+s+"cell70 {\n    width: 70%;\n  }",p={tl:0,tc:0,tr:0,cl:0,cr:0,bl:0,br:0,minDim:1},y=a({},p,{cr:1,bc:0,currentUnit:1,minDim:1,step:.2});o&&(y.keyWidth="flex-basis");var m={class:c,"data-gjs-droppable":"."+d,"data-gjs-resizable":p,"data-gjs-name":"Row"},v={class:d,"data-gjs-draggable":"."+c,"data-gjs-resizable":y,"data-gjs-name":"Cell"};o&&(v["data-gjs-unstylable"]=["width"],v["data-gjs-stylable-require"]=["flex-basis"]);var x=["."+c,"."+d];e.on("selector:add",function(e){return x.indexOf(e.getFullName())>=0&&e.set("private",1)});var j=function(e){var t=[];for(var n in e){var a=e[n],l=a instanceof Array||a instanceof Object;a=l?JSON.stringify(a):a,t.push(n+"="+(l?"'"+a+"'":'"'+a+'"'))}return t.length?" "+t.join(" "):""},h=function(e){return i.indexOf(e)>=0},w=j(m),k=j(v);h("column1")&&l.add("column1",{label:n.labelColumn1,category:n.category,attributes:{class:"gjs-fonts gjs-f-b1"},content:"<div "+w+">\n        <div "+k+"></div>\n      </div>\n      "+(r?"<style>\n          "+u+"\n          "+b+"\n        </style>":"")}),h("column2")&&l.add("column2",{label:n.labelColumn2,attributes:{class:"gjs-fonts gjs-f-b2"},category:n.category,content:"<div "+w+">\n        <div "+k+"></div>\n        <div "+k+"></div>\n      </div>\n      "+(r?"<style>\n          "+u+"\n          "+b+"\n        </style>":"")}),h("column3")&&l.add("column3",{label:n.labelColumn3,category:n.category,attributes:{class:"gjs-fonts gjs-f-b3"},content:"<div "+w+">\n        <div "+k+"></div>\n        <div "+k+"></div>\n        <div "+k+"></div>\n      </div>\n      "+(r?"<style>\n          "+u+"\n          "+b+"\n        </style>":"")}),h("column3-7")&&l.add("column3-7",{label:n.labelColumn37,category:n.category,attributes:{class:"gjs-fonts gjs-f-b37"},content:"<div "+w+">\n        <div "+k+' style="'+(o?"flex-basis":"width")+': 30%;"></div>\n        <div '+k+' style="'+(o?"flex-basis":"width")+': 70%;"></div>\n      </div>\n      '+(r?"<style>\n          "+u+"\n          "+b+"\n          "+f+"\n          "+g+"\n        </style>":"")}),h("text")&&l.add("text",{label:n.labelText,category:n.category,attributes:{class:"gjs-fonts gjs-f-text"},content:{type:"text",content:"Insert your text here",style:{padding:"10px"},activeOnRender:1}}),h("link")&&l.add("link",{label:n.labelLink,category:n.category,attributes:{class:"fa fa-link"},content:{type:"link",content:"Link",style:{color:"#d983a6"}}}),h("image")&&l.add("image",{label:n.labelImage,category:n.category,attributes:{class:"gjs-fonts gjs-f-image"},content:{style:{color:"black"},type:"image",activeOnRender:1}}),h("video")&&l.add("video",{label:n.labelVideo,category:n.category,attributes:{class:"fa fa-youtube-play"},content:{type:"video",src:"img/video2.webm",style:{height:"350px",width:"615px"}}}),h("map")&&l.add("map",{label:n.labelMap,category:n.category,attributes:{class:"fa fa-map-o"},content:{type:"map",style:{height:"350px"}}})}}])});
-
-/***/ }),
-
-/***/ "./node_modules/grapesjs-tui-image-editor/dist/grapesjs-tui-image-editor.min.js":
-/*!**************************************************************************************!*\
-  !*** ./node_modules/grapesjs-tui-image-editor/dist/grapesjs-tui-image-editor.min.js ***!
-  \**************************************************************************************/
-/***/ ((module) => {
-
-/*! grapesjs-tui-image-editor - 0.1.3 */
-!function(t,e){ true?module.exports=e():0}(window,function(){return function(t){var e={};function n(o){if(e[o])return e[o].exports;var r=e[o]={i:o,l:!1,exports:{}};return t[o].call(r.exports,r,r.exports,n),r.l=!0,r.exports}return n.m=t,n.c=e,n.d=function(t,e,o){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:o})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var o=Object.create(null);if(n.r(o),Object.defineProperty(o,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var r in t)n.d(o,r,function(e){return t[e]}.bind(null,r));return o},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=2)}([function(t,e,n){var o=n(6);t.exports=function(t){for(var e=1;e<arguments.length;e++){var n=null!=arguments[e]?arguments[e]:{},r=Object.keys(n);"function"==typeof Object.getOwnPropertySymbols&&(r=r.concat(Object.getOwnPropertySymbols(n).filter(function(t){return Object.getOwnPropertyDescriptor(n,t).enumerable}))),r.forEach(function(e){o(t,e,n[e])})}return t}},function(t,e,n){var o=n(3),r=n(4),i=n(5);t.exports=function(t){return o(t)||r(t)||i()}},function(t,e,n){"use strict";n.r(e);var o=n(1),r=n.n(o),i=n(0),a=n.n(i);e.default=function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},n="https://raw.githubusercontent.com/nhnent/tui.image-editor/production/dist/svg/",o=a()({},{config:{},constructor:"",labelImageEditor:"Image Editor",labelApply:"Apply",height:"650px",width:"100%",commandId:"tui-image-editor",toolbarIcon:'<svg viewBox="0 0 24 24">\n                    <path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z">\n                    </path>\n                  </svg>',hideHeader:1,onApply:0,addToAssets:1,upload:0,onApplyButton:function(){},icons:{"menu.normalIcon.path":"".concat(n,"icon-d.svg"),"menu.activeIcon.path":"".concat(n,"icon-b.svg"),"menu.disabledIcon.path":"".concat(n,"icon-a.svg"),"menu.hoverIcon.path":"".concat(n,"icon-c.svg"),"submenu.normalIcon.path":"".concat(n,"icon-d.svg"),"submenu.activeIcon.path":"".concat(n,"icon-c.svg")},script:["https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.6.7/fabric.min.js","https://uicdn.toast.com/tui.code-snippet/v1.5.0/tui-code-snippet.min.js","https://uicdn.toast.com/tui-color-picker/v2.2.0/tui-color-picker.min.js","https://uicdn.toast.com/tui-image-editor/v3.4.0/tui-image-editor.min.js"],style:["https://uicdn.toast.com/tui-color-picker/v2.2.0/tui-color-picker.min.css","https://uicdn.toast.com/tui-image-editor/v3.4.0/tui-image-editor.min.css"]},e),i=o.script,c=o.style,u=o.height,s=o.width,l=o.hideHeader,d=o.icons,p=o.onApply,f=o.upload,g=o.addToAssets,m=o.commandId,h=function(){return o.constructor||window.tui&&window.tui.ImageEditor},b=h();if(!b&&i){var y=document.head,v=Array.isArray(i)?r()(i):[i];!function t(e){if(e.length){var n=document.createElement("link");n.href=e.shift(),n.rel="stylesheet",y.appendChild(n),t(e)}}(Array.isArray(c)?r()(c):[c]),function t(e){if(e.length){var n=document.createElement("script");n.src=e.shift(),n.onerror=n.onload=t.bind(null,e),y.appendChild(n)}else b=h()}(v)}var I=t.DomComponents,j=I.getType("image").model;I.addType("image",{model:{initToolbar:function(){j.prototype.initToolbar.apply(this,arguments);var t=this.get("toolbar");t.some(function(t){return t.command===m})||(t.unshift({command:m,label:o.toolbarIcon}),this.set("toolbar",t))}}}),t.Commands.add(m,{run:function(t,e){var n=this,r=arguments.length>2&&void 0!==arguments[2]?arguments[2]:{},i=this.id;if(!b)return t.log("TOAST UI Image editor not found",{level:"error",ns:m}),t.stopCommand(i);this.editor=t,this.target=r.target||t.getSelected();var a=this.createContent(),c=o.labelImageEditor,u=a.children[1];t.Modal.open({title:c,content:a}).getModel().once("change:open",function(){return t.stopCommand(i)}),this.imageEditor=new b(a.children[0],this.getEditorConfig()),t.getModel().setEditing(1),u.onclick=function(){return n.applyChanges()},o.onApplyButton(u)},stop:function(t){var e=this.imageEditor;e&&e.destroy(),t.getModel().setEditing(0)},getEditorConfig:function(){var t=a()({},o.config),e=this.target.get("src");return t.includeUI||(t.includeUI={}),t.includeUI=a()({theme:{}},t.includeUI,{loadImage:{path:e,name:1},uiSize:{height:u,width:s}}),l&&(t.includeUI.theme["header.display"]="none"),d&&(t.includeUI.theme=a()({},t.includeUI.theme,d)),t},createContent:function(){var t=document.createElement("div");return t.style="position: relative",t.innerHTML='\n        <div></div>\n        <button class="tui-image-editor__apply-btn" style="\n          position: absolute;\n          top: 0; right: 0;\n          margin: 10px;\n          background-color: #fff;\n          font-size: 1rem;\n          border-radius: 3px;\n          border: none;\n          padding: 10px 20px;\n          cursor: pointer\n        ">\n          '.concat(o.labelApply,"\n        </botton>\n      "),t},applyChanges:function(){var t=this,e=this.imageEditor,n=this.target,o=this.editor.AssetManager;p?p(e,n):"CROPPER"===e.getDrawingMode()?e.crop(e.getCropzoneRect()).then(function(){t.uploadImage(e,n,o)}):this.uploadImage(e,n,o)},uploadImage:function(t,e,n){var o=this,r=t.toDataURL();if(f){var i=this.dataUrlToBlob(r);n.FileUploader().uploadFile({dataTransfer:{files:[i]}},function(t){var e=t&&t.data&&t.data[0],n=e&&("string"==typeof e?e:e.src);n&&o.applyToTarget(n)})}else g&&n.add({src:r,name:(e.get("src")||"").split("/").pop()}),this.applyToTarget(r)},applyToTarget:function(t){this.target.set({src:t}),this.editor.Modal.close()},dataUrlToBlob:function(t){for(var e=t.split(","),n=window.atob(e[1]),o=e[0].split(":")[1].split(";")[0],r=new ArrayBuffer(n.length),i=new Uint8Array(r),a=0;a<n.length;a++)i[a]=n.charCodeAt(a);return new Blob([r],{type:o})}})}},function(t,e){t.exports=function(t){if(Array.isArray(t)){for(var e=0,n=new Array(t.length);e<t.length;e++)n[e]=t[e];return n}}},function(t,e){t.exports=function(t){if(Symbol.iterator in Object(t)||"[object Arguments]"===Object.prototype.toString.call(t))return Array.from(t)}},function(t,e){t.exports=function(){throw new TypeError("Invalid attempt to spread non-iterable instance")}},function(t,e){t.exports=function(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}}])});
-//# sourceMappingURL=grapesjs-tui-image-editor.min.js.map
 
 /***/ }),
 

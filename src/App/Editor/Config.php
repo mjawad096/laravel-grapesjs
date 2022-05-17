@@ -21,11 +21,20 @@ class Config
     public ?string $templatesUrl;
     public bool $forceClass = true;
 
+    public $dist_path;
+    public $media_proxy_url;
+    public $media_proxy_url_input;
+
     function __construct(){
         $this->exposeApi = config('laravel-grapesjs.expose_api', false);
         $this->imageEditor = config('laravel-grapesjs.image_editor', false);
         $this->forceClass = config('laravel-grapesjs.force_class', false);
         $this->fonts = config('laravel-grapesjs.fonts', []);
+
+        $this->dist_path = asset('vendor/laravel-grapesjs');
+
+        $this->media_proxy_url = route('laravel-grapesjs.asset.proxy');
+        $this->media_proxy_url_input = 'file';
     }
 
     public function initialize(Editable $editable)
