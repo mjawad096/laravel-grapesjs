@@ -9,18 +9,19 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! grapesjs */ "./node_modules/grapesjs/dist/grapes.min.js");
-/* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(grapesjs__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! grapesjs */ "./node_modules/grapesjs/dist/grapes.min.js");
+/* harmony import */ var grapesjs__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(grapesjs__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! grapesjs-blocks-basic */ "./node_modules/grapesjs-blocks-basic/dist/grapesjs-blocks-basic.min.js");
 /* harmony import */ var grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(grapesjs_blocks_basic__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var grapesjs_blocks_bootstrap4__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! grapesjs-blocks-bootstrap4 */ "./node_modules/grapesjs-blocks-bootstrap4/dist/grapesjs-blocks-bootstrap4.min.js");
 /* harmony import */ var grapesjs_blocks_bootstrap4__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(grapesjs_blocks_bootstrap4__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _plugins_image_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./plugins/image-editor */ "./src/resources/js/plugins/image-editor/src/index.js");
-/* harmony import */ var _plugins_custom_font_family__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./plugins/custom-font-family */ "./src/resources/js/plugins/custom-font-family/src/index.js");
-/* harmony import */ var _plugins_loader__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./plugins/loader */ "./src/resources/js/plugins/loader/src/index.js");
-/* harmony import */ var _plugins_notifications__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./plugins/notifications */ "./src/resources/js/plugins/notifications/src/index.js");
-/* harmony import */ var _plugins_save_button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./plugins/save-button */ "./src/resources/js/plugins/save-button/src/index.js");
-/* harmony import */ var _plugins_back_button__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./plugins/back-button */ "./src/resources/js/plugins/back-button/src/index.js");
+/* harmony import */ var _plugins_code_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./plugins/code-editor */ "./src/resources/js/plugins/code-editor/src/index.js");
+/* harmony import */ var _plugins_image_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./plugins/image-editor */ "./src/resources/js/plugins/image-editor/src/index.js");
+/* harmony import */ var _plugins_custom_font_family__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./plugins/custom-font-family */ "./src/resources/js/plugins/custom-font-family/src/index.js");
+/* harmony import */ var _plugins_loader__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./plugins/loader */ "./src/resources/js/plugins/loader/src/index.js");
+/* harmony import */ var _plugins_notifications__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./plugins/notifications */ "./src/resources/js/plugins/notifications/src/index.js");
+/* harmony import */ var _plugins_save_button__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./plugins/save-button */ "./src/resources/js/plugins/save-button/src/index.js");
+/* harmony import */ var _plugins_back_button__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./plugins/back-button */ "./src/resources/js/plugins/back-button/src/index.js");
 var _pluginsOpts;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -34,12 +35,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 var config = window.editorConfig;
 delete window.editorConfig;
-var plugins = [_plugins_custom_font_family__WEBPACK_IMPORTED_MODULE_3__.default, _plugins_loader__WEBPACK_IMPORTED_MODULE_4__.default, _plugins_notifications__WEBPACK_IMPORTED_MODULE_5__.default, _plugins_save_button__WEBPACK_IMPORTED_MODULE_6__.default, _plugins_back_button__WEBPACK_IMPORTED_MODULE_7__.default];
-var pluginsOpts = (_pluginsOpts = {}, _defineProperty(_pluginsOpts, _plugins_custom_font_family__WEBPACK_IMPORTED_MODULE_3__.default, {
+var plugins = [_plugins_custom_font_family__WEBPACK_IMPORTED_MODULE_4__.default, _plugins_loader__WEBPACK_IMPORTED_MODULE_5__.default, _plugins_notifications__WEBPACK_IMPORTED_MODULE_6__.default];
+var pluginsOpts = (_pluginsOpts = {}, _defineProperty(_pluginsOpts, _plugins_custom_font_family__WEBPACK_IMPORTED_MODULE_4__.default, {
   fonts: config.pluginManager.customFonts
-}), _defineProperty(_pluginsOpts, _plugins_loader__WEBPACK_IMPORTED_MODULE_4__.default, {}), _defineProperty(_pluginsOpts, _plugins_notifications__WEBPACK_IMPORTED_MODULE_5__.default, {}), _defineProperty(_pluginsOpts, _plugins_save_button__WEBPACK_IMPORTED_MODULE_6__.default, {}), _defineProperty(_pluginsOpts, _plugins_back_button__WEBPACK_IMPORTED_MODULE_7__.default, {}), _pluginsOpts);
+}), _defineProperty(_pluginsOpts, _plugins_loader__WEBPACK_IMPORTED_MODULE_5__.default, {}), _defineProperty(_pluginsOpts, _plugins_notifications__WEBPACK_IMPORTED_MODULE_6__.default, {}), _pluginsOpts);
 
 if (config.pluginManager.basicBlocks) {
   plugins.push('gjs-blocks-basic');
@@ -51,15 +53,23 @@ if (config.pluginManager.bootstrap4Blocks) {
   pluginsOpts['grapesjs-blocks-bootstrap4'] = config.pluginManager.bootstrap4Blocks;
 }
 
-if (config.pluginManager.imageEditor) {
-  plugins.push(_plugins_image_editor__WEBPACK_IMPORTED_MODULE_2__.default);
-  pluginsOpts[_plugins_image_editor__WEBPACK_IMPORTED_MODULE_2__.default] = config.pluginManager.imageEditor;
+if (config.pluginManager.codeEditor) {
+  plugins.push(_plugins_code_editor__WEBPACK_IMPORTED_MODULE_2__.default);
+  pluginsOpts[_plugins_code_editor__WEBPACK_IMPORTED_MODULE_2__.default] = config.pluginManager.codeEditor;
 }
 
+if (config.pluginManager.imageEditor) {
+  plugins.push(_plugins_image_editor__WEBPACK_IMPORTED_MODULE_3__.default);
+  pluginsOpts[_plugins_image_editor__WEBPACK_IMPORTED_MODULE_3__.default] = config.pluginManager.imageEditor;
+}
+
+plugins.push(_plugins_save_button__WEBPACK_IMPORTED_MODULE_7__.default, _plugins_back_button__WEBPACK_IMPORTED_MODULE_8__.default);
+pluginsOpts[_plugins_save_button__WEBPACK_IMPORTED_MODULE_7__.default] = {};
+pluginsOpts[_plugins_back_button__WEBPACK_IMPORTED_MODULE_8__.default] = {};
 config.plugins = plugins;
 config.pluginsOpts = pluginsOpts;
 console.log(config);
-var editor = grapesjs__WEBPACK_IMPORTED_MODULE_8___default().init(config);
+var editor = grapesjs__WEBPACK_IMPORTED_MODULE_9___default().init(config);
 
 if (config.exposeApi) {
   Object.defineProperty(window, 'gjsEditor', {
@@ -72,71 +82,6 @@ editor.on('load', function () {
   event.editor = editor;
   window.document.dispatchEvent(event);
 });
-var pfx = editor.getConfig().stylePrefix;
-var modal = editor.Modal;
-var commands = editor.Commands;
-var codeViewer = editor.CodeManager.getViewer('CodeMirror').clone();
-var panels = editor.Panels;
-var container = document.createElement('div');
-var btnEdit = document.createElement('button');
-codeViewer.set({
-  codeName: 'htmlmixed',
-  readOnly: 0,
-  theme: 'hopscotch',
-  autoBeautify: true,
-  autoCloseTags: true,
-  autoCloseBrackets: true,
-  lineWrapping: true,
-  styleActiveLine: true,
-  smartIndent: true,
-  indentWithTabs: true
-});
-btnEdit.innerHTML = 'Save';
-btnEdit.style["float"] = 'right';
-btnEdit.style.backgroundColor = '#090';
-btnEdit.className = pfx + 'btn-prim ' + pfx + 'btn-import';
-
-btnEdit.onclick = function () {
-  var html = (codeViewer.editor.getValue() || '').trim();
-  var css = ((html.split('<style>') || [])[1] || '').replace('</style>', '');
-  editor.DomComponents.getWrapper().set('content', '');
-  editor.setComponents(html);
-  editor.setStyle(css);
-  modal.close();
-  toastr.success('Content Updated', 'Success');
-};
-
-commands.add('html-edit', {
-  run: function run(editor, sender) {
-    sender && sender.set('active', 0);
-    var viewer = codeViewer.editor;
-    modal.setTitle('Edit code');
-
-    if (!viewer) {
-      var txtarea = document.createElement('textarea');
-      container.appendChild(txtarea);
-      container.appendChild(btnEdit);
-      codeViewer.init(txtarea);
-      viewer = codeViewer.editor;
-    }
-
-    var InnerHtml = editor.getHtml();
-    var Css = editor.getCss();
-    modal.setContent('');
-    modal.setContent(container);
-    codeViewer.setContent(InnerHtml + "<style>" + Css + '</style>');
-    modal.open();
-    viewer.refresh();
-  }
-});
-panels.addButton('options', [{
-  id: 'edit',
-  className: 'fa fa-edit',
-  command: 'html-edit',
-  attributes: {
-    title: 'Edit code.'
-  }
-}]);
 var blockManager = editor.BlockManager;
 blockManager.add("iframe", {
   category: 'Basic',
@@ -253,6 +198,107 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     attributes: {
       title: options.title
+    }
+  });
+});
+
+/***/ }),
+
+/***/ "./src/resources/js/plugins/code-editor/src/index.js":
+/*!***********************************************************!*\
+  !*** ./src/resources/js/plugins/code-editor/src/index.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (editor) {
+  var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  var options = _objectSpread({
+    btn_icon: 'fa fa-edit',
+    btn_title: 'Edit code.',
+    model: {
+      title: 'Edit code',
+      message: 'Code chagnes Applied.',
+      btn_text: 'Save'
+    }
+  }, opts);
+
+  var stylePrefix = editor.getConfig().stylePrefix;
+  var modal = editor.Modal;
+  var codeViewer = editor.CodeManager.getViewer('CodeMirror').clone();
+  var container = document.createElement('div');
+  var btnEdit = document.createElement('button');
+  codeViewer.set({
+    codeName: 'htmlmixed',
+    readOnly: 0,
+    theme: 'hopscotch',
+    autoBeautify: true,
+    autoCloseTags: true,
+    autoCloseBrackets: true,
+    lineWrapping: true,
+    styleActiveLine: true,
+    smartIndent: true,
+    indentWithTabs: true
+  });
+  btnEdit.innerHTML = options.model.btn_text;
+  btnEdit.style["float"] = 'right';
+  btnEdit.style.backgroundColor = '#090';
+  btnEdit.className = stylePrefix + 'btn-prim ' + stylePrefix + 'btn-import';
+
+  btnEdit.onclick = function () {
+    var html = (codeViewer.editor.getValue() || '').trim();
+    var css = ((html.split('<style>') || [])[1] || '').replace('</style>', '');
+    editor.DomComponents.getWrapper().set('content', '');
+    editor.setComponents(html);
+    editor.setStyle(css);
+    modal.close();
+    editor.runCommand('notify', {
+      type: 'info',
+      title: 'Success',
+      message: options.model.message
+    });
+  };
+
+  editor.Commands.add('html-edit', {
+    run: function run(editor, sender) {
+      sender && sender.set('active', 0);
+      var viewer = codeViewer.editor;
+      modal.setTitle(options.model.title);
+
+      if (!viewer) {
+        var txtarea = document.createElement('textarea');
+        container.appendChild(txtarea);
+        container.appendChild(btnEdit);
+        codeViewer.init(txtarea);
+        viewer = codeViewer.editor;
+      }
+
+      var InnerHtml = editor.getHtml();
+      var Css = editor.getCss();
+      modal.setContent('');
+      modal.setContent(container);
+      codeViewer.setContent(InnerHtml + "<style>" + Css + '</style>');
+      modal.open();
+      viewer.refresh();
+    }
+  });
+  editor.Panels.addButton('options', {
+    id: 'edit',
+    className: options.btn_icon,
+    command: 'html-edit',
+    attributes: {
+      title: options.btn_title
     }
   });
 });
