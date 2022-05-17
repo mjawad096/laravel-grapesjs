@@ -10,22 +10,13 @@ import SaveButton from "./plugins/save-button"
 import BackButton from "./plugins/back-button"
 import Templates from "./plugins/templates"
 import CustomTypes from "./plugins/custom-types"
+import PluginsLoader from "./plugins/plugins-loader"
 
 let config = window.editorConfig;
 delete window.editorConfig;
 
-let plugins = [
-	CustomFontFamily,
-	Loader,
-	Notifications,
-	CustomTypes,
-]
-let pluginsOpts = {
-	[CustomFontFamily]: {fonts: config.pluginManager.customFonts},
-	[Loader]: {},
-	[Notifications]: {},
-	[CustomTypes]: {},
-};
+let plugins = []
+let pluginsOpts = {}
 
 if(config.pluginManager.basicBlocks){
 	plugins.push('gjs-blocks-basic')
@@ -47,14 +38,32 @@ if(config.pluginManager.imageEditor){
 	pluginsOpts[ImageEditor] = config.pluginManager.imageEditor
 }
 
-plugins.push(SaveButton, BackButton)
-pluginsOpts[SaveButton] = {}
-pluginsOpts[BackButton] = {}
-
 if(config.pluginManager.templates){	
 	plugins.push(Templates)
 	pluginsOpts[Templates] = config.pluginManager.templates
 }
+
+plugins = [
+	...plugins,
+	CustomFontFamily,
+	Loader,
+	Notifications,
+	CustomTypes,
+	SaveButton,
+	BackButton,
+	PluginsLoader,
+]
+
+pluginsOpts = {
+	...pluginsOpts,
+	[CustomFontFamily]: {fonts: config.pluginManager.customFonts},
+	[Loader]: {},
+	[Notifications]: {},
+	[CustomTypes]: {},
+	[SaveButton]: {},
+	[BackButton]: {},
+	[PluginsLoader]: config.pluginManager.pluginsLoader,
+};
 
 config.plugins = plugins
 config.pluginsOpts = pluginsOpts

@@ -4,8 +4,12 @@ return [
     'expose_api' => false,
     'force_class' => false,
 
-    'styles' => [],
-    'scripts' => [],
+    'styles' => [
+        'vendor/laravel-grapesjs/assets/editor.css'
+    ],
+    'scripts' => [
+        'vendor/laravel-grapesjs/assets/editor.js'
+    ],
 
     'canvas' => [
         'styles' => [],
@@ -33,6 +37,14 @@ return [
             'custom_fonts' => [],
             'templates' => true,
         ],
-        'custom' => [],
+        'custom' => [
+            [
+                'name' => 'grapesjs-plugin-forms',
+                'options' => [],
+                'scripts' => [
+                    'https://unpkg.com/grapesjs-plugin-forms@2.0.1/dist/grapesjs-plugin-forms.min.js',
+                ]
+            ],
+        ],
     ],
 ];

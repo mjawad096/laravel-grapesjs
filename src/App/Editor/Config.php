@@ -6,6 +6,10 @@ use Dotlogics\Grapesjs\App\Contracts\Editable;
 
 class Config
 {
+    //Global styles and scripts
+    public array $styles = [];
+    public array $scripts = [];
+
     // General
     public bool $exposeApi = false;
     public string $container = '#editor';
@@ -47,8 +51,35 @@ class Config
         $this->components = $editable->components; 
         $this->style = $editable->styles;
 
+        $this->initStylesAndScripts();
+        
         // dd($this->toArray());
         return $this;
+    }
+    
+    protected function initStylesAndScripts()
+    {
+        collect(['styles', 'scripts'])
+            ->each(function($type){
+                $items = config("laravel-grapesjs.{$type}", []);
+                $items = collect($items)->filter()->values()->toArray();
+
+                $this->{$type} = array_map('url', $items);
+            });
+    }
+
+    public function getStyles()
+    {
+        $extraStyles = $this->pluginManager ? $this->pluginManager->getPluginStyles() : [];
+        
+        return [...$extraStyles, ...$this->styles];
+    }
+
+    public function getScripts()
+    {
+        $extraScripts = $this->pluginManager ? $this->pluginManager->getPluginScripts() : [];
+        
+        return [...$extraScripts, ...$this->scripts];
     }
 
     public function toJson()
