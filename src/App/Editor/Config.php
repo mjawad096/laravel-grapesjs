@@ -25,12 +25,9 @@ class Config
     public ?StorageManager $storageManager;
     public ?AssetManager $assetManager;
 
-    public array $fonts = [];
-
     function __construct(){
         $this->exposeApi = config('laravel-grapesjs.expose_api', false);
         $this->forceClass = config('laravel-grapesjs.force_class', false);
-        $this->fonts = config('laravel-grapesjs.fonts', []);
     }
 
     public function initialize(Editable $editable)

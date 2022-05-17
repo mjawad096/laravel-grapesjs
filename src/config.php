@@ -3,7 +3,6 @@
 return [
     'expose_api' => false,
     'force_class' => false,
-    'fonts' => [],
 
     'styles' => [],
     'scripts' => [],
@@ -30,6 +29,7 @@ return [
             'basic_blocks' => true,
             'bootstrap4_blocks' => false,
             'image_editor' => false,
+            'custom_fonts' => [],
         ],
         'custom' => [],
     ],
