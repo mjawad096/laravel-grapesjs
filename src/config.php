@@ -38,12 +38,13 @@ return [
             'templates' => true,
         ],
         'custom' => [
+            'grapesjs-custom-code' => 'https://unpkg.com/grapesjs-custom-code',
             [
                 'enabled' => false,
                 'name' => 'grapesjs-plugin-forms',
                 'options' => [],
                 'scripts' => [
-                    'https://unpkg.com/grapesjs-plugin-forms@2.0.1/dist/grapesjs-plugin-forms.min.js',
+                    'https://unpkg.com/grapesjs-plugin-forms',
                 ]
             ],
         ],
