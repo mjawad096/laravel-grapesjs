@@ -10,6 +10,7 @@ import SaveButton from "./plugins/save-button"
 import BackButton from "./plugins/back-button"
 import Templates from "./plugins/templates"
 import CustomTypes from "./plugins/custom-types"
+import DeviceButtons from './plugins/device-buttons'
 import PluginsLoader from "./plugins/plugins-loader"
 
 let config = window.editorConfig;
@@ -51,6 +52,7 @@ plugins = [
 	CustomTypes,
 	SaveButton,
 	BackButton,
+	DeviceButtons,
 	PluginsLoader,
 ]
 

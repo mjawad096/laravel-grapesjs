@@ -62,6 +62,7 @@ class PluginManager
                 $options = [];
                 $styles = [];
                 $scripts = [];
+                $enabled = true;
 
                 if(is_string($value)){
                     $name = $value;
@@ -73,6 +74,7 @@ class PluginManager
                 }else{
                     $name = $value['name'] ?? null;
                     $options = $value['options'] ?? [];
+                    $enabled = (bool)($value['enabled'] ?? true);
 
                     if(!empty($value['styles'])){
                         $styles = (array)$value['styles'] ?? [];
@@ -86,10 +88,11 @@ class PluginManager
                 $styles = array_map('url', $styles);
                 $scripts = array_map('url', $scripts);
 
-                return compact('name', 'options', 'styles', 'scripts');
+                return compact('name', 'options', 'enabled', 'styles', 'scripts');
             })
             ->filter()
             ->unique('name')
+            ->where('enabled', true)
             ->values()
             ->toArray();
     }
