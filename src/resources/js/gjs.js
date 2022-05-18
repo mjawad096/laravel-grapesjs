@@ -2,6 +2,7 @@ import grapesjs from 'grapesjs';
 import 'grapesjs-blocks-basic';
 import 'grapesjs-blocks-bootstrap4';
 import CodeEditor from "./plugins/code-editor"
+import ExtraButtons from "./plugins/extra-buttons"
 import ImageEditor from "./plugins/image-editor"
 import CustomFontFamily from "./plugins/custom-font-family"
 import Loader from "./plugins/loader"
@@ -50,6 +51,7 @@ plugins = [
 	Loader,
 	Notifications,
 	CustomTypes,
+	ExtraButtons,
 	SaveButton,
 	BackButton,
 	DeviceButtons,
@@ -62,8 +64,10 @@ pluginsOpts = {
 	[Loader]: {},
 	[Notifications]: {},
 	[CustomTypes]: {},
+	[ExtraButtons]: {},
 	[SaveButton]: {},
 	[BackButton]: {},
+	[DeviceButtons]: {},
 	[PluginsLoader]: config.pluginManager.pluginsLoader,
 };
 
