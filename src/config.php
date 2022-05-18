@@ -39,6 +39,7 @@ return [
         ],
         'custom' => [
             [
+                'enabled' => false,
                 'name' => 'grapesjs-plugin-forms',
                 'options' => [],
                 'scripts' => [
