@@ -50,7 +50,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Canvas  styles and scripts
+    | Canvas styles and scripts
     |--------------------------------------------------------------------------
     |
     | The styles and scripts for the editor content.
@@ -101,7 +101,7 @@ return [
     |
     | You can enable/disable built-in plugins or can add any custom plugin from
     | this config. Formats for custom plugins are as below.
-
+    |
     | 1. Simplest way
     |   'plugin-name' => 'https://url_to_plugin_script.com'
     |    
@@ -124,7 +124,6 @@ return [
     |           //plugin options goes here
     |       ],
     |   ]
-    | 
     |
     */
 
@@ -140,12 +139,46 @@ return [
         'custom' => [
             'grapesjs-custom-code' => 'https://unpkg.com/grapesjs-custom-code',
             [
+                'enabled' => true,
+                'name' => 'gjs-plugin-ckeditor',
+                'scripts' => [
+                    'https://cdn.ckeditor.com/4.14.0/full-all/ckeditor.js',
+                    'https://unpkg.com/grapesjs-plugin-ckeditor',
+                ],
+                'options' => [
+                    'position' => 'left',
+                    /**
+                     * Config options for CKeditor
+                     * Available options can be found here https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html
+                     * Or you can use config builder https://cdn.ckeditor.com/4.14.0/full-all/samples/toolbarconfigurator/index.html
+                     */
+                    'options' => [ 
+                        'toolbarGroups' => [
+                            [ "name" => "document", "groups" => [ "mode", "document", "doctools" ] ],
+                            [ "name" => "clipboard", "groups" => [ "clipboard", "undo" ] ],
+                            [ "name" => "editing", "groups" => [ "find", "selection", "spellchecker", "editing" ] ],
+                            [ "name" => "forms", "groups" => [ "forms" ] ],
+                            [ "name" => "basicstyles", "groups" => [ "basicstyles", "cleanup" ] ],
+                            [ "name" => "styles", "groups" => [ "styles" ] ],
+                            [ "name" => "paragraph", "groups" => [ "list", "indent", "blocks", "align", "bidi", "paragraph" ] ],
+                            [ "name" => "links", "groups" => [ "links" ] ],
+                            [ "name" => "insert", "groups" => [ "insert" ] ],
+                            [ "name" => "colors", "groups" => [ "colors" ] ],
+                            [ "name" => "tools", "groups" => [ "tools" ] ],
+                            [ "name" => "others", "groups" => [ "others" ] ],
+                            [ "name" => "about", "groups" => [ "about" ] ]
+                        ],
+                        'removeButtons' => 'Save,NewPage,Preview,Print,Templates,Source,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,Flash,Table,About'
+                    ],
+                ],
+            ],
+            [
                 'enabled' => false,
                 'name' => 'grapesjs-plugin-forms',
                 'options' => [],
                 'scripts' => [
                     'https://unpkg.com/grapesjs-plugin-forms',
-                ]
+                ],
             ],
         ],
     ],
