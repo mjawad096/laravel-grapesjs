@@ -1,32 +1,132 @@
-<?php 
+<?php
 
 return [
+    /*
+    |--------------------------------------------------------------------------
+    | Expose API
+    |--------------------------------------------------------------------------
+    |
+    | This will expose the editor variable. 
+    | It can be accessed via a window.gjsEditor
+    |
+    */
+
     'expose_api' => false,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Force Class
+    |--------------------------------------------------------------------------
+    |
+    | See https://github.com/artf/grapesjs/issues/546
+    |
+    */
+    
     'force_class' => false,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Global Styles
+    |--------------------------------------------------------------------------
+    |
+    | Global Styles for the editor blade file.
+    */
 
     'styles' => [
         'vendor/laravel-grapesjs/assets/editor.css'
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Global Scripts
+    |--------------------------------------------------------------------------
+    |
+    | Global scripts for the editor blade file.
+    */
+
     'scripts' => [
         'vendor/laravel-grapesjs/assets/editor.js'
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Canvas  styles and scripts
+    |--------------------------------------------------------------------------
+    |
+    | The styles and scripts for the editor content.
+    | You need to add these also to your layout.
+    | e.g the bootstrap files, etc
+    |
+    */
 
     'canvas' => [
         'styles' => [],
         'scripts' => [],
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Assets Manager
+    |--------------------------------------------------------------------------
+    |
+    | Here you can configure the disk and custom upload URL for your asset
+    | manager.
+    |
+    */
+
     'assets' => [
         'disk' => 'public', //Default: local
         'path' => null, //Default: 'laravel-grapesjs/media',
         'upload_url' => null,
-        'upload_url' => null,
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Storage Manager
+    |--------------------------------------------------------------------------
+    |
+    | Enable/Disable the autosave function for your editor.
+    |
+    */
 
     'storage_manager' => [
         'autosave' => true,
         'steps_before_save' => 10,
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Plugin Manager
+    |--------------------------------------------------------------------------
+    |
+    | You can enable/disable built-in plugins or can add any custom plugin from
+    | this config. Formats for custom plugins are as below.
+
+    | 1. Simplest way
+    |   'plugin-name' => 'https://url_to_plugin_script.com'
+    |    
+    | 2. Simple with options (Plugin script will be added to global scrips above)
+    |   'plugin-name' => [
+    |       //plugin options goes here
+    |     ]
+    |
+    | 3. Advanced way
+    |   [
+    |       'enabled => true,
+    |       'name' => 'plugin-name',
+    |       'styles' => [
+    |           'https://url_to_plugin_styles.com',
+    |       ],
+    |       'scripts' => [
+    |           'https://url_to_plugin_script.com',
+    |       ],
+    |       'options' => [
+    |           //plugin options goes here
+    |       ],
+    |   ]
+    | 
+    |
+    */
 
     'plugins' => [
         'default' => [
