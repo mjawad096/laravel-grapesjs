@@ -73,7 +73,16 @@ The the placeholder will be replaced by the content of the relative blade file "
 
 
 # Templates
-You can create a template (a block) in the "/resources/views/vendor/laravel-grapesjs/templates" directory. And the templates will be availabe in the block section of edittor. 
+You can create global templates (or blocks) in the "/resources/views/vendor/laravel-grapesjs/templates" directory. And the templates/blocks will be availabe in the block section of edittor.   You can also create model specific templates/blocks by defining getTemplatesPath/getGjsBlocksPath in model
+```php
+public function getTemplatesPath(){ return 'pages_templates'; }
+```
+
+This will look for templates under "laravel-grapesj::pages_templates" directory.
+
+You can also return null from these methods to hide templates/blocks for any model.
+
+
 
 # Display output
 The "Editable" model (e.g. Page) will have two public properties, css and html. In your blade file you can use these properties to display the content.
