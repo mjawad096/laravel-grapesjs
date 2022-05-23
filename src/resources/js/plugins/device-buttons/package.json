@@ -1,0 +1,23 @@
+{
+  "name": "device-buttons",
+  "version": "1.0.0",
+  "description": "Device Buttons",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR-USERNAME/device-buttons.git"
+  },
+  "scripts": {
+    "start": "grapesjs-cli serve",
+    "build": "grapesjs-cli build",
+    "bump": "npm version patch -m 'Bump v%s'"
+  },
+  "keywords": [
+    "grapesjs",
+    "plugin"
+  ],
+  "devDependencies": {
+    "grapesjs-cli": "^3.0.0"
+  },
+  "license": "MIT"
+}
