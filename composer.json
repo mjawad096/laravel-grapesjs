@@ -1,6 +1,6 @@
 {
     "name": "jd-dotlogics/laravel-grapesjs",
-    "description": "A package for use Grapes.js in Laravel",
+    "description": "A package to easily integrate GrapesJS into your laravel proejct.",
     "type": "library",
     "require": {
         "php": "^7.4|^8.0",
