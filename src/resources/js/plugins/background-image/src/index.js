@@ -1,44 +1,182 @@
 export default (editor, opts = {}) => {
-  const commandToAdd = 'jd-change-bg-model';
-  const commandIcon = 'fa fa-image';
+  const COMMAND_ID = 'jd-open-change_bg-modal';
+  const TOOL_ICON = 'fa fa-image';
+  const BG_IMAGE = 'background-image';
 
-  editor.Commands.add(commandToAdd, {
-    run(editor, sender, options = {}) {
-      let am = editor.AssetManager;
+  let modal = editor.Modal;
 
-      am.open({
-        types: ['image'],
+  editor.Commands.add(COMMAND_ID, {
+    run:  (editor, sender)  => setModalContent(),
+  });
 
-        select(asset, complete) {
-          const component = editor.getSelected();
-       
-          if (component) {
-            component.setStyle({ 'background-image': `url(${asset.getSrc()})` });
-            complete && am.close();
-          }
-        }
-       });
-    },
-  })
+  let setModalContent = content => {
+    modal.setTitle('Change Background image settings.');
+
+    modal.setContent('');
+    modal.setContent(content || createModalContent());
+
+    !content && bindEventHandlers();
+
+    modal.open();
+  }
+
+  let createModalContent = () => {
+    let fields = [
+      {
+        name: 'background-image',
+        title: 'Image',
+        type: 'image',
+      },
+      {
+        name: 'background-repeat',
+        title: 'Repeat',
+        type: 'select',
+        options: ['repeat', 'repeat-x', 'repeat-y', 'no-repeat'],
+      },
+      {
+        name: 'background-position',
+        title: 'Position',
+        type: 'select',
+        options: ['left top', 'left center', 'left bottom', 'right top', 'right center', 'right bottom', 'center top', 'center center', 'center bottom'],
+      },
+      {
+        name: 'background-attachment',
+        title: 'Attachment',
+        type: 'select',
+        options: ['scroll', 'fixed', 'local'],
+      },
+      {
+        name: 'background-size',
+        title: 'Size',
+        type: 'select',
+        options: ['auto', 'cover', 'contain'],
+      },
+    ];
+
+    let fields_html = fields.map(field => {
+      let { name, title, type, options } = field,
+        field_html = '',
+        isImage = type == 'image',
+        value = editor.getSelected().getStyle(name);
+
+      if (isImage) {
+        field_html = `
+          <div class="gjs-sm-field gjs-sm-file">
+              <div id="gjs-sm-input-holder">
+                  <div class="gjs-sm-btn-c">
+                      <button class="gjs-sm-btn jd-bg-setting ${name}" data-property="${name}" id="gjs-sm-images" type="button"">
+                          Choose Image
+                      </button>
+                  </div>
+                  <div style=" clear:both;"></div>
+              </div>
+              <div id="gjs-sm-preview-box" class="gjs-sm-preview-file jd-bg-setting ${name}-preview">
+                  <div id="gjs-sm-preview-file" class="gjs-sm-preview-file-cnt" style="background-image: ${value};"></div>
+                  <div id="gjs-sm-close" class="gjs-sm-preview-file-close">
+                      <i class="fa fa-times"></i>
+                  </div>
+              </div>
+          </div>
+      `;
+      } else if (type == 'select') {
+        let options_html = '';
+
+        (options || []).forEach(option => {
+          options_html += `<option value="${option}" ${value == option ? 'selected' : ''}>${option}</option>`;
+        });
+
+        field_html = `
+          <div class="gjs-field gjs-select">
+              <span id="gjs-sm-input-holder">
+                  <select class="jd-bg-setting ${name}" data-property="${name}" >
+                      ${options_html}
+                  </select>
+              </span>
+              <div class="gjs-sel-arrow">
+                  <div class="gjs-d-s-arrow"></div>
+              </div>
+          </div>
+      `;
+      }
+
+      return `
+        <div class="gjs-sm-property gjs-sm-file gjs-sm-property__${name} ${isImage ? 'gjs-sm-property--full' : ''}">
+            <div class="gjs-sm-label">
+                <span class="gjs-sm-icon " title="${title}">
+                    ${title}
+                </span>
+                <div class="gjs-sm-clear" style="display: none;">
+                    <i class="fa fa-times"></i>
+                </div>
+            </div>
+            <div class="gjs-fields">
+                ${field_html}
+            </div>
+        </div>
+    `;
+    }).join('');
+
+    return `
+      <div class="gjs-sm-properties jd-bg-settings">${fields_html}</div>
+    `;
+  };
+
+  let bindEventHandlers = () => {
+    let elements = document.querySelectorAll('.jd-bg-settings .jd-bg-setting[data-property]');
+
+    elements.forEach(element => {
+      let property = element.dataset.property;
+
+      if (property == BG_IMAGE) {
+        element.addEventListener('click', () => openAssetModal(property));
+      }
+    });
+  };
+
+  let openAssetModal = (property) => {
+    let am = editor.AssetManager;
+    let oldContent = modal.getContentEl().childNodes[1] || '';
+
+    am.open({
+      types: ['image'],
+      select(asset, complete) {
+        am.close();
+
+        setModalContent(oldContent);
+
+        setSelectedComponentStyle(property, asset.getSrc());
+      }
+    });
+  };
+
+  let setSelectedComponentStyle = (property, value) => {
+    if (property == BG_IMAGE) {
+      value = `url(${value})`;
+
+      let preview = document.querySelector(`.jd-bg-settings .jd-bg-setting.${property}-preview #gjs-sm-preview-file`);
+
+      preview.style.backgroundImage = value;
+    }
+
+    editor.getSelected().setStyle({ [property]: value });
+  };
 
   editor.on('component:selected', () => {
-
     const component = editor.getSelected();
     const toolbar = component.get('toolbar');
 
-    const commandExists = toolbar.some(item => item.command === commandToAdd);
+    const commandExists = toolbar.some(item => item.command === COMMAND_ID);
 
     // if it doesn't already exist, add it
     if (!commandExists) {
-      let tool = {  
-        attributes: {'class' : commandIcon}, 
-        command: commandToAdd
+      let tool = {
+        attributes: { 'class': TOOL_ICON },
+        command: COMMAND_ID
       };
 
       toolbar.splice(-2, 0, tool);
 
       component.set('toolbar', toolbar);
     }
-
   });
 };
