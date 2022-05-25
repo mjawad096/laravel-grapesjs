@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller;
 use Dotlogics\Grapesjs\App\Traits\EditorTrait;
+use Illuminate\Support\Facades\View;
 
 class EditorController extends Controller
 {
@@ -84,9 +85,10 @@ class EditorController extends Controller
 
                     // dd($content);
                     $templates [] = [
-                        'category' => $category,
                         'id' => $id_prefix . $fileInfo->getFilename(),
+                        'category' => $category,
                         'label' => $file_name->replace('-', ' ')->title(),
+                        'media' => app('template-icon')->url(),
                         'content' => $content,
                     ];
                 }
