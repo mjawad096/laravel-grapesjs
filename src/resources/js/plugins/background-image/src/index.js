@@ -10,7 +10,7 @@ export default (editor, opts = {}) => {
   });
 
   let setModalContent = content => {
-    modal.setTitle('Change Background image settings.');
+    modal.setTitle('Change Background image settings');
 
     modal.setContent('');
     modal.setContent(content || createModalContent());
@@ -53,11 +53,12 @@ export default (editor, opts = {}) => {
       },
     ];
 
+    let styles = editor.getSelected().getStyle();
     let fields_html = fields.map(field => {
       let { name, title, type, options } = field,
         field_html = '',
         isImage = type == 'image',
-        value = editor.getSelected().getStyle(name);
+        value = styles[name] || null;
 
       if (isImage) {
         field_html = `
@@ -70,7 +71,7 @@ export default (editor, opts = {}) => {
                   </div>
                   <div style=" clear:both;"></div>
               </div>
-              <div id="gjs-sm-preview-box" class="gjs-sm-preview-file jd-bg-setting ${name}-preview">
+              <div id="gjs-sm-preview-box" class="gjs-sm-preview-file jd-bg-setting ${name}-preview" style="display: ${value ? 'block' : 'none'};">
                   <div id="gjs-sm-preview-file" class="gjs-sm-preview-file-cnt" style="background-image: ${value};"></div>
                   <div id="gjs-sm-close" class="gjs-sm-preview-file-close">
                       <i class="fa fa-times"></i>
@@ -129,8 +130,16 @@ export default (editor, opts = {}) => {
 
       if (property == BG_IMAGE) {
         element.addEventListener('click', () => openAssetModal(property));
+        let previewClose = document.querySelector(`.jd-bg-settings .jd-bg-setting.${property}-preview #gjs-sm-close i`);
+
+        previewClose.addEventListener('click', e => setSelectedComponentStyle(property));
+      }else{
+        element.addEventListener('change', function(e){
+          setSelectedComponentStyle(property, this.value);
+        });
       }
     });
+
   };
 
   let openAssetModal = (property) => {
@@ -150,15 +159,31 @@ export default (editor, opts = {}) => {
   };
 
   let setSelectedComponentStyle = (property, value) => {
+    let styles = editor.getSelected().getStyle();
+
     if (property == BG_IMAGE) {
-      value = `url(${value})`;
+      
+      let previewContainer = document.querySelector(`.jd-bg-settings .jd-bg-setting.${property}-preview`);
+      let preview = previewContainer.firstElementChild;
+      
+      if(value){
+        value = `url(${value})`;
 
-      let preview = document.querySelector(`.jd-bg-settings .jd-bg-setting.${property}-preview #gjs-sm-preview-file`);
+        previewContainer.style.display = 'block';
+      }else{
+        previewContainer.style.display = 'none';
+      }
 
-      preview.style.backgroundImage = value;
+      preview.style.backgroundImage = value || null;
     }
 
-    editor.getSelected().setStyle({ [property]: value });
+    if(value){
+      styles[property] = value;
+    }else{
+      delete styles[property];
+    }
+    
+    editor.getSelected().setStyle(styles);
   };
 
   editor.on('component:selected', () => {
@@ -168,7 +193,7 @@ export default (editor, opts = {}) => {
     const commandExists = toolbar.some(item => item.command === COMMAND_ID);
 
     // if it doesn't already exist, add it
-    if (!commandExists) {
+    if (!commandExists && !component.is('image')) {
       let tool = {
         attributes: { 'class': TOOL_ICON },
         command: COMMAND_ID
