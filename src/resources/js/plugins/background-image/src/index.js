@@ -6,11 +6,11 @@ export default (editor, opts = {}) => {
   let modal = editor.Modal;
 
   editor.Commands.add(COMMAND_ID, {
-    run:  (editor, sender)  => setModalContent(),
+    run: (editor, sender) => setModalContent(),
   });
 
   let setModalContent = content => {
-    modal.setTitle('Change Background image settings');
+    modal.setTitle('Change Background settings');
 
     modal.setContent('');
     modal.setContent(content || createModalContent());
@@ -26,6 +26,13 @@ export default (editor, opts = {}) => {
         name: 'background-image',
         title: 'Image',
         type: 'image',
+        full_width: true,
+      },
+      {
+        name: 'background-color',
+        title: 'Color',
+        type: 'color',
+        full_width: true,
       },
       {
         name: 'background-repeat',
@@ -55,7 +62,7 @@ export default (editor, opts = {}) => {
 
     let styles = editor.getSelected().getStyle();
     let fields_html = fields.map(field => {
-      let { name, title, type, options } = field,
+      let { name, title, type, options, full_width } = field,
         field_html = '',
         isImage = type == 'image',
         value = styles[name] || null;
@@ -74,11 +81,19 @@ export default (editor, opts = {}) => {
               <div id="gjs-sm-preview-box" class="gjs-sm-preview-file jd-bg-setting ${name}-preview" style="display: ${value ? 'block' : 'none'};">
                   <div id="gjs-sm-preview-file" class="gjs-sm-preview-file-cnt" style="background-image: ${value};"></div>
                   <div id="gjs-sm-close" class="gjs-sm-preview-file-close">
-                      <i class="fa fa-times"></i>
+                    <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
                   </div>
               </div>
           </div>
-      `;
+        `;
+      } else if (type == 'color') {
+        field_html = `
+          <div class="gjs-field gjs-field-color">
+            <div class="gjs-input-holder">
+              <input type="color" placeholder="black" class="jd-bg-setting ${name}" data-property="${name}" value="${value}">
+            </div>
+          </div>
+        `;
       } else if (type == 'select') {
         let options_html = '';
 
@@ -97,24 +112,24 @@ export default (editor, opts = {}) => {
                   <div class="gjs-d-s-arrow"></div>
               </div>
           </div>
-      `;
+        `;
       }
 
       return `
-        <div class="gjs-sm-property gjs-sm-file gjs-sm-property__${name} ${isImage ? 'gjs-sm-property--full' : ''}">
+        <div class="gjs-sm-property gjs-sm-file gjs-sm-property__${name} ${full_width ? 'gjs-sm-property--full' : ''}">
             <div class="gjs-sm-label">
                 <span class="gjs-sm-icon " title="${title}">
                     ${title}
                 </span>
                 <div class="gjs-sm-clear" style="display: none;">
-                    <i class="fa fa-times"></i>
+                  <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
                 </div>
             </div>
             <div class="gjs-fields">
                 ${field_html}
             </div>
         </div>
-    `;
+      `;
     }).join('');
 
     return `
@@ -130,11 +145,11 @@ export default (editor, opts = {}) => {
 
       if (property == BG_IMAGE) {
         element.addEventListener('click', () => openAssetModal(property));
-        let previewClose = document.querySelector(`.jd-bg-settings .jd-bg-setting.${property}-preview #gjs-sm-close i`);
+        let previewClose = document.querySelector(`.jd-bg-settings .jd-bg-setting.${property}-preview #gjs-sm-close svg`);
 
         previewClose.addEventListener('click', e => setSelectedComponentStyle(property));
-      }else{
-        element.addEventListener('change', function(e){
+      } else {
+        element.addEventListener('change', function (e) {
           setSelectedComponentStyle(property, this.value);
         });
       }
@@ -162,27 +177,27 @@ export default (editor, opts = {}) => {
     let styles = editor.getSelected().getStyle();
 
     if (property == BG_IMAGE) {
-      
+
       let previewContainer = document.querySelector(`.jd-bg-settings .jd-bg-setting.${property}-preview`);
       let preview = previewContainer.firstElementChild;
-      
-      if(value){
+
+      if (value) {
         value = `url(${value})`;
 
         previewContainer.style.display = 'block';
-      }else{
+      } else {
         previewContainer.style.display = 'none';
       }
 
       preview.style.backgroundImage = value || null;
     }
 
-    if(value){
+    if (value) {
       styles[property] = value;
-    }else{
+    } else {
       delete styles[property];
     }
-    
+
     editor.getSelected().setStyle(styles);
   };
 

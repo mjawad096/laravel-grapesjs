@@ -1,0 +1,18 @@
+.jd-bg-settings {
+    .gjs-sm-property {
+        &:not(.gjs-sm-property--full){
+            width: 50%;
+        }
+
+        .background-image-preview {
+            .gjs-sm-preview-file-cnt{
+                height: 180px;
+            } 
+        }
+
+        [type=color]{
+            height: 50px;
+            padding-right: 5px;
+        }
+    }
+}
