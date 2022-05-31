@@ -25,8 +25,9 @@ class Config
     // Management
     public Canvas $canvas;
     public PluginManager $pluginManager;
-    public ?StorageManager $storageManager;
-    public ?AssetManager $assetManager;
+    public StorageManager $storageManager;
+    public AssetManager $assetManager;
+    public StyleManager $styleManager;
 
     function __construct(){
         $this->exposeApi = config('laravel-grapesjs.expose_api', false);
@@ -38,15 +39,15 @@ class Config
         $pluginManager = app(PluginManager::class, ['templates_url' => $editable->templates_url]);
         $assetManager = app(AssetManager::class);
         $storageManager = app(StorageManager::class, ['save_url' => $editable->store_url]);
+        $styleManager = app(StyleManager::class);
 
-        $canvas = app(Canvas::class)
-            ->mergeStyles($editable->style_sheet_links)
-            ->mergeScripts($editable->script_links);
+        $canvas = app(Canvas::class, ['styles' => $editable->style_sheet_links, 'scripts' => $editable->script_links]);
         
         $this->pluginManager = $pluginManager;
         $this->assetManager = $assetManager;
         $this->canvas = $canvas;
         $this->storageManager = $storageManager;
+        $this->styleManager = $styleManager;
 
         $this->components = $editable->components; 
         $this->style = $editable->styles;

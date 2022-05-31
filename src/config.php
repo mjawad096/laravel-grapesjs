@@ -18,7 +18,7 @@ return [
     | Force Class
     |--------------------------------------------------------------------------
     |
-    | See https://github.com/artf/grapesjs/issues/546
+    | @See https://github.com/artf/grapesjs/issues/546
     |
     */
     
@@ -78,6 +78,20 @@ return [
         'disk' => 'public', //Default: local
         'path' => null, //Default: 'laravel-grapesjs/media',
         'upload_url' => null,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Style Manager
+    |--------------------------------------------------------------------------
+    |
+    | Enable/Disable selectors.
+    | @see https://grapesjs.com/docs/api/style_manager.html#stylemanager
+    |
+    */
+
+    'style_manager' => [
+        'limited_selectors' => true,
     ],
 
     /*

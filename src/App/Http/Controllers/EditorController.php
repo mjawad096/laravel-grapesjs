@@ -83,6 +83,7 @@ class EditorController extends Controller
 
                     $content = view("laravel-grapesjs::{$view_base}{$file_name}")->render();
 
+                    // dd($content);
                     $templates [] = [
                         'id' => $id_prefix . $fileInfo->getFilename(),
                         'category' => $category,
