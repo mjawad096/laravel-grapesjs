@@ -12,6 +12,7 @@ import BackButton from "./plugins/back-button"
 import Templates from "./plugins/templates"
 import CustomTypes from "./plugins/custom-types"
 import DeviceButtons from './plugins/device-buttons'
+import BackgroundImage from "./plugins/background-image"
 import PluginsLoader from "./plugins/plugins-loader"
 
 let config = window.editorConfig;
@@ -48,6 +49,7 @@ if(config.pluginManager.templates){
 plugins = [
 	...plugins,
 	CustomFontFamily,
+	BackgroundImage,
 	Loader,
 	Notifications,
 	CustomTypes,
@@ -60,6 +62,7 @@ plugins = [
 
 pluginsOpts = {
 	...pluginsOpts,
+	[BackgroundImage]: {},
 	[CustomFontFamily]: {fonts: config.pluginManager.customFonts},
 	[Loader]: {},
 	[Notifications]: {},
