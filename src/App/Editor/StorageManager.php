@@ -12,14 +12,11 @@ class StorageManager
     public int $stepsBeforeSave = 10;  
     public bool $autoload = false;
     public ?string $urlStore = null;
-
-    public $params = [
-        '_token' => null 
-    ];
+    public array $headers = [];
 
     function __construct($save_url = null)
     {
-        $this->params['_token'] = csrf_token();
+        $this->headers['X-CSRF-TOKEN'] = csrf_token();
 
         $this->autosave = config('laravel-grapesjs.storage_manager.autosave', true);
         $this->stepsBeforeSave = config('laravel-grapesjs.storage_manager.steps_before_save', 10);

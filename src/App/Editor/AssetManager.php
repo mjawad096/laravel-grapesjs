@@ -20,7 +20,7 @@ class AssetManager
 
     function __construct(AssetRepository $assetRepository)
     {
-        $this->headers['_token'] = csrf_token();
+        $this->headers['X-CSRF-TOKEN'] = csrf_token();
         $this->upload = $assetRepository->getUploadUrl();    
         $this->uploadName = 'file';
 
