@@ -8,7 +8,7 @@ This package provide an esay way to integrate [GrapesJS](https://grapesjs.com/) 
 
 ## Publish files & migrate
 
->`php artisan vendor:publish --provider="Dotlogics\Grapesjs\GrapesjsServiceProvider"`
+>`php artisan vendor:publish --tag="laravel-grapesjs"`
 
 >`php artisan migrate`
 
