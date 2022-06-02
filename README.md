@@ -99,9 +99,4 @@ The "Editable" model (e.g. Page) will have two public properties, css and html. 
 
 ```
 
-## Note
-Each time you update the package you'll need to re-publish the latest assets by running the below command.
-
->`php artisan vendor:publish --provider="Dotlogics\Grapesjs\GrapesjsServiceProvider" --tag="public" --force`
-
 Thank you for using.
