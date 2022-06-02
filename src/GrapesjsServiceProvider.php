@@ -72,7 +72,7 @@ class GrapesjsServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../dist' => public_path($this->publicDirPath),
-        ], [$this->namespace, 'public']);
+        ], [$this->namespace, 'public', 'laravel-assets']);
 
         $this->publishes([
             __DIR__.'/resources/views' => resource_path($this->viewDirPath),
