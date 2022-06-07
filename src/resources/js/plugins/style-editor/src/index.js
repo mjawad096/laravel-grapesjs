@@ -32,24 +32,18 @@ export default (editor, opts = {}) => {
         }, 500);
       }
     })
-
-    return;
-    const BORDER_SIZE = 4;
     
-    let m_pos;
     function resize(e){
-      const item = document.querySelector(".CodeMirror");
-      const dx = m_pos - e.y;
-      m_pos = e.y;
-      item.style.height = (parseInt(getComputedStyle(item, '').height) + dx) + "px";
+      const item = div.querySelector(".CodeMirror");
+
+      let height = e.pageY - item.getBoundingClientRect().top - 4;
+
+      if(height < 300) return;
+      item.style.height = `${height}px`;
     }
 
-    div.querySelector('.gjs-input-holder').addEventListener("mousedown", function(e){
-      console.log(e.offsetY);
-      if (e.offsetY < BORDER_SIZE) {
-        m_pos = e.y;
-        document.addEventListener("mousemove", resize, false);
-      }
+    div.querySelector('.gjs-input-holder i').addEventListener("mousedown", function(e){
+      document.addEventListener("mousemove", resize, false);
     }, false);
 
     document.addEventListener("mouseup", function(){
@@ -73,6 +67,7 @@ export default (editor, opts = {}) => {
         <div class="gjs-field gjs-field-styles">
           <div class="gjs-input-holder">
             <textarea></textarea>
+            <i></i>
           </div>
         </div>
       </div>
@@ -102,16 +97,6 @@ export default (editor, opts = {}) => {
       .trigger('change:appendContent');
   };
 
-  editor.Panels.addButton('views', {
-    id: COMMAND_ID,
-    className: 'fa fa-css3',
-    command: COMMAND_ID,
-    attributes: {
-      title: 'Modify styles'
-    },
-    active: false,
-  });
-
   editor.on('update', updateCodeViewerContent);
 
   editor.Commands.add(COMMAND_ID, {
@@ -129,5 +114,15 @@ export default (editor, opts = {}) => {
         div.style.display = 'none';
       }
     }
-  })
+  });
+
+  editor.Panels.addButton('views', {
+    id: COMMAND_ID,
+    className: 'fa fa-css3',
+    command: COMMAND_ID,
+    attributes: {
+      title: 'Modify styles'
+    },
+    active: false,
+  });
 };
