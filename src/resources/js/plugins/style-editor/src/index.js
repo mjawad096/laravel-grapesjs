@@ -15,7 +15,24 @@ export default (editor, opts = {}) => {
 
   let updateCodeViewerContent = () => codeViewer && codeViewer.setContent(editor.getCss());
 
-  let setCodeExpandHandler = (div) => {
+  let setEventListners = (div) => {
+    div.querySelector('.jd-expand-handle').addEventListener('click', function(e){
+      let handle = e.target;
+
+      setCanvasWidth(handle.classList.contains('active') ? 85 : 50);
+      handle.classList.toggle('active')
+    });
+
+    codeViewer.editor.on('changes', (e, changes) => {
+      if(changes.length == 1 && changes[0].origin != "setValue"){
+        clearTimeout(timer);
+
+        timer = setTimeout(() => {
+          editor.setStyle(e.getValue());
+        }, 500);
+      }
+    })
+
     return;
     const BORDER_SIZE = 4;
     
@@ -40,6 +57,51 @@ export default (editor, opts = {}) => {
     }, false);
   };
 
+  let initCodeViewer = () => {
+    if(div) return;
+
+    codeViewer = editor.CodeManager.getViewer('CodeMirror').clone();
+
+    div = document.createElement('div')
+    div.classList.add('jd-style-editor');
+    div.innerHTML= `
+      <div>
+        <i class="jd-expand-handle fa fa-arrows-h"></i>
+        <div class="gjs-trt-header">Update styles</div>
+      </div>
+      <div class="jd-field-containter">
+        <div class="gjs-field gjs-field-styles">
+          <div class="gjs-input-holder">
+            <textarea></textarea>
+          </div>
+        </div>
+      </div>
+    `;
+  
+    codeViewer.set({
+      codeName: 'css',
+      readOnly: 0,
+      theme: 'hopscotch',
+      autoBeautify: true,
+      autoCloseTags: true,
+      autoCloseBrackets: true,
+      lineWrapping: true,
+      styleActiveLine: true,
+      smartIndent: true,
+      indentWithTabs: true,
+    });
+
+    codeViewer.init(div.querySelector('.jd-field-containter textarea'));
+
+    setEventListners(div);
+
+    editor
+      .Panels
+      .getPanel('views-container')
+      .set('appendContent', div)
+      .trigger('change:appendContent');
+  };
+
   editor.Panels.addButton('views', {
     id: COMMAND_ID,
     className: 'fa fa-css3',
@@ -53,65 +115,8 @@ export default (editor, opts = {}) => {
   editor.on('update', updateCodeViewerContent);
 
   editor.Commands.add(COMMAND_ID, {
-    run(editor, sender){ 
-      const panel = editor.Panels.getPanel('views-container');
-      
-      if(!div){
-        codeViewer = editor.CodeManager.getViewer('CodeMirror').clone();
-
-        div = document.createElement('div')
-        div.classList.add('jd-style-editor');
-        div.innerHTML= `
-          <div>
-            <i class="jd-expand-handle fa fa-arrows-h"></i>
-            <div class="gjs-trt-header">Update styles</div>
-          </div>
-          <div class="jd-field-containter">
-            <div class="gjs-field gjs-field-styles">
-              <div class="gjs-input-holder">
-                <textarea></textarea>
-              </div>
-            </div>
-          </div>
-        `;
-
-        div.querySelector('.jd-expand-handle').addEventListener('click', function(e){
-          let handle = e.target;
-
-          setCanvasWidth(handle.classList.contains('active') ? 85 : 50);
-          handle.classList.toggle('active')
-        });
-      
-        codeViewer.set({
-          codeName: 'css',
-          readOnly: 0,
-          theme: 'hopscotch',
-          autoBeautify: true,
-          autoCloseTags: true,
-          autoCloseBrackets: true,
-          lineWrapping: true,
-          styleActiveLine: true,
-          smartIndent: true,
-          indentWithTabs: true,
-        });
-
-        codeViewer.init(div.querySelector('.jd-field-containter textarea'));
-
-        setTimeout(setCodeExpandHandler(div));
-
-        codeViewer.editor.on('changes', (e, changes) => {
-          if(changes.length == 1 && changes[0].origin != "setValue"){
-            clearTimeout(timer);
-
-            timer = setTimeout(() => {
-              editor.setStyle(e.getValue());
-            }, 500);
-          }
-        })        
-
-        panel.set('appendContent', div).trigger('change:appendContent')
-      }
-
+    run(editor, sender){    
+      initCodeViewer();
       updateCodeViewerContent();
       div.style.display = 'block';
     },
