@@ -1162,23 +1162,108 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (editor) {
   var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var COMMAND_ID = 'css-edit';
+  var div, codeViewer, timer;
 
-  var options = _objectSpread(_objectSpread({}, {// default options
-  }), opts); // TODO Remove
+  var setCanvasWidth = function setCanvasWidth(w) {
+    var canvas = document.querySelector(".gjs-cv-canvas");
+    var panel = document.querySelector(".gjs-pn-views-container");
+    var canvas_width = w;
+    var panel_width = 100 - w;
+    canvas.style.width = "".concat(canvas_width, "%");
+    panel.style.width = "".concat(panel_width, "%");
+  };
 
+  var updateCodeViewerContent = function updateCodeViewerContent() {
+    return codeViewer && codeViewer.setContent(editor.getCss());
+  };
 
-  editor.on('load', function () {
-    return editor.addComponents("<div style=\"margin:100px; padding:25px;\">\n            Content loaded from the plugin\n        </div>", {
-      at: 0
-    });
+  var setCodeExpandHandler = function setCodeExpandHandler(div) {
+    return;
+    var BORDER_SIZE = 4;
+    var m_pos;
+
+    function resize(e) {
+      var item = document.querySelector(".CodeMirror");
+      var dx = m_pos - e.y;
+      m_pos = e.y;
+      item.style.height = parseInt(getComputedStyle(item, '').height) + dx + "px";
+    }
+
+    div.querySelector('.gjs-input-holder').addEventListener("mousedown", function (e) {
+      console.log(e.offsetY);
+
+      if (e.offsetY < BORDER_SIZE) {
+        m_pos = e.y;
+        document.addEventListener("mousemove", resize, false);
+      }
+    }, false);
+    document.addEventListener("mouseup", function () {
+      document.removeEventListener("mousemove", resize, false);
+    }, false);
+  };
+
+  editor.Panels.addButton('views', {
+    id: COMMAND_ID,
+    className: 'fa fa-css3',
+    command: COMMAND_ID,
+    attributes: {
+      title: 'Modify styles'
+    },
+    active: false
+  });
+  editor.on('update', updateCodeViewerContent);
+  editor.Commands.add(COMMAND_ID, {
+    run: function run(editor, sender) {
+      var panel = editor.Panels.getPanel('views-container');
+
+      if (!div) {
+        codeViewer = editor.CodeManager.getViewer('CodeMirror').clone();
+        div = document.createElement('div');
+        div.classList.add('jd-style-editor');
+        div.innerHTML = "\n          <div>\n            <i class=\"jd-expand-handle fa fa-arrows-h\"></i>\n            <div class=\"gjs-trt-header\">Update styles</div>\n          </div>\n          <div class=\"jd-field-containter\">\n            <div class=\"gjs-field gjs-field-styles\">\n              <div class=\"gjs-input-holder\">\n                <textarea></textarea>\n              </div>\n            </div>\n          </div>\n        ";
+        div.querySelector('.jd-expand-handle').addEventListener('click', function (e) {
+          var handle = e.target;
+          setCanvasWidth(handle.classList.contains('active') ? 85 : 50);
+          handle.classList.toggle('active');
+        });
+        codeViewer.set({
+          codeName: 'css',
+          readOnly: 0,
+          theme: 'hopscotch',
+          autoBeautify: true,
+          autoCloseTags: true,
+          autoCloseBrackets: true,
+          lineWrapping: true,
+          styleActiveLine: true,
+          smartIndent: true,
+          indentWithTabs: true
+        });
+        codeViewer.init(div.querySelector('.jd-field-containter textarea'));
+        setTimeout(setCodeExpandHandler(div));
+        codeViewer.editor.on('changes', function (e, changes) {
+          if (changes.length == 1 && changes[0].origin != "setValue") {
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+              editor.setStyle(e.getValue());
+            }, 500);
+          }
+        });
+        panel.set('appendContent', div).trigger('change:appendContent');
+      }
+
+      updateCodeViewerContent();
+      div.style.display = 'block';
+    },
+    stop: function stop(editor, sender) {
+      if (div) {
+        setCanvasWidth(85);
+        div.querySelector('.jd-expand-handle').classList.remove('active');
+        div.style.display = 'none';
+      }
+    }
   });
 });
 

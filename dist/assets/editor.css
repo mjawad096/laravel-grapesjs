@@ -261,3 +261,40 @@ button.toast-close-button {
   height: 50px;
   padding-right: 5px;
 }
+
+.gjs-pn-views-container {
+  z-index: 2;
+}
+.gjs-pn-views-container .jd-style-editor {
+  margin-top: 4px;
+}
+.gjs-pn-views-container .jd-style-editor .jd-expand-handle {
+  position: absolute;
+  left: 7px;
+  font-size: 22px;
+  padding: 6px;
+  cursor: pointer;
+}
+.gjs-pn-views-container .jd-style-editor .jd-expand-handle.active {
+  background-color: rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.25) inset;
+}
+.gjs-pn-views-container .jd-style-editor .jd-field-containter {
+  padding: 0 5px;
+  margin-top: 12px;
+}
+.gjs-pn-views-container .jd-style-editor .jd-field-containter .gjs-field-styles::after {
+  content: "";
+  background-color: #ccc;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  cursor: ns-resize;
+}
+.gjs-pn-views-container .jd-style-editor .jd-field-containter .gjs-field-styles textarea {
+  min-height: 300px;
+}
+.gjs-pn-views-container .jd-style-editor .jd-field-containter .gjs-field-styles .CodeMirror .CodeMirror-code .CodeMirror-line {
+  text-align: left;
+}
