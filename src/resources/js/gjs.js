@@ -14,6 +14,7 @@ import CustomTypes from "./plugins/custom-types"
 import DeviceButtons from './plugins/device-buttons'
 import BackgroundImage from "./plugins/background-image"
 import PluginsLoader from "./plugins/plugins-loader"
+import StyleEditor from "./plugins/style-editor"
 
 let config = window.editorConfig;
 delete window.editorConfig;
@@ -58,6 +59,7 @@ plugins = [
 	BackButton,
 	DeviceButtons,
 	PluginsLoader,
+	StyleEditor,
 ]
 
 pluginsOpts = {
@@ -72,6 +74,7 @@ pluginsOpts = {
 	[BackButton]: {},
 	[DeviceButtons]: {},
 	[PluginsLoader]: config.pluginManager.pluginsLoader,
+	[StyleEditor]: {},
 };
 
 config.plugins = plugins
