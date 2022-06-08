@@ -36,11 +36,9 @@ export default (editor, opts = {}) => {
   btnEdit.className = stylePrefix + 'btn-prim ' + stylePrefix + 'btn-import';
   btnEdit.onclick = function () {
     let html = (codeViewer.editor.getValue() || '').trim();
-    let css = ((html.split('<style>') || [])[1] || '').replace('</style>', '');
 
     editor.DomComponents.getWrapper().set('content', '');
     editor.setComponents(html);
-    editor.setStyle(css);
 
     modal.close();
 
@@ -63,11 +61,12 @@ export default (editor, opts = {}) => {
         codeViewer.init(txtarea);
         viewer = codeViewer.editor;
       }
-      var InnerHtml = editor.getHtml();
-      var Css = editor.getCss();
+
       modal.setContent('');
       modal.setContent(container);
-      codeViewer.setContent(InnerHtml + "<style>" + Css + '</style>');
+
+      codeViewer.setContent(editor.getHtml());
+
       modal.open();
       viewer.refresh();
     }
