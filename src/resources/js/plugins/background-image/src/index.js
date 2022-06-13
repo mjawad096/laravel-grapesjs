@@ -208,7 +208,7 @@ export default (editor, opts = {}) => {
     const commandExists = toolbar.some(item => item.command === COMMAND_ID);
 
     // if it doesn't already exist, add it
-    if (!commandExists && !component.is('image')) {
+    if (!commandExists && !component.is('image') && component.get('tagName') !== 'body') {
       let tool = {
         attributes: { 'class': TOOL_ICON },
         command: COMMAND_ID
