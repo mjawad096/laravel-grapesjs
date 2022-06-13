@@ -15,6 +15,7 @@ import DeviceButtons from './plugins/device-buttons'
 import BackgroundImage from "./plugins/background-image"
 import PluginsLoader from "./plugins/plugins-loader"
 import StyleEditor from "./plugins/style-editor"
+import LinkableImage from "./plugins/linkable-image"
 
 let config = window.editorConfig;
 delete window.editorConfig;
@@ -60,6 +61,7 @@ plugins = [
 	DeviceButtons,
 	PluginsLoader,
 	StyleEditor,
+	LinkableImage,
 ]
 
 pluginsOpts = {
@@ -75,6 +77,7 @@ pluginsOpts = {
 	[DeviceButtons]: {},
 	[PluginsLoader]: config.pluginManager.pluginsLoader,
 	[StyleEditor]: {},
+	[LinkableImage]: {},
 };
 
 config.plugins = plugins
