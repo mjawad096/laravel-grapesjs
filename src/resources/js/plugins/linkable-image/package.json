@@ -1,0 +1,23 @@
+{
+  "name": "linkable-image",
+  "version": "1.0.0",
+  "description": "Linkable Image",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR-USERNAME/linkable-image.git"
+  },
+  "scripts": {
+    "start": "grapesjs-cli serve",
+    "build": "grapesjs-cli build",
+    "bump": "npm version patch -m 'Bump v%s'"
+  },
+  "keywords": [
+    "grapesjs",
+    "plugin"
+  ],
+  "devDependencies": {
+    "grapesjs-cli": "^3.0.0"
+  },
+  "license": "MIT"
+}
