@@ -34,12 +34,23 @@ export default (editor, opts = {}) => {
     })
     
     function resize(e){
+      const container = document.querySelector(".gjs-pn-views-container");
+      const canvas = document.querySelector(".gjs-cv-canvas");
       const item = div.querySelector(".CodeMirror");
 
       let height = e.pageY - item.getBoundingClientRect().top - 4;
+      let container_width = 100 - Math.ceil(e.clientX / window.innerWidth * 100);
+      let canvas_width = 100 - container_width;
 
-      if(height < 300) return;
-      item.style.height = `${height}px`;
+      item.style.width = `100%`;
+      if(height >= 300){
+        item.style.height = `${height}px`;
+      }
+
+      if(container_width >= 15){
+        canvas.style.width = `${canvas_width}%`;
+        container.style.width = `${container_width}%`;
+      }
     }
 
     div.querySelector('.gjs-input-holder i').addEventListener("mousedown", function(e){
