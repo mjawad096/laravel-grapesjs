@@ -4,11 +4,31 @@ namespace Dotlogics\Grapesjs\App\Editor;
 
 class PluginManager
 {
-    public array|bool $basicBlocks = false;
-    public array|bool $bootstrap4Blocks = false;
-    public array|bool $codeEditor = false;
-    public array|bool $imageEditor = false;
-    public array|bool $templates = false;
+    /**
+     * @var array|bool
+     */
+    public $basicBlocks = false;
+
+    /**
+     * @var array|bool
+     */
+    public $bootstrap4Blocks = false;
+    
+    /**
+     * @var array|bool
+     */
+    public $codeEditor = false;
+    
+    /**
+     * @var array|bool
+     */
+    public $imageEditor = false;
+    
+    /**
+     * @var array|bool
+     */
+    public $templates = false;
+    
     public array $customFonts = [];
     public array $pluginsLoader = [];
 
