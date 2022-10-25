@@ -33,4 +33,6 @@
  * Date: 2021-03-02T17:08Z
  */
 
+/*! grapesjs - 0.18.4 */
+
 /*! grapesjs-blocks-bootstrap4 - 0.2.3 */
