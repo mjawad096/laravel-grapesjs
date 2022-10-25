@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('laravel-grapesjs')
 	->name('laravel-grapesjs.')
-	->middleware('web')
+	->middleware(config('laravel-grapesjs.routes.middleware', []))
 	->namespace('Dotlogics\Grapesjs\App\Http\Controllers')
 	->group(function(){
 		Route::post('asset/store', 'AssetController@store')->name('asset.store');
