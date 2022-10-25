@@ -6,5 +6,8 @@ return [
     'force_class' => false,
     'fonts' => [],
     'styles' => [],
-    'scripts' => []
+    'scripts' => [],
+    'middleware' => [
+        'web', 'auth'
+    ],
 ];
