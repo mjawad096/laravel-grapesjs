@@ -18,6 +18,6 @@ class EditorAssetManager
 
     function __construct($save_url = null)
     {
-        $this->headers['_token'] = csrf_token();
+        $this->headers['X-CSRF-TOKEN'] = csrf_token();
     }
 }
