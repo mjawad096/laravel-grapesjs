@@ -36,9 +36,11 @@ export default (editor, opts = {}) => {
   btnEdit.className = stylePrefix + 'btn-prim ' + stylePrefix + 'btn-import';
   btnEdit.onclick = function () {
     let html = (codeViewer.editor.getValue() || '').trim();
+    let css = editor.getCss();
 
     editor.DomComponents.getWrapper().set('content', '');
     editor.setComponents(html);
+    editor.setStyle(css);
 
     modal.close();
 
